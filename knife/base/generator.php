@@ -12,6 +12,27 @@
 class KnifeBaseGenerator
 {
 	/**
+	 * The arguments
+	 *
+	 * @var	array
+	 */
+	protected $arg;
+
+	/**
+	 * Constructor
+	 *
+	 * @param array $arguments
+	 */
+	public function __construct(array $arguments)
+	{
+		// set the arguments
+		$this->arg = $arguments;
+
+		// initiate
+		$this->init();
+	}
+
+	/**
 	 * Creates a valid file name
 	 *
 	 * @return	string
@@ -80,5 +101,64 @@ class KnifeBaseGenerator
 
 		// return
 		return $newName;
+	}
+
+	/**
+	 * Removes the spaces from a string
+	 *
+	 * @return	string
+	 * @param	string $string		The string to edit.
+	 */
+	public function cleanString($string)
+	{
+		return str_replace(' ', '', $string);
+	}
+
+	/**
+	 * The init function, this sets the needed variable names
+	 * and calls the required actions.
+	 */
+	protected function init() {}
+
+	/**
+	 * Creates the directories from a given array
+	 *
+	 * @param	array $dirs		The directories to create
+	 */
+	protected function makeDirs(array $dirs)
+	{
+		// the main dir
+		$mainDir = '';
+
+		// loop the directories
+		foreach($dirs as $type => $dir)
+		{
+			// create a new dir if this is the main dir
+			if($type == 'main')
+			{
+				mkdir($dir);
+				$mainDir = $dir . '/';
+				continue;
+			}
+
+			// loob the dir to check for subdirs if this isn't the main
+			foreach($dir as $name => $subdir)
+			{
+				// no subdirs
+				if(!is_array($subdir)) mkdir($mainDir . $subdir);
+				// more subdirs
+				else
+				{
+					// create new array to pass
+					$tmpArray = array(
+									'main' => $mainDir . $name,
+									'sub' => $subdir
+					);
+
+					// make the dir
+					$this->makeDirs($tmpArray);
+				}
+			}
+		}
 	}
 }
