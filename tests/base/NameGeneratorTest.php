@@ -3,7 +3,7 @@
  * Class to test the name generator
  */
 
-require_once '../../knife/base/generator.php';
+require_once 'knife/base/generator.php';
 
 class BaseGeneratorTest extends PHPUnit_Framework_TestCase
 {
@@ -24,8 +24,9 @@ class BaseGeneratorTest extends PHPUnit_Framework_TestCase
 		return array(
 			array('basename'),
 			array('BaSeNaMe'),
+			array('base9name'),
 			array('base_name'),
-			array('9base_2name')
+			array('9ba#$se_2name')
 		);
 	}
 
@@ -40,6 +41,19 @@ class BaseGeneratorTest extends PHPUnit_Framework_TestCase
      */
 	public function testName($name)
 	{
-		$this->assertEquals($nameGen->buildName($name), 'basename');
+		$this->assertRegExp('/^[a-zA-Z]{1,}$/', $this->base->buildName($name));
+	}
+
+	/**
+     * @dataProvider provider
+     */
+	public function testFileName($name)
+	{
+		$this->assertRegExp("/^[a-z_]{1,}(.)[a-z]{1,}$/", $this->base->buildFileName($name));
+		$this->assertRegExp("/^[a-z_]{1,}(.)[a-z]{1,}$/", $this->base->buildFileName($name, 'tpl'));
+		$this->assertRegExp("/^[a-z_]{1,}(.)[a-z]{1,}$/", $this->base->buildFileName($name, 'tpl#@$'));
+		$this->assertRegExp("/^[a-z_]{1,}(.)[a-z]{1,}$/", $this->base->buildFileName($name, 'tpl9'));
+		$this->assertRegExp("/^[a-z_]{1,}(.)[a-z]{1,}$/", $this->base->buildFileName($name, 't@#$pl'));
+		$this->assertRegExp("/^[a-z_]{1,}(.)[a-z]{1,}$/", $this->base->buildFileName($name, '99tpl'));
 	}
 }
