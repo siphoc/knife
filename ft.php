@@ -12,7 +12,7 @@
 /*
  * Developer mode
  */
-define('DEV_MODE', true);
+define('DEV_MODE', false);
 
 // define the CLI path
 define('CLIPATH', dirname(__FILE__) . '/');
@@ -21,3 +21,8 @@ define('CLIPATH', dirname(__FILE__) . '/');
  * Get the base class
  */
 require_once 'knife/knife.php';
+
+/*
+ * Start the tool
+ */
+new Knife($argv);

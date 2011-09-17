@@ -44,7 +44,7 @@ function __autoload($class) {
 	/*
 	 * Dirty classes job
 	 *
-	 * @todo	use namespaces (ask Davy)
+	 * @todo use namespaces (ask Davy)
 	 */
 	$classes = array();
 	$classes['knifebasegenerator'] = 'base/generator.php';
@@ -100,12 +100,30 @@ class Knife
 	{
 		// do start checks (when not in devmode)
 		if(!DEV_MODE) $this->startChecks();
+		else $this->devStart();
+
+		// no argument set?
+		if(!isset($argv[1])) throw new Exception('Please, specify an action.');
 
 		// set the class to call
 		$callClass = 'Knife' . ucfirst($argv[1]) . 'Generator';
 
+		// arguments
+		$arguments = $argv;
+		unset($arguments[0]);
+		unset($arguments[1]);
+
+		// the arguments to pass
+		$argPass = array();
+
+		// rebase
+		foreach($arguments as $argument)
+		{
+			$argPass[] = $argument;
+		}
+
 		// execute the action
-		$callClass::execute($argv);
+		$tmpClass = new $callClass($argPass);
 	}
 
 	/**
@@ -182,8 +200,8 @@ class Knife
 
 		// opens the file (creates one if it doesn't exists)
 		$oFile = fopen($settingsPath, 'w');
-
-		Knife::dump('Settings file created.');
+		// @todo check for author
+		fclose($oFile);
 	}
 
 	/**
@@ -207,15 +225,12 @@ class Knife
 		}
 
 		// print output
-		if($exit) echo "-----------------------------------------DUMP-----------------------------------------\n";
+		echo "-----------------------------------------DUMP-----------------------------------------\n";
 		echo $output;
+		echo "-----------------------------------------DUMP-----------------------------------------\n";
 
 		// exit
-		if($exit)
-		{
-			echo "-----------------------------------------DUMP-----------------------------------------\n";
-			exit;
-		}
+		if($exit) exit;
 	}
 
 	/**
@@ -226,7 +241,14 @@ class Knife
 		$this->checkPaths();
 		$this->checkSettings();
 	}
-}
 
-// start knife
-new Knife($argv);
+	/**
+	 * Initiates the stuff for devers
+	 */
+	private function devStart()
+	{
+		// set paths for overall use
+		define('FRONTENDPATH', CLIPATH . 'devdir/');
+		define('BACKENDPATH', CLIPATH . 'devdir/');
+	}
+}

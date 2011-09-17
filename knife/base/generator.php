@@ -115,6 +115,22 @@ class KnifeBaseGenerator
 	}
 
 	/**
+	 * The error handler. This gets the PHPDoc from the create function and prints
+	 * it in a proper way.
+	 *
+	 * @param	string $class		The class to search in.
+	 * @param	string $function	The function to search.
+	 */
+	protected function errorHandler($class, $function)
+	{
+		$reflectionClass = new ReflectionClass($class);
+		$reflectionFunction = $reflectionClass->getMethod($function);
+		$reflectionDocumentation = $reflectionFunction->getDocComment();
+
+		throw new Exception($reflectionDocumentation);
+	}
+
+	/**
 	 * The init function, this sets the needed variable names
 	 * and calls the required actions.
 	 */
@@ -160,5 +176,23 @@ class KnifeBaseGenerator
 				}
 			}
 		}
+	}
+
+	/**
+	 * Creates a file in a specific directory
+	 *
+	 * @param	string $file				The file name.
+	 * @param	string[optional] $input		The input for the file.
+	 */
+	protected function makeFile($file, $input = null)
+	{
+		// create the file
+		$oFile = fopen($file, 'w');
+
+		// input?
+		if($input !== null) fwrite($oFile, $input);
+
+		// close the file
+		fclose($oFile);
 	}
 }
