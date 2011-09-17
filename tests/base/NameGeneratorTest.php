@@ -49,11 +49,20 @@ class BaseGeneratorTest extends PHPUnit_Framework_TestCase
      */
 	public function testFileName($name)
 	{
+		// @todo possible to combine 2 data providers?
 		$this->assertRegExp("/^[a-z_]{1,}(.)[a-z]{1,}$/", $this->base->buildFileName($name));
 		$this->assertRegExp("/^[a-z_]{1,}(.)[a-z]{1,}$/", $this->base->buildFileName($name, 'tpl'));
 		$this->assertRegExp("/^[a-z_]{1,}(.)[a-z]{1,}$/", $this->base->buildFileName($name, 'tpl#@$'));
 		$this->assertRegExp("/^[a-z_]{1,}(.)[a-z]{1,}$/", $this->base->buildFileName($name, 'tpl9'));
 		$this->assertRegExp("/^[a-z_]{1,}(.)[a-z]{1,}$/", $this->base->buildFileName($name, 't@#$pl'));
 		$this->assertRegExp("/^[a-z_]{1,}(.)[a-z]{1,}$/", $this->base->buildFileName($name, '99tpl'));
+	}
+
+	/**
+	 * @dataProvider provider
+	 */
+	public function testDirName($name)
+	{
+		$this->assertRegExp('/^[a-z]{1,}$/', $this->base->buildDirName($name));
 	}
 }
