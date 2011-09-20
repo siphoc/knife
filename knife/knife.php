@@ -31,40 +31,10 @@ else error_reporting(0);
  */
 require_once 'exception/exception.php';
 
-/**
- * The knife autoloader
- *
- * @param string $class
-*/
-function __autoload($class) {
-
-	// make the class lowercase
-	$tmpClass = strtolower($class);
-
-	/*
-	 * Dirty classes job
-	 *
-	 * @todo use namespaces (ask Davy)
-	 */
-	$classes = array();
-	$classes['knifebasegenerator'] = 'base/generator.php';
-	$classes['knifethemegenerator'] = 'theme/generator.php';
-
-	// is the class set?
-	if(!array_key_exists($tmpClass, $classes))
-		throw new Exception('This class isn\'t set in Knife.');
-
-	// does the file exist?
-	if(!file_exists(CLIPATH . 'knife/' . $classes[$tmpClass]))
-		throw new Exception('The class file doesn\'t exist.');
-
-	// get the file
-	require_once CLIPATH . 'knife/' . $classes[$tmpClass];
-
-	// is the class callable?
-	if(!class_exists($class, false))
-		throw new Exception('The file is present but the class name should be ' . $class);
-}
+/*
+ * Set the autoloader
+ */
+spl_autoload_register(array('Knife', 'autoLoader'));
 
 /**
  * This class contains all generic functions for the knife libary
@@ -99,11 +69,13 @@ class Knife
 	public function __construct($argv)
 	{
 		// do start checks (when not in devmode)
-		if(!DEV_MODE) $this->startChecks();
-		else $this->devStart();
+		$this->startChecks();
 
 		// no argument set?
 		if(!isset($argv[1])) throw new Exception('Please, specify an action.');
+
+		/* Spoon stuff */
+		require_once LIBRARYPATH . 'globals.php';
 
 		// set the class to call
 		$callClass = 'Knife' . ucfirst($argv[1]) . 'Generator';
@@ -124,6 +96,41 @@ class Knife
 
 		// execute the action
 		$tmpClass = new $callClass($argPass);
+	}
+
+	/**
+	 * The knife autoloader
+	 *
+	 * @param string $class
+	*/
+	public static function autoLoader($class) {
+
+		// make the class lowercase
+		$tmpClass = strtolower($class);
+
+		/*
+		 * Dirty classes job
+		 *
+		 * @todo use namespaces (ask Davy)
+		 */
+		$classes = array();
+		$classes['knifebasegenerator'] = CLIPATH . 'knife/base/generator.php';
+		$classes['knifethemegenerator'] = CLIPATH . 'knife/theme/generator.php';
+
+		// is the class set?
+		if(!array_key_exists($tmpClass, $classes))
+			throw new Exception('This class(' . $class . ') isn\'t set in Knife.');
+
+		// does the file exist?
+		if(!file_exists($classes[$tmpClass]))
+			throw new Exception('The class file(' . $classes[$tmpClass] . ') doesn\'t exist.');
+
+		// get the file
+		require_once $classes[$tmpClass];
+
+		// is the class callable?
+		if(!class_exists($class, false))
+			throw new Exception('The file is present but the class name should be ' . $class);
 	}
 
 	/**
@@ -196,12 +203,22 @@ class Knife
 	private function checkSettings()
 	{
 		// settings path
-		$settingsPath = CLIPATH . '.settings';
+		$settingsPath = CLIPATH . '.ftconfig';
 
 		// opens the file (creates one if it doesn't exists)
 		$oFile = fopen($settingsPath, 'w');
 		// @todo check for author
 		fclose($oFile);
+	}
+
+	/**
+	 * Initiates the stuff for devers
+	 */
+	private function devStart()
+	{
+		// set paths for overall use
+		define('FRONTENDPATH', CLIPATH . 'devdir/');
+		define('BACKENDPATH', CLIPATH . 'devdir/');
 	}
 
 	/**
@@ -234,21 +251,29 @@ class Knife
 	}
 
 	/**
+	 * Gets the database instance
+	 *
+	 * @return	SpoonDatabase
+	 */
+	public static function getDB()
+	{
+		// build dsn
+		if(DB_PORT !== null) $dsn = DB_TYPE . ':host=' . DB_HOSTNAME . ';port=' . DB_PORT . ';dbname=' . DB_DATABASE;
+		else $dsn = DB_TYPE . ':host=' . DB_HOSTNAME . ';dbname=' . DB_DATABASE;
+
+		// get the spoon database class
+		$db = new PDO($dsn, DB_USERNAME, DB_PASSWORD);
+
+		// return
+		return $db;
+	}
+
+	/**
 	 * This does the initial checks
 	 */
 	private function startChecks()
 	{
 		$this->checkPaths();
 		$this->checkSettings();
-	}
-
-	/**
-	 * Initiates the stuff for devers
-	 */
-	private function devStart()
-	{
-		// set paths for overall use
-		define('FRONTENDPATH', CLIPATH . 'devdir/');
-		define('BACKENDPATH', CLIPATH . 'devdir/');
 	}
 }

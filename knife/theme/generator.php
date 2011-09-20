@@ -29,12 +29,6 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 	private $dbLabel = 'Default';
 
 	/**
-	 * Template blocks
-	 *
-	 *
-	 */
-
-	/**
 	 * This executes the generator
 	 *
 	 */
@@ -47,6 +41,7 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 		$return = $this->createTheme();
 
 		if(!$return) $this->errorHandler(__CLASS__, 'createTheme');
+		else $this->successHandler('The theme "' . ucfirst($this->themeName) . '" is created.');
 	}
 
 	/**
@@ -54,7 +49,35 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 	 */
 	private function createDatabaseInfo()
 	{
-		// @todo insert data into the database
+		// try to insert the data
+		try
+		{
+			// prepare
+			$stmt = Knife::getDB()->prepare('INSERT INTO pages_templates (theme, label, path, num_blocks, data) VALUES (:theme, :label, :path, :num_blocks, :data)');
+
+			// bind the parameters
+			$stmt->bindParam(':theme', $theme);
+			$stmt->bindParam(':label', $label);
+			$stmt->bindParam(':path', $path);
+			$stmt->bindParam(':num_blocks', $numblocks);
+			$stmt->bindParam(':data', $data);
+
+			$theme = $this->themeName;
+			$label = $this->dbLabel;
+			$numblocks = $this->dbNumBlocks;
+			$data = $this->dbTemplateData;
+			$path = $this->dbPath;
+
+			// execute
+			$stmt->execute();
+		}
+		catch(Exception $e)
+		{
+			Knife::dump($e);
+		}
+
+		// return
+		return true;
 	}
 
 	/**
@@ -120,11 +143,9 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 	/**
 	 * This action will create a theme. This will not overwrite an existing theme.
 	 *
-	 * The data needed to create a theme:
-	 * Theme name
+	 * The data needed to create a theme: 'themename'
 	 *
-	 * Example:
-	 * ft theme 'knife'
+	 * Example: ft theme 'knife'
 	 */
 	protected function createTheme()
 	{
@@ -134,17 +155,11 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 		// create the dirs
 		$this->createDirs();
 
-		/*
-		 * These actions will only work if we're not in dev mode
-		 */
-		if(!DEV_MODE)
-		{
-			// create the files
-			$this->createFiles();
+		// create the files
+		$this->createFiles();
 
-			// set info in the database
-			$this->createDatabaseInfo();
-		}
+		// set info in the database
+		if(!$this->createDatabaseInfo()) return false;
 
 		// return
 		return true;

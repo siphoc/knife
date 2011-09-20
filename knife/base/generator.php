@@ -123,10 +123,20 @@ class KnifeBaseGenerator
 	 */
 	protected function errorHandler($class, $function)
 	{
+		// get the documentation
 		$reflectionClass = new ReflectionClass($class);
 		$reflectionFunction = $reflectionClass->getMethod($function);
 		$reflectionDocumentation = $reflectionFunction->getDocComment();
 
+		// clean the documentation
+		// @todo propper cleaning function
+		$reflectionDocumentation = str_replace('	', '', $reflectionDocumentation);
+		$reflectionDocumentation = str_replace('/**', '', $reflectionDocumentation);
+		$reflectionDocumentation = str_replace(' * ', '', $reflectionDocumentation);
+		$reflectionDocumentation = str_replace(' */', '', $reflectionDocumentation);
+		$reflectionDocumentation = str_replace(' *', '', $reflectionDocumentation);
+
+		// throw new exception
 		throw new Exception($reflectionDocumentation);
 	}
 
@@ -194,5 +204,18 @@ class KnifeBaseGenerator
 
 		// close the file
 		fclose($oFile);
+	}
+
+	/**
+	 * The success handler. This shows a success message.
+	 *
+	 * @param	string $message		The message to show.
+	 */
+	protected function successHandler($message)
+	{
+		echo "---------------------------------------------YAR MATEY---------------------------------------------\n";
+		echo $message;
+		echo "\n";
+		echo "---------------------------------------------------------------------------------------------------\n";
 	}
 }

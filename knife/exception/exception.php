@@ -21,9 +21,6 @@ set_exception_handler('knifeExceptionHandler');
  */
 function knifeExceptionHandler(Exception $exception)
 {
-	// fetch trace stack
-	$trace = $exception->getTrace();
-
 	// specific name
 	$name = (is_callable(array($exception, 'getName'))) ? $exception->getName() : get_class($exception);
 
