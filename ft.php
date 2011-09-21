@@ -12,7 +12,7 @@
 /*
  * Developer mode
  */
-define('DEV_MODE', true);
+define('DEV_MODE', false);
 
 // define the CLI path
 define('CLIPATH', dirname(__FILE__) . '/');
