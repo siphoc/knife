@@ -61,6 +61,14 @@ class Knife
 	 */
 	public static $version;
 
+
+	/**
+	 * The database
+	 *
+	 * @var	SpoonDatabase
+	 */
+	private static $db;
+
 	/**
 	 * This is the constructor for the CLI Tool
 	 *
@@ -68,8 +76,11 @@ class Knife
 	 */
 	public function __construct($argv)
 	{
-		// do start checks (when not in devmode)
+		// do startup checks
 		$this->startChecks();
+
+		// build the paths
+		$this->buildPaths();
 
 		// no argument set?
 		if(!isset($argv[1])) throw new Exception('Please, specify an action.');
@@ -103,8 +114,8 @@ class Knife
 	 *
 	 * @param string $class
 	*/
-	public static function autoLoader($class) {
-
+	public static function autoLoader($class)
+	{
 		// make the class lowercase
 		$tmpClass = strtolower($class);
 
@@ -116,6 +127,7 @@ class Knife
 		$classes = array();
 		$classes['knifebasegenerator'] = CLIPATH . 'knife/base/generator.php';
 		$classes['knifethemegenerator'] = CLIPATH . 'knife/theme/generator.php';
+		$classes['knifedatabase'] = CLIPATH . 'knife/database/database.php';
 
 		// is the class set?
 		if(!array_key_exists($tmpClass, $classes))
@@ -138,7 +150,7 @@ class Knife
 	 *
 	 * @return	bool
 	 */
-	private function checkPaths()
+	private function buildPaths()
 	{
 		// set the working dir
 		$workingDir = getcwd();
@@ -254,18 +266,28 @@ class Knife
 	 * Gets the database instance
 	 *
 	 * @return	SpoonDatabase
+	 * @write	bool[optional] $write		Write to the database or not.
 	 */
-	public static function getDB()
+	public static function getDB($write = true)
 	{
-		// build dsn
-		if(DB_PORT !== null) $dsn = DB_TYPE . ':host=' . DB_HOSTNAME . ';port=' . DB_PORT . ';dbname=' . DB_DATABASE;
-		else $dsn = DB_TYPE . ':host=' . DB_HOSTNAME . ';dbname=' . DB_DATABASE;
+		// redefine
+		$write = (bool) $write;
 
-		// get the spoon database class
-		$db = new PDO($dsn, DB_USERNAME, DB_PASSWORD);
+		// do we have a db-object ready?
+		if(!isset(self::$db))
+		{
+			// create instance
+			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 
-		// return
-		return $db;
+			// utf8 compliance & MySQL-timezone
+			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
+
+			// store
+			self::$db = $db;
+		}
+
+		// return db-object
+		return self::$db;
 	}
 
 	/**
@@ -273,7 +295,6 @@ class Knife
 	 */
 	private function startChecks()
 	{
-		$this->checkPaths();
 		$this->checkSettings();
 	}
 }

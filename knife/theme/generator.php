@@ -70,6 +70,8 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 
 			// execute
 			$stmt->execute();
+
+			// @todo generate page so the updatePagesTemplate doesn't flip
 		}
 		catch(Exception $e)
 		{
