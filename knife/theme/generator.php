@@ -49,37 +49,16 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 	 */
 	private function createDatabaseInfo()
 	{
-		// try to insert the data
-		try
-		{
-			// prepare
-			$stmt = Knife::getDB()->prepare('INSERT INTO pages_templates (theme, label, path, num_blocks, data) VALUES (:theme, :label, :path, :num_blocks, :data)');
-
-			// bind the parameters
-			$stmt->bindParam(':theme', $theme);
-			$stmt->bindParam(':label', $label);
-			$stmt->bindParam(':path', $path);
-			$stmt->bindParam(':num_blocks', $numblocks);
-			$stmt->bindParam(':data', $data);
-
-			$theme = $this->themeName;
-			$label = $this->dbLabel;
-			$numblocks = $this->dbNumBlocks;
-			$data = $this->dbTemplateData;
-			$path = $this->dbPath;
-
-			// execute
-			$stmt->execute();
-
-			// @todo generate page so the updatePagesTemplate doesn't flip
-		}
-		catch(Exception $e)
-		{
-			Knife::dump($e);
-		}
+		// build the parameters
+		$parameters = array();
+		$parameters['theme'] = $this->themeName;
+		$parameters['label'] = $this->dbLabel;
+		$parameters['path'] = $this->dbPath;
+		$parameters['num_blocks'] = $this->dbNumBlocks;
+		$parameters['data'] = $this->dbTemplateData;
 
 		// return
-		return true;
+		return (bool) Knife::getDB(true)->insert('pages_templates', $parameters);
 	}
 
 	/**
