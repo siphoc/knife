@@ -98,10 +98,11 @@ class Knife
 		unset($arguments[1]);
 
 		// rebase
-		array_multisort($arguments);
+		$passArgs = array();
+		foreach($arguments as $parameter) $passArgs[] = $parameter;
 
 		// execute the action
-		$tmpClass = new $callClass($arguments);
+		$tmpClass = new $callClass($passArgs);
 	}
 
 	/**
@@ -123,6 +124,7 @@ class Knife
 		$classes['knifebasegenerator'] = CLIPATH . 'knife/base/generator.php';
 		$classes['knifethemegenerator'] = CLIPATH . 'knife/theme/generator.php';
 		$classes['knifemodulegenerator'] = CLIPATH . 'knife/module/generator.php';
+		$classes['knifeactiongenerator'] = CLIPATH . 'knife/action/generator.php';
 		$classes['knifedatabase'] = CLIPATH . 'knife/database/database.php';
 
 		// is the class set?
@@ -190,7 +192,7 @@ class Knife
 		// read the version
 		$oVersion = fopen($basePath . 'VERSION.md', 'r');
 		$rVersion = fread($oVersion, filesize($basePath . 'VERSION.md'));
-		define('VERSION', $rVersion);
+		define('VERSION', trim($rVersion));
 		$rVersion = (int) str_replace('.', '', $rVersion);
 
 		// check if the frontend and backend exist (old fork doesn't have this)

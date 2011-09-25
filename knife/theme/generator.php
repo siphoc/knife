@@ -5,6 +5,7 @@
  * More information can be found on http://www.fork-cms.com
  *
  * @package		knife
+ * @subpackage	theme
  *
  * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
  * @since		0.1

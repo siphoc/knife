@@ -5,6 +5,7 @@
  * More information can be found on http://www.fork-cms.com
  *
  * @package		knife
+ * @subpackage	module
  *
  * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
  * @since		0.2
@@ -148,9 +149,9 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 	 * This action creates a module. This will not overwrite an existing module.
 	 *
 	 * The data needed for this action: 'modulename'
-	 * The optional data for this action: -f 'frontendaction1:frontendaction2' -b 'backendaction1:backendaction2'
+	 * The optional data for this action: f=frontendaction1,frontendaction2 b=backendaction1,backendaction2
 	 *
-	 * Example: ft module blog -f 'detail:category' -b 'add:edit'
+	 * Example: ft module blog f=detail,category b=add,edit
 	 * This will create the module 'blog' with the frontendactions detail and category, and the backend actions add and edit.
 	 */
 	protected function createModule()
@@ -166,6 +167,46 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 
 		// create the files
 		$this->createFiles();
+
+		// there are more arguments given
+		if(isset($this->arg[1]))
+		{
+			// define the module
+			define('MODULE', $this->moduleName);
+
+			// get the position and actions
+			$explode = explode('=', $this->arg[1]);
+
+			if(!empty($explode))
+			{
+				// frontend action
+				if(strtolower($explode[0]) == 'f' || strtolower($explode[0]) == 'frontend')
+				{
+					// data
+					$data = explode(',', $explode[1]);
+					$type = 'frontend';
+				}
+
+				// backend action
+				if(strtolower($explode[0]) == 'b' || strtolower($explode[0]) == 'backend')
+				{
+					// data
+					$data = explode(',', $explode[1]);
+					$type = 'backend';
+				}
+
+				foreach($data as $action)
+				{
+					// create action data
+					$actionData = array();
+					array_push($actionData, $type);
+					array_push($actionData, $this->arg[0]);
+					array_push($actionData, $action);
+
+					$action = new KnifeActionGenerator($actionData);
+				}
+			}
+		}
 
 		// @todo action stuff
 

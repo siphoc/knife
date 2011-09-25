@@ -26,17 +26,31 @@ class KnifeBaseGenerator
 	protected $options;
 
 	/**
+	 * The location
+	 *
+	 * @var	string
+	 */
+	protected $location;
+
+	/**
+	 * The module
+	 *
+	 * @var	string
+	 */
+	protected $module;
+
+	/**
 	 * Constructor
 	 *
 	 * @param array $arguments
 	 */
-	public function __construct(array $arguments)
+	public function __construct(array $arguments, array $options = array())
 	{
 		// set the arguments
 		$this->arg = $arguments;
 
 		// the options
-		$this->options = getopt('f:b:', array('frontend:', 'backend:'));
+		$this->options = $options;
 
 		// initiate
 		$this->init();
@@ -148,6 +162,26 @@ class KnifeBaseGenerator
 	}
 
 	/**
+	 * Gets the location
+	 *
+	 * @return	string
+	 */
+	protected function getLocation()
+	{
+		return $this->location;
+	}
+
+	/**
+	 * Gets the module
+	 *
+	 * @return	string
+	 */
+	protected function getModule()
+	{
+		return $this->module;
+	}
+
+	/**
 	 * The init function, this sets the needed variable names
 	 * and calls the required actions.
 	 */
@@ -235,6 +269,36 @@ class KnifeBaseGenerator
 
 		// return
 		return $rFile;
+	}
+
+	/**
+	 * Sets the location
+	 *
+	 * @param	string $location		The location.
+	 */
+	protected function setLocation($location)
+	{
+		// set short terms
+		if($location == 'f') $location = 'frontend';
+		if($location == 'b') $location = 'backend';
+
+		// set the location
+		if($location == 'frontend' || $location == 'backend') $this->location = (string) strtolower($location);
+		// not a valid location
+		else throw new Exception('This is not a valid location');
+	}
+
+	/**
+	 * Sets the module
+	 *
+	 * @param	string $module		The module.
+	 */
+	protected function setModule($module)
+	{
+		// module exists?
+		if(is_dir(BASEPATH . 'default_www/' . $this->location . '/modules/' . $module)) $this->module = (string) $this->buildName($module);
+		// doesnt exist
+		else throw new Exception('The given module does not exist.');
 	}
 
 	/**
