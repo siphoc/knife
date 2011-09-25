@@ -158,16 +158,18 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		// module already exists
 		if(is_dir(FRONTENDPATH . 'modules/' . strtolower($this->moduleName)) || is_dir(BACKENDPATH . 'modules/' . strtolower($this->moduleName))) return false;
 
+		// insert into the database
+		if(!$this->databaseInfo()) return false;
+
 		// create the directories
 		$this->createDirs();
 
 		// create the files
 		$this->createFiles();
 
-		// insert into the database
-		if(!$this->databaseInfo()) return false;
 		// @todo action stuff
 
+		// return
 		return true;
 	}
 
@@ -176,7 +178,40 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 	 */
 	private function databaseInfo()
 	{
+		// database instance
+		$db = Knife::getDB(true);
 
+		try
+		{
+			/*
+			 * Insert module
+			 */
+			$parameters = array();
+			$parameters['name'] = strtolower($this->moduleName);
+			$parameters['description'] = 'The ' . strtolower($this->moduleName) . ' module';
+			$db->insert('modules', $parameters);
+
+			// group module rights
+			$parameters = array();
+			$parameters['group_id'] = 1;
+			$parameters['module'] = strtolower($this->moduleName);
+			$db->insert('groups_rights_modules', $parameters);
+
+			/*
+			 * Insert index action
+			 */
+			$parameters['action'] = 'index';
+			$parameters['level'] = 7;
+			$db->insert('groups_rights_actions', $parameters);
+		}
+		// houston, we have a problem.
+		catch(Exception $e)
+		{
+			throw new Exception('Something went wrong while inserting the data into the database.');
+		}
+
+		// return
+		return true;
 	}
 
 	/**
