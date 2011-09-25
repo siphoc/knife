@@ -1,6 +1,7 @@
 <?php
+
 /**
- * This source file is a part of Fork CMS.
+ * This source file is a part of the Knife CLI Tool for Fork CMS.
  * More information can be found on http://www.fork-cms.com
  *
  * @package		knife
@@ -8,7 +9,6 @@
  * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
  * @since		0.1
  */
-
 class KnifeBaseGenerator
 {
 	/**
@@ -19,6 +19,13 @@ class KnifeBaseGenerator
 	protected $arg;
 
 	/**
+	 * Options
+	 *
+	 * @var	array
+	 */
+	protected $options;
+
+	/**
 	 * Constructor
 	 *
 	 * @param array $arguments
@@ -27,6 +34,9 @@ class KnifeBaseGenerator
 	{
 		// set the arguments
 		$this->arg = $arguments;
+
+		// the options
+		$this->options = getopt('f:b:', array('frontend:', 'backend:'));
 
 		// initiate
 		$this->init();
@@ -94,10 +104,7 @@ class KnifeBaseGenerator
 		$newName = '';
 
 		// loop trough the parts to ucfirst it
-		foreach($parts as $part)
-		{
-			$newName.= ucfirst($part);
-		}
+		foreach($parts as $part) $newName.= ucfirst($part);
 
 		// return
 		return $newName;
@@ -204,6 +211,30 @@ class KnifeBaseGenerator
 
 		// close the file
 		fclose($oFile);
+	}
+
+	/**
+	 * Reads the content of a file
+	 *
+	 * @return	string
+	 * @param	string $file		The file path.
+	 */
+	protected function readFile($file)
+	{
+		// file exists?
+		if(!file_exists($file)) throw new Exception('The given file(' . $file .') does not exist.');
+
+		// open the file
+		$oFile = fopen($file, 'r');
+
+		// read the file
+		$rFile = fread($oFile, filesize($file));
+
+		// close the file
+		fclose($oFile);
+
+		// return
+		return $rFile;
 	}
 
 	/**

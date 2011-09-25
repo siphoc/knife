@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>subname</name>
+	<requirements>
+		<minimum_version>versionname</minimum_version>
+	</requirements>
+	<info lang="en">
+		<name>classname</name>
+		<description><![CDATA[]]></description>
+	</info>
+	<events>
+		<event application="backend" name=""><![CDATA[]]></event>
+	</events>
+</module>

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * This source file is a part of Fork CMS.
+ * This source file is a part of the Knife CLI Tool for Fork CMS.
  * More information can be found on http://www.fork-cms.com
  *
  * @package		knife
@@ -96,18 +97,11 @@ class Knife
 		unset($arguments[0]);
 		unset($arguments[1]);
 
-
-		// the arguments to pass
-		$argPass = array();
-
 		// rebase
-		foreach($arguments as $argument)
-		{
-			$argPass[] = $argument;
-		}
+		array_multisort($arguments);
 
 		// execute the action
-		$tmpClass = new $callClass($argPass);
+		$tmpClass = new $callClass($arguments);
 	}
 
 	/**
@@ -128,6 +122,7 @@ class Knife
 		$classes = array();
 		$classes['knifebasegenerator'] = CLIPATH . 'knife/base/generator.php';
 		$classes['knifethemegenerator'] = CLIPATH . 'knife/theme/generator.php';
+		$classes['knifemodulegenerator'] = CLIPATH . 'knife/module/generator.php';
 		$classes['knifedatabase'] = CLIPATH . 'knife/database/database.php';
 
 		// is the class set?
@@ -195,6 +190,7 @@ class Knife
 		// read the version
 		$oVersion = fopen($basePath . 'VERSION.md', 'r');
 		$rVersion = fread($oVersion, filesize($basePath . 'VERSION.md'));
+		define('VERSION', $rVersion);
 		$rVersion = (int) str_replace('.', '', $rVersion);
 
 		// check if the frontend and backend exist (old fork doesn't have this)
@@ -218,9 +214,18 @@ class Knife
 		// settings path
 		$settingsPath = CLIPATH . '.ftconfig';
 
+		// does the file exist?
+		if(!file_exists($settingsPath)) throw new Exception('You have no settings file. Please change your settings. This will automaticly make the file.');
+
 		// opens the file (creates one if it doesn't exists)
-		$oFile = fopen($settingsPath, 'w');
-		// @todo check for author
+		$oFile = fopen($settingsPath, 'r');
+		$rFile = fread($oFile, filesize($settingsPath));
+
+		// author
+		$author = preg_match('/#author=(.*);/', $rFile, $authorMatch);
+		define('AUTHOR', $authorMatch[1]);
+
+		// close the file
 		fclose($oFile);
 	}
 

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * This source file is a part of Fork CMS.
+ * This source file is a part of the Knife CLI Tool for Fork CMS.
  * More information can be found on http://www.fork-cms.com
  *
  * @package		knife
@@ -8,7 +9,6 @@
  * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
  * @since		0.1
  */
-
 class KnifeThemeGenerator extends KnifeBaseGenerator
 {
 	/**
@@ -30,10 +30,12 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 
 	/**
 	 * This executes the generator
-	 *
 	 */
 	protected function init()
 	{
+		// name given?
+		if(!isset($this->arg[0])) throw new Exception('Please specify a theme name');
+
 		// initiate name
 		$this->themeName = $this->cleanString($this->arg[0]);
 

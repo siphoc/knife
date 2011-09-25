@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Class to test the Database functions
  *
  * The database will be handled by Knife in a later stage. Currently, we need the whole knife library
  * for this, this does not work in knife. Due the autoloaders.
  */
-
 require_once 'knife/database/database.php';
 
 class DatabaseTest extends PHPUnit_Framework_TestCase
