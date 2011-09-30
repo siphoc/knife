@@ -19,7 +19,7 @@ class BackendclassnameModel
 	 */
 	public static function delete($id)
 	{
-
+		BackendModel::getDB(true)->delete('subname', 'id = ?', (int) $id);
 	}
 
 
