@@ -123,7 +123,7 @@ class BackendclassnameModel
 	 */
 	public static function insert(array $data)
 	{
-		return (int) BackendModel::getDB(true)->insert('modulename', $data);
+		return (int) BackendModel::getDB(true)->insert('subname', $data);
 	}
 
 
@@ -140,7 +140,7 @@ class BackendclassnameModel
 		unset($data['id']);
 
 		// update
-		BackendModel::getDB(true)->insert('modulename', $data, 'id = ?', (int) $itemId);
+		BackendModel::getDB(true)->insert('subname', $data, 'id = ?', (int) $itemId);
 	}
 }
 
