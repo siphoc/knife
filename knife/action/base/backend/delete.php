@@ -22,16 +22,16 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if($this->id !== null && BackendmodulenameModel::exists($this->id))
+		if($this->id !== null && BackendsubnameModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
 			// get data
-			$this->record = (array) BackendBlogModel::get($this->id);
+			$this->record = (array) BackendsubnameModel::get($this->id);
 
 			// delete item
-			BackendBlogModel::delete($this->id);
+			BackendsubnameModel::delete($this->id);
 
 			// trigger event
 			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
@@ -39,11 +39,8 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 			// delete search indexes
 			if(is_callable(array('BackendSearchModel', 'removeIndex'))) BackendSearchModel::removeIndex($this->getModule(), $this->id);
 
-			// build redirect URL
-			$redirectUrl = BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']);
-
 			// item was deleted, so redirect
-			$this->redirect($redirectUrl);
+			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
 		}
 
 		// something went wrong
