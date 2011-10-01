@@ -273,4 +273,84 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		// return
 		return $fileInput;
 	}
+
+	/**
+	 * Shows info about the modules.
+	 */
+	public function showInfo()
+	{
+		// get the database instance
+		$db = Knife::getDB();
+
+		// all the modules
+		$modules = array();
+
+		// get all module directories
+		$backendDirs = scandir(BACKENDPATH . 'modules/');
+		$frontendDirs = scandir(FRONTENDPATH . 'modules/');
+		$allDirs = array_merge($backendDirs, $frontendDirs);
+
+		// loop the backend dirs
+		foreach($allDirs as $key => $dir)
+		{
+			// if it is a file
+			if(!is_dir(BACKENDPATH . 'modules/' . $dir) || $dir === '.' || $dir === '..' || array_key_exists($dir, $modules)) continue;
+
+			// check if the module is active
+			$active = $db->getVar('SELECT m.active
+									FROM modules AS m
+									WHERE m.name = ?',
+									(string) $dir);
+
+			// set the message if it is not installed
+			$active = (empty($active)) ? 'N' : $active;
+
+			// @todo make check if tables are set
+			// @todo make check if locale is installed
+			// @todo make check for the files
+
+			// put it into the modules
+			$modules[$dir] = $active;
+		}
+
+		// header
+		$output = "--------------------------\n";
+		$output.= "|      MODULE     |ACTIVE|\n";
+		$output.= "--------------------------\n";
+
+		// go trough the modules
+		foreach($modules as $module => $active)
+		{
+			// get the length of the modulename
+			$strLength = 17 - strlen($module);
+			$strFirst = ceil($strLength / 2);
+
+			$output.= '|';
+
+			// input
+			for($i = 0; $i < $strFirst; $i++) $output.= ' ';
+
+			// add the module
+			$output.= ($active == 'N') ? "\033[31m" : "";
+			$output.= strtoupper($module);
+			$output.= "\033[37m";
+
+			// add more space
+			for($i = 0; $i < ($strLength - $strFirst); $i++) $output.= ' ';
+
+			// add state
+			$output.= "|  ";
+			$output.= ($active == 'N') ? "\033[31m" : "";
+			$output.= $active;
+			$output.= "\033[37m";
+			$output.= "   |\n";
+		}
+
+		// add the end
+		$output.= "--------------------------\n";
+
+		// print it
+		echo $output;
+		exit;
+	}
 }
