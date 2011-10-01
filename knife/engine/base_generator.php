@@ -44,7 +44,7 @@ class KnifeBaseGenerator
 	 *
 	 * @param array $arguments
 	 */
-	public function __construct(array $arguments, array $options = array())
+	public function __construct(array $arguments = array(), array $options = array())
 	{
 		// set the arguments
 		$this->arg = $arguments;
@@ -53,7 +53,7 @@ class KnifeBaseGenerator
 		$this->options = $options;
 
 		// initiate
-		$this->init();
+		if(!empty($arguments)) $this->init();
 	}
 
 	/**
