@@ -24,15 +24,49 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 */
 	protected function init()
 	{
-		// set variables
-		$this->setLocation($this->arg[0]);
-		$this->setModule($this->arg[1]);
-		$this->actionName = $this->buildName($this->arg[2]);
-		$this->fileName = $this->buildFileName($this->arg[2]);
-		$this->templateName = $this->buildFileName($this->arg[2], 'tpl');
 
-		// build the action
-		$this->buildAction();
+		// name given?
+		if(!isset($this->arg[2])) throw new Exception('Please provide an action name.');
+		// set variables
+		$this->setLocation($this->arg[1]);
+		$this->setModule($this->arg[0]);
+
+		$actionNames = str_replace(' ', '', $this->arg[2]);
+		$actionNames = explode(',', $actionNames);
+
+		foreach($actionNames as $action)
+		{
+			// build action variables
+			$this->actionName = $this->buildName($action);
+			$this->fileName = $this->buildFileName($action);
+			$this->templateName = $this->buildFileName($action, 'tpl');
+
+			// build the action
+			$this->buildAction();
+		}
+
+		if(!isset($this->arg[3])) return;
+
+		// do we have a second action parameter?
+		if(isset($this->arg[3]) && !isset($this->arg[4])) throw new Exception('Please provide an action name.');
+
+		// set variables
+		$this->setLocation($this->arg[3]);
+		$this->setModule($this->arg[0]);
+
+		$actionNames = str_replace(' ', '', $this->arg[4]);
+		$actionNames = explode(',', $actionNames);
+
+		foreach($actionNames as $action)
+		{
+			// build action variables
+			$this->actionName = $this->buildName($action);
+			$this->fileName = $this->buildFileName($action);
+			$this->templateName = $this->buildFileName($action, 'tpl');
+
+			// build the action
+			$this->buildAction();
+		}
 	}
 
 	/**
@@ -63,23 +97,25 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				$tmpCheck = strpos($this->fileName, $action);
 				if($tmpCheck !== false) $baseAction = $action;
 			}
-
-			// base file
-			$baseFile = CLIPATH . 'knife/action/base/' . $this->getLocation() . '/' . $baseAction;
-
-			$actionFile = $this->replaceFileInfo($baseFile . '.php');
-			$this->makeFile($actionPath, $actionFile);
-
-			if($baseAction != 'delete')
-			{
-				$actionTpl = $this->replaceFileInfo($baseFile . '.tpl');
-				$this->makeFile($templatePath, $actionTpl);
-			}
 		}
 		// frontend aciton
 		else
 		{
+			$baseAction = 'index';
+		}
 
+		// base file
+		$baseFile = CLIPATH . 'knife/action/base/' . $this->getLocation() . '/' . $baseAction;
+
+		// the action file
+		$actionFile = $this->replaceFileInfo($baseFile . '.php');
+		$this->makeFile($actionPath, $actionFile);
+
+		// create template file, if we don't have a delete action
+		if($baseAction != 'delete')
+		{
+			$actionTpl = $this->replaceFileInfo($baseFile . '.tpl');
+			$this->makeFile($templatePath, $actionTpl);
 		}
 	}
 
