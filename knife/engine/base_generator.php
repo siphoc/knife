@@ -311,7 +311,7 @@ class KnifeBaseGenerator
 	protected function successHandler($message)
 	{
 		echo "---------------------------------------------YAR MATEY---------------------------------------------\n";
-		echo $message;
+		echo "\033[32m" . $message . "\033[37m";
 		echo "\n";
 		echo "---------------------------------------------------------------------------------------------------\n";
 	}
