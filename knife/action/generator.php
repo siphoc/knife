@@ -24,7 +24,6 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 */
 	protected function init()
 	{
-
 		// name given?
 		if(!isset($this->arg[2])) throw new Exception('Please provide an action name.');
 		// set variables
