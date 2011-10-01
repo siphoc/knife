@@ -285,7 +285,7 @@ class KnifeBaseGenerator
 		// set the location
 		if($location == 'frontend' || $location == 'backend') $this->location = (string) strtolower($location);
 		// not a valid location
-		else throw new Exception('This is not a valid location');
+		else throw new Exception('This(' . $location . ') is not a valid location');
 	}
 
 	/**
@@ -298,7 +298,7 @@ class KnifeBaseGenerator
 		// module exists?
 		if(is_dir(BASEPATH . 'default_www/' . $this->location . '/modules/' . $module)) $this->module = (string) $this->buildName($module);
 		// doesnt exist
-		else throw new Exception('The given module does not exist.');
+		else throw new Exception('The given module(' . $module . ') does not exist.');
 	}
 
 	/**
