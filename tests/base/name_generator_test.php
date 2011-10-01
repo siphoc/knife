@@ -3,7 +3,7 @@
 /**
  * Class to test the name generator
  */
-require_once 'knife/base/generator.php';
+require_once 'knife/engine/base_generator.php';
 
 class BaseGeneratorTest extends PHPUnit_Framework_TestCase
 {
