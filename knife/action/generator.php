@@ -17,7 +17,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 *
 	 * @var	string
 	 */
-	protected $actionName, $fileName, $templateName;
+	protected $actionName, $fileName, $templateName, $inputName;
 
 	/**
 	 * Execute the action
@@ -37,6 +37,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		foreach($actionNames as $action)
 		{
 			// build action variables
+			$this->inputName = $action;
 			$this->actionName = $this->buildName($action);
 			$this->fileName = $this->buildFileName($action);
 			$this->templateName = $this->buildFileName($action, 'tpl');
@@ -60,6 +61,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		foreach($actionNames as $action)
 		{
 			// build action variables
+			$this->inputName = $action;
 			$this->actionName = $this->buildName($action);
 			$this->fileName = $this->buildFileName($action);
 			$this->templateName = $this->buildFileName($action, 'tpl');
@@ -81,7 +83,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		$templatePath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . strtolower($this->getModule()) . '/layout/templates/' . $this->templateName;
 
 		// check if the action doesn't exist yet
-		if(file_exists($actionPath)) throw new Exception('The action already exists');
+		if(file_exists($actionPath)) throw new Exception('The action(' . $this->getLocation() . '/' .  strtolower($this->getModule()) . '/' . strtolower($this->actionName) . ') already exists.');
 
 		// backend action
 		if($this->getLocation() == 'backend')
@@ -97,6 +99,9 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				$tmpCheck = strpos($this->fileName, $action);
 				if($tmpCheck !== false) $baseAction = $action;
 			}
+
+			// insert info in the database to grant access
+			if(!$this->databaseInfo()) return;
 		}
 		// frontend aciton
 		else
@@ -117,6 +122,37 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 			$actionTpl = $this->replaceFileInfo($baseFile . '.tpl');
 			$this->makeFile($templatePath, $actionTpl);
 		}
+	}
+
+	/**
+	 * Inserts a backend action into the database.
+	 *
+	 * @return	void
+	 */
+	private function databaseInfo()
+	{
+		// database instance
+		$db = Knife::getDB(true);
+
+		try
+		{
+			// set the parameters
+			$parameters['group_id'] = 1;
+			$parameters['module'] = strtolower($this->getModule());
+			$parameters['action'] = strtolower($this->buildFileName($this->inputName, ''));
+			$parameters['level'] = 7;
+
+			// insert
+			$db->insert('groups_rights_actions', $parameters);
+		}
+		// houston, we have a problem.
+		catch(Exception $e)
+		{
+			throw new Exception('Something went wrong while inserting the data into the database.');
+		}
+
+		// return
+		return true;
 	}
 
 	/**

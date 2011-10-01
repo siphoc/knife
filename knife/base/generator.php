@@ -91,7 +91,8 @@ class KnifeBaseGenerator
 		$name = preg_replace("/[^a-z_\s]/", "", $name);
 		$ext = preg_replace("/[^a-z\s]/", "", $ext);
 
-		$newName = $name . '.' . $ext;
+		$newName = $name;
+		$newName.= ($ext != '') ? '.' . $ext : '';
 
 		// return
 		return $newName;
