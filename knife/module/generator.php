@@ -8,7 +8,7 @@
  * @subpackage	module
  *
  * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
- * @since		0.2
+ * @since		0.4
  */
 class KnifeModuleGenerator extends KnifeBaseGenerator
 {
@@ -43,6 +43,47 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		// error handling
 		if(!$return) $this->errorHandler(__CLASS__, 'createModule');
 		else $this->successHandler('The module "' . ucfirst($this->moduleName) . '" is created.');
+	}
+
+	/**
+	 * Creates the actions
+	 *
+	 * @param	string $actions		Thea ctions to create.
+	 */
+	private function createActions($actions)
+	{
+		// get the position and actions
+		$explode = explode('=', $actions);
+
+		if(!empty($explode))
+		{
+			// frontend action
+			if(strtolower($explode[0]) == 'f' || strtolower($explode[0]) == 'frontend')
+			{
+				// data
+				$data = explode(',', $explode[1]);
+				$type = 'frontend';
+			}
+
+			// backend action
+			if(strtolower($explode[0]) == 'b' || strtolower($explode[0]) == 'backend')
+			{
+				// data
+				$data = explode(',', $explode[1]);
+				$type = 'backend';
+			}
+
+			foreach($data as $action)
+			{
+				// create action data
+				$actionData = array();
+				array_push($actionData, $this->arg[0]);
+				array_push($actionData, $type);
+				array_push($actionData, $action);
+
+				$action = new KnifeActionGenerator($actionData);
+			}
+		}
 	}
 
 	/**
@@ -168,47 +209,12 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		// create the files
 		$this->createFiles();
 
+		// define the module
+		define('MODULE', $this->moduleName);
+
 		// there are more arguments given
-		if(isset($this->arg[1]))
-		{
-			// define the module
-			define('MODULE', $this->moduleName);
-
-			// get the position and actions
-			$explode = explode('=', $this->arg[1]);
-
-			if(!empty($explode))
-			{
-				// frontend action
-				if(strtolower($explode[0]) == 'f' || strtolower($explode[0]) == 'frontend')
-				{
-					// data
-					$data = explode(',', $explode[1]);
-					$type = 'frontend';
-				}
-
-				// backend action
-				if(strtolower($explode[0]) == 'b' || strtolower($explode[0]) == 'backend')
-				{
-					// data
-					$data = explode(',', $explode[1]);
-					$type = 'backend';
-				}
-
-				foreach($data as $action)
-				{
-					// create action data
-					$actionData = array();
-					array_push($actionData, $type);
-					array_push($actionData, $this->arg[0]);
-					array_push($actionData, $action);
-
-					$action = new KnifeActionGenerator($actionData);
-				}
-			}
-		}
-
-		// @todo action stuff
+		if(isset($this->arg[1])) $this->createActions($this->arg[1]);
+		if(isset($this->arg[2])) $this->createActions($this->arg[2]);
 
 		// return
 		return true;
