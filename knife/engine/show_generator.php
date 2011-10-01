@@ -19,13 +19,48 @@ class KnifeShowGenerator extends KnifeBaseGenerator
 		// the item to show
 		$execution = $this->arg[0];
 
-		if(class_exists('Knife' . ucfirst($execution) . 'Generator'))
+		try
 		{
-			Knife::dump('true');
+			// the class to search in
+			$class = 'Knife' . ucfirst($execution) . 'Generator';
+
+			// show info function callable?
+			if(is_callable(array($class, 'showInfo')))
+			{
+				// call function
+				$function = 'showInfo';
+
+				// start new class
+				$class = new $class();
+				$class->$function();
+			}
 		}
-		else
+		catch(Exception $e)
 		{
-			Knife::dump('false');
+			if(is_callable(array(__CLASS__, 'show' . ucfirst($execution))))
+			{
+				$function = 'show' . ucfirst($execution);
+				$this->$function();
+			}
+			else throw new Exception('Invalid parameter');
 		}
+	}
+
+	/**
+	 * Shows the version of the Fork project
+	 */
+	private function showVersion()
+	{
+		Knife::dump(VERSION);
+	}
+
+	/**
+	 * Shows th modules
+	 */
+	private function showModules()
+	{
+		// start modules instance
+		$modules = new KnifeModuleGenerator();
+		$modules->showInfo();
 	}
 }
