@@ -121,11 +121,12 @@ class Knife
 		 * @todo use namespaces (ask Davy)
 		 */
 		$classes = array();
-		$classes['knifebasegenerator'] = CLIPATH . 'knife/base/generator.php';
+		$classes['knifebasegenerator'] = CLIPATH . 'knife/engine/base_generator.php';
 		$classes['knifethemegenerator'] = CLIPATH . 'knife/theme/generator.php';
 		$classes['knifemodulegenerator'] = CLIPATH . 'knife/module/generator.php';
 		$classes['knifeactiongenerator'] = CLIPATH . 'knife/action/generator.php';
 		$classes['knifedatabase'] = CLIPATH . 'knife/database/database.php';
+		$classes['knifeshowgenerator'] = CLIPATH . 'knife/engine/show_generator.php';
 
 		// is the class set?
 		if(!array_key_exists($tmpClass, $classes))
