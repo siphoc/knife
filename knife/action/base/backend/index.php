@@ -39,7 +39,7 @@ class BackendclassnameIndex extends BackendBaseActionIndex
 	 */
 	private function loadDataGrid()
 	{
-
+		$this->dataGrid = new BackendDataGridDB(QUERY, PARAMETERS);
 	}
 
 
