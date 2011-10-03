@@ -24,12 +24,17 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 */
 	protected function init()
 	{
+		// @todo make error for no input
+		// @todo make success message
+
 		// name given?
 		if(!isset($this->arg[2])) throw new Exception('Please provide an action name.');
+
 		// set variables
 		$this->setLocation($this->arg[1]);
 		$this->setModule($this->arg[0]);
 
+		// variables
 		$actionNames = str_replace(' ', '', $this->arg[2]);
 		$actionNames = explode(',', $actionNames);
 

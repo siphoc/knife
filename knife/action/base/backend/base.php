@@ -37,8 +37,7 @@ class Backendmodulenameactionname extends BackendBaseAction
 	 */
 	protected function parse()
 	{
-		// call parent
-		parent::parse();
+
 	}
 }
 
