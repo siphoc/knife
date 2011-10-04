@@ -89,6 +89,9 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 		// call parent
 		parent::parse();
 
+		// parse the form
+		$this->frm->parse($this->tpl);
+
 		// get url
 		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
 		$url404 = BackendModel::getURL(404);
