@@ -132,7 +132,7 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 				BackendmodulenameModel::update($item);
 
 				// everything is saved, so redirect to the index
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=added');
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited');
 			}
 		}
 	}
