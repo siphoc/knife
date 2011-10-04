@@ -129,7 +129,7 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 				$item['id'] = $this->id;
 				$item['meta_id'] = $this->meta->save(true);
 				$item['language'] = BL::getWorkingLanguage();
-				$item['created_on'] = BackendModel::getUTCDate();
+				$item['edited_on'] = BackendModel::getUTCDate();
 				$item['visible'] = $this->frm->getField('visible')->getValue();
 
 				// update
