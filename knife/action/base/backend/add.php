@@ -46,12 +46,12 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 
 		// set hidden values
-		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
-		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
+		$rbtVisibleValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'N');
+		$rbtVisibleValues[] = array('label' => BL::lbl('Published'), 'value' => 'Y');
 
 		// create elements
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
-		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
+		$this->frm->addRadiobutton('hidden', $rbtVisibleValues, 'N');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
@@ -105,6 +105,7 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 				$item['meta_id'] = $this->meta->save();
 				$item['language'] = BL::getWorkingLanguage();
 				$item['created_on'] = BackendModel::getUTCDate();
+				$item['visible'] = $this->frm->getField('visible')->getValue();
 
 				// insert
 				$item['id'] = BackendmodulenameModel::insert($item);

@@ -5,7 +5,7 @@
 	<h2>{$lblmodulename|ucfirst}: {$lblEdit}</h2>
 </div>
 
-{form:add}
+{form:edit}
 	<label for="title">{$lblTitle|ucfirst}</label>
 	{$txtTitle} {$txtTitleError}
 
@@ -71,7 +71,7 @@
 			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblPublish|ucfirst}" />
 		</div>
 	</div>
-{/form:add}
+{/form:edit}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
