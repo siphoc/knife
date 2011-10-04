@@ -50,7 +50,7 @@ class BackendclassnameIndex extends BackendBaseActionIndex
 	 */
 	protected function parse()
 	{
-		// parse the datagrid for the drafts
+		// parse the dataGrid
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }

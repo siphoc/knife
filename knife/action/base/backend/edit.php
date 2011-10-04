@@ -11,7 +11,6 @@
  */
 class Backendmodulenameactionname extends BackendBaseActionEdit
 {
-
 	/**
 	 * Execute the action
 	 *
@@ -125,7 +124,7 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 			{
 				// get the values
 				$item['id'] = $this->id;
-				$item['meta_id'] = $this->meta->save();
+				$item['meta_id'] = $this->meta->save(true);
 				$item['language'] = BL::getWorkingLanguage();
 				$item['created_on'] = BackendModel::getUTCDate();
 

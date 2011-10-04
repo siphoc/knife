@@ -11,7 +11,6 @@
  */
 class Backendmodulenameactionname extends BackendBaseActionAdd
 {
-
 	/**
 	 * Execute the action
 	 *

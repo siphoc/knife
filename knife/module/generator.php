@@ -300,7 +300,8 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		foreach($allDirs as $key => $dir)
 		{
 			// if it is a file
-			if(!is_dir(BACKENDPATH . 'modules/' . $dir) || $dir === '.' || $dir === '..' || array_key_exists($dir, $modules)) continue;
+			// @todo get good fix for non module directories
+			if(!is_dir(BACKENDPATH . 'modules/' . $dir) || $dir === '.' || $dir === '..' || $dir === '.svn' || array_key_exists($dir, $modules)) continue;
 
 			// check if the module is active
 			$active = $db->getVar('SELECT m.active
