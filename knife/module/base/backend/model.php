@@ -140,7 +140,7 @@ class BackendclassnameModel
 		unset($data['id']);
 
 		// update
-		BackendModel::getDB(true)->insert('subname', $data, 'id = ?', (int) $itemId);
+		BackendModel::getDB(true)->update('subname', $data, 'id = ?', (int) $itemId);
 	}
 }
 
