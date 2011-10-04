@@ -92,6 +92,9 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 		// parse the form
 		$this->frm->parse($this->tpl);
 
+		// assign the item
+		$this->tpl->assign('item', $this->record);
+
 		// get url
 		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
 		$url404 = BackendModel::getURL(404);
