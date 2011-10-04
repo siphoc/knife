@@ -51,7 +51,7 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 
 		// create elements
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
-		$this->frm->addRadiobutton('hidden', $rbtVisibleValues, 'N');
+		$this->frm->addRadiobutton('visible', $rbtVisibleValues, 'N');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);

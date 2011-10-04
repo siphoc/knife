@@ -72,7 +72,7 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
-		$this->frm->addRadiobutton('hidden', $rbtVisibleValues, $this->record['hidden']);
+		$this->frm->addRadiobutton('visible', $rbtVisibleValues, $this->record['hidden']);
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
