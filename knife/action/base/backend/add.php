@@ -102,6 +102,7 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// get the values
+				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['meta_id'] = $this->meta->save();
 				$item['language'] = BL::getWorkingLanguage();
 				$item['created_on'] = BackendModel::getUTCDate();
