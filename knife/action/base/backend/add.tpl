@@ -47,12 +47,12 @@
 
 							<div class="options">
 								<ul class="inputList">
-									{iteration:hidden}
+									{iteration:visible}
 									<li>
-										{$hidden.rbtHidden}
-										<label for="{$hidden.id}">{$hidden.label}</label>
+										{$visible.rbtVisible}
+										<label for="{$visible.id}">{$visible.label}</label>
 									</li>
-									{/iteration:hidden}
+									{/iteration:visible}
 								</ul>
 							</div>
 						</div>
