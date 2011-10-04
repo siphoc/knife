@@ -49,7 +49,7 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// item does not exist
-		if(BackendmodulenameModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		if(!BackendmodulenameModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 
 		// the data
 		$this->record = BackendmodulenameModel::get($this->id);

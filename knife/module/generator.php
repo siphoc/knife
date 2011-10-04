@@ -244,6 +244,8 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 			$parameters['module'] = strtolower($this->moduleName);
 			$db->insert('groups_rights_modules', $parameters);
 
+			// @todo create block
+
 			/*
 			 * Insert index action
 			 */
