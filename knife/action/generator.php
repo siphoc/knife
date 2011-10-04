@@ -126,6 +126,9 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 			$actionTpl = $this->replaceFileInfo($baseFile . '.tpl');
 			$this->makeFile($templatePath, $actionTpl);
 		}
+
+		// @todo if it is a form action, build form via database
+		// @todo if it is an edit action, build form via add action(if exists)
 	}
 
 	/**
