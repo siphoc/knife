@@ -123,6 +123,10 @@ class BackendclassnameModel
 	 */
 	public static function insert(array $data)
 	{
+		// set the created on date
+		$data['created_on'] = BackendModel::getUTCDate();
+
+		// insert
 		return (int) BackendModel::getDB(true)->insert('subname', $data);
 	}
 
@@ -136,6 +140,9 @@ class BackendclassnameModel
 	 */
 	public static function update(array $data, $itemId)
 	{
+		// set the edited on date
+		$data['edited_on'] = BackendModel::getUTCDate();
+
 		// update
 		BackendModel::getDB(true)->update('subname', $data, 'id = ?', (int) $itemId);
 	}

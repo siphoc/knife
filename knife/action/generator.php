@@ -27,6 +27,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		// @todo make error for no input
 		// @todo make success message
 		// @todo clean this shit up
+		// @todo Implement new style rules in the actions/modules
 
 		// name given?
 		if(!isset($this->arg[2])) throw new Exception('Please provide an action name.');
