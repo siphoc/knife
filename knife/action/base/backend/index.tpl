@@ -3,7 +3,7 @@
 
 <div class="pageTitle">
 	<h2>
-		{$lblclassname|ucfirst}:
+		{$lblclassname|ucfirst}
 	</h2>
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
