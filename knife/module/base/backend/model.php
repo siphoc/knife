@@ -132,13 +132,10 @@ class BackendclassnameModel
 	 *
 	 * @return	void
 	 * @param	array $data		The data to update.
+	 * @param	int $itemId		The item id to update.
 	 */
-	public static function update(array $data)
+	public static function update(array $data, $itemId)
 	{
-		// the item id
-		$itemId = $data['id'];
-		unset($data['id']);
-
 		// update
 		BackendModel::getDB(true)->update('subname', $data, 'id = ?', (int) $itemId);
 	}
