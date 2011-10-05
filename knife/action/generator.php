@@ -26,6 +26,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	{
 		// @todo make error for no input
 		// @todo make success message
+		// @todo clean this shit up
 
 		// name given?
 		if(!isset($this->arg[2])) throw new Exception('Please provide an action name.');
@@ -93,7 +94,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		if($this->getLocation() == 'backend')
 		{
 			// check if we need a specific base file
-			$baseActions = array('add', 'edit', 'delete');
+			$baseActions = array('add', 'edit', 'delete', 'settings');
 			$baseAction = 'base';
 
 			// loop the baseactions
@@ -101,7 +102,11 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 			{
 				// check if it is this action
 				$tmpCheck = strpos($this->fileName, $action);
-				if($tmpCheck !== false) $baseAction = $action;
+				if($tmpCheck !== false)
+				{
+					if($action == 'settings') $action = 'edit';
+					$baseAction = $action;
+				}
 			}
 
 			// insert info in the database to grant access
@@ -127,7 +132,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 			$this->makeFile($templatePath, $actionTpl);
 		}
 
-		// @todo if it is a form action, build form via database
+		// @todo if it is a form action, build form via database(with table parameter)
 		// @todo if it is an edit action, build form via add action(if exists)
 	}
 
