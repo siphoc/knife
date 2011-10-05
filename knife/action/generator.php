@@ -24,63 +24,28 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 */
 	protected function init()
 	{
-		// @todo make error for no input
-		// @todo make success message
-		// @todo clean this shit up
 		// @todo Implement new style rules in the actions/modules
 
-		// name given?
-		if(!isset($this->arg[2])) throw new Exception('Please provide an action name.');
+		// build the first location actions
+		$this->buildLocationAction($this->arg[0], @$this->arg[1], @$this->arg[2]);
 
-		// set variables
-		$this->setLocation($this->arg[1]);
-		$this->setModule($this->arg[0]);
+		// is there a second location given?
+		if(isset($this->arg[3])) $this->buildLocationAction($this->arg[0], $this->arg[3], @$this->arg[4]);
 
-		// variables
-		$actionNames = str_replace(' ', '', $this->arg[2]);
-		$actionNames = explode(',', $actionNames);
-
-		foreach($actionNames as $action)
-		{
-			// build action variables
-			$this->inputName = $action;
-			$this->actionName = $this->buildName($action);
-			$this->fileName = $this->buildFileName($action);
-			$this->templateName = $this->buildFileName($action, 'tpl');
-
-			// build the action
-			$this->buildAction();
-		}
-
-		if(!isset($this->arg[3])) return;
-
-		// do we have a second action parameter?
-		if(isset($this->arg[3]) && !isset($this->arg[4])) throw new Exception('Please provide an action name.');
-
-		// set variables
-		$this->setLocation($this->arg[3]);
-		$this->setModule($this->arg[0]);
-
-		$actionNames = str_replace(' ', '', $this->arg[4]);
-		$actionNames = explode(',', $actionNames);
-
-		foreach($actionNames as $action)
-		{
-			// build action variables
-			$this->inputName = $action;
-			$this->actionName = $this->buildName($action);
-			$this->fileName = $this->buildFileName($action);
-			$this->templateName = $this->buildFileName($action, 'tpl');
-
-			// build the action
-			$this->buildAction();
-		}
+		// print the good actions
+		$this->successHandler('The actions ' . implode(', ', $successArray) . ' are created.');
+		if(!empty($failArray)) $this->errorHandler(__CLASS__, 'buildAction');
 	}
 
 	/**
 	 * This will generate an action. It willn ot overwrite an existing action.
 	 *
+	 * The data needed for this action: 'modulename', 'location', 'actionname(s)'
 	 *
+	 * Examples:
+	 * ft action blog backend edit,add,categories
+	 * ft action blog frontend detail,archive
+	 * ft action blog backend edit,delete,add_category frontend detail,archive
 	 */
 	protected function buildAction()
 	{
@@ -111,7 +76,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 			}
 
 			// insert info in the database to grant access
-			if(!$this->databaseInfo()) return;
+			if(!$this->databaseInfo()) return false;
 		}
 		// frontend aciton
 		else
@@ -133,8 +98,50 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 			$this->makeFile($templatePath, $actionTpl);
 		}
 
+		return true;
+
 		// @todo if it is a form action, build form via database(with table parameter)
 		// @todo if it is an edit action, build form via add action(if exists)
+	}
+
+	/**
+	 * Builds a specific location action
+	 *
+	 * @return	void
+	 * @param
+	 * @param
+	 */
+	private function buildLocationAction($module, $location, $actions = null)
+	{
+		// do we have a second action parameter?
+		if(isset($location) && $actions == null) throw new Exception('Please provide an action name.');
+
+		// set variables
+		$this->setLocation($location);
+		$this->setModule($module);
+
+		// arrays with succes and failures
+		$successArray = array();
+		$failArray = array();
+
+		// seperate the actions
+		$actionNames = str_replace(' ', '', $actions);
+		$actionNames = explode(',', $actionNames);
+
+		// loop the actions
+		foreach($actionNames as $action)
+		{
+			// build action variables
+			$this->inputName = $action;
+			$this->actionName = $this->buildName($action);
+			$this->fileName = $this->buildFileName($action);
+			$this->templateName = $this->buildFileName($action, 'tpl');
+
+			// build the action
+			$success = $this->buildAction();
+			if($success) array_push($successArray, $this->actionName);
+			else array_push($failArray, $this->actionName);
+		}
 	}
 
 	/**
@@ -161,7 +168,8 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		// houston, we have a problem.
 		catch(Exception $e)
 		{
-			throw new Exception('Something went wrong while inserting the data into the database.');
+			if(DEV_MODE) throw new Exception('Something went wrong while inserting the data into the database.');
+			else return false;
 		}
 
 		// return

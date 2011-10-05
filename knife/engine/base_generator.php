@@ -54,6 +54,7 @@ class KnifeBaseGenerator
 
 		// initiate
 		if(!empty($arguments)) $this->init();
+		else throw new Exception('Please specify your actions.');
 	}
 
 	/**
