@@ -51,7 +51,7 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 
 		// create elements
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
-		$this->frm->addRadiobutton('visible', $rbtVisibleValues, 'N');
+		$this->frm->addRadiobutton('visible', $rbtVisibleValues, 'Y');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
@@ -106,7 +106,6 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['meta_id'] = $this->meta->save();
 				$item['language'] = BL::getWorkingLanguage();
-				$item['created_on'] = BackendModel::getUTCDate();
 				$item['visible'] = $this->frm->getField('visible')->getValue();
 
 				// insert
