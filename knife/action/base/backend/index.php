@@ -39,7 +39,11 @@ class BackendclassnameIndex extends BackendBaseActionIndex
 	 */
 	private function loadDataGrid()
 	{
+		// create the dataGrid
 		$this->dataGrid = new BackendDataGridDB(QUERY, PARAMETERS);
+
+		// add edit column
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 
