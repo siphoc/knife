@@ -61,6 +61,6 @@ class KnifeShowGenerator extends KnifeBaseGenerator
 	{
 		// start modules instance
 		$modules = new KnifeModuleGenerator();
-		$modules->showInfo();
+		$modules->showAll();
 	}
 }

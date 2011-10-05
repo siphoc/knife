@@ -285,7 +285,7 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 	/**
 	 * Shows info about the modules.
 	 */
-	public function showInfo()
+	public function showAll()
 	{
 		// get the database instance
 		$db = Knife::getDB();
