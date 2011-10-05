@@ -94,6 +94,7 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// validation
+			$this->frm->getField('title')->isFilled(BL::err('FieldIsRequired'));
 
 			// validate meta
 			$this->meta->validate();

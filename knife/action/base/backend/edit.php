@@ -121,6 +121,7 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// validation
+			$this->frm->getField('title')->isFilled(BL::err('FieldIsRequired'));
 
 			// validate meta
 			$this->meta->validate();
@@ -129,7 +130,6 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// get the values
-				$item['id'] = $this->id;
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['meta_id'] = $this->meta->save(true);
 				$item['language'] = BL::getWorkingLanguage();
@@ -137,7 +137,8 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 				$item['visible'] = $this->frm->getField('visible')->getValue();
 
 				// update
-				BackendmodulenameModel::update($item);
+				BackendmodulenameModel::update($item, $this->id);
+				$item['id'] = $this->id;
 
 				// everything is saved, so redirect to the index
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited');
