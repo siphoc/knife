@@ -37,12 +37,17 @@ class KnifeShowGenerator extends KnifeBaseGenerator
 		}
 		catch(Exception $e)
 		{
+			// is the info function callable?
 			if(is_callable(array(__CLASS__, 'show' . ucfirst($execution))))
 			{
 				$function = 'show' . ucfirst($execution);
 				$this->$function();
 			}
-			else throw new Exception('Invalid parameter');
+			else
+			{
+				if(DEV_MODE) throw new Exception($e);
+				else throw new Exception('Invalid parameter');
+			}
 		}
 	}
 

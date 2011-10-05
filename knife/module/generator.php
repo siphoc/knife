@@ -362,4 +362,14 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		echo $output;
 		exit;
 	}
+
+
+	/**
+	 * Shows info about a specific module
+	 *
+	 * @param	string $module		The module to show info from
+	 */
+	public function showInfo()
+	{
+	}
 }

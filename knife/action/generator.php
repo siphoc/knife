@@ -102,6 +102,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 
 		// @todo if it is a form action, build form via database(with table parameter)
 		// @todo if it is an edit action, build form via add action(if exists)
+		// @todo make it possible to choose the extension
 	}
 
 	/**
