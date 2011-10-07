@@ -24,8 +24,6 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 */
 	protected function init()
 	{
-		// @todo Implement new style rules in the actions/modules
-
 		// build the first location actions
 		$this->buildLocationAction($this->arg[0], @$this->arg[1], @$this->arg[2]);
 
