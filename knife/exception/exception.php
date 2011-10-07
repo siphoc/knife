@@ -27,10 +27,8 @@ function knifeExceptionHandler(Exception $exception)
 	/*
 	 * Print the exception in a readable way
 	 */
-	echo "---------------------------------------EXCEPTION---------------------------------------\n";
-	echo "\033[31m" . $exception->getMessage() . "\033[37m";
+	echo $exception->getMessage();
 	echo "\n";
-	echo "---------------------------------------EXCEPTION---------------------------------------\n";
 
 	// stop the script
 	exit;

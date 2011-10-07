@@ -17,7 +17,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 *
 	 * @var	string
 	 */
-	protected $actionName, $fileName, $templateName, $inputName;
+	protected $actionName, $fileName, $templateName, $inputName, $successArray;
 
 	/**
 	 * Execute the action
@@ -33,7 +33,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		if(isset($this->arg[3])) $this->buildLocationAction($this->arg[0], $this->arg[3], @$this->arg[4]);
 
 		// print the good actions
-		$this->successHandler('The actions ' . implode(', ', $successArray) . ' are created.');
+		$this->successHandler('The actions ' . implode(', ', $this->successArray) . ' are created.');
 		if(!empty($failArray)) $this->errorHandler(__CLASS__, 'buildAction');
 	}
 
@@ -122,7 +122,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		$this->setModule($module);
 
 		// arrays with succes and failures
-		$successArray = array();
+		$this->successArray = array();
 		$failArray = array();
 
 		// seperate the actions
@@ -140,7 +140,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 
 			// build the action
 			$success = $this->buildAction();
-			if($success) array_push($successArray, $this->actionName);
+			if($success) array_push($this->successArray, $this->actionName);
 			else array_push($failArray, $this->actionName);
 		}
 	}

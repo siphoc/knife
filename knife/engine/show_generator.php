@@ -12,43 +12,25 @@
 class KnifeShowGenerator extends KnifeBaseGenerator
 {
 	/**
-	 * This executes the generator
+	 * Usage: ft <command> [<args>]
+	 *
+	 * The most commonly used fork commands are(type ft help <command> for more info):
+	 *   action      This creates an action(or multiple)
+	 *   module      This creates module
+	 *   theme       This creates a theme
+	 *   show        This shows information about the command contents
+	 *   settings    Adjusts a specific setting
 	 */
 	protected function init()
 	{
 		// the item to show
 		$execution = $this->arg[0];
 
-		try
-		{
-			// the class to search in
-			$class = 'Knife' . ucfirst($execution) . 'Generator';
+		// the function name
+		$functionName = 'show' . ucfirst($execution);
 
-			// show info function callable?
-			if(is_callable(array($class, 'showInfo')))
-			{
-				// call function
-				$function = 'showInfo';
-
-				// start new class
-				$class = new $class();
-				$class->$function();
-			}
-		}
-		catch(Exception $e)
-		{
-			// is the info function callable?
-			if(is_callable(array(__CLASS__, 'show' . ucfirst($execution))))
-			{
-				$function = 'show' . ucfirst($execution);
-				$this->$function();
-			}
-			else
-			{
-				if(DEV_MODE) throw new Exception($e);
-				else throw new Exception('Invalid parameter');
-			}
-		}
+		if(method_exists($this, $functionName)) $this->$functionName();
+		else $this->errorHandler(__CLASS__, 'init');
 	}
 
 	/**
