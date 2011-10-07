@@ -256,7 +256,8 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		// houston, we have a problem.
 		catch(Exception $e)
 		{
-			throw new Exception('Something went wrong while inserting the data into the database.');
+			if(DEV_MODE) throw $e;
+			else throw new Exception('Something went wrong while inserting the data into the database.');
 		}
 
 		// return

@@ -76,14 +76,11 @@ class Knife
 	 */
 	public function __construct($argv)
 	{
-		// do startup checks
-		$this->startChecks();
-
-		// build the paths
-		$this->buildPaths();
-
 		// no argument set?
 		if(!isset($argv[1])) throw new Exception('Please, specify an action.');
+
+		// do startup checks
+		$this->startChecks();
 
 		/* Spoon stuff */
 		require_once LIBRARYPATH . 'globals.php';
@@ -128,19 +125,16 @@ class Knife
 		$classes['knifeshowgenerator'] = CLIPATH . 'knife/engine/show_generator.php';
 
 		// is the class set?
-		if(!array_key_exists($tmpClass, $classes))
-			throw new Exception('This class(' . $class . ') isn\'t set in Knife.');
+		if(!array_key_exists($tmpClass, $classes)) throw new Exception('This isn\'t a valid action.');
 
 		// does the file exist?
-		if(!file_exists($classes[$tmpClass]))
-			throw new Exception('The class file(' . $classes[$tmpClass] . ') doesn\'t exist.');
+		if(!file_exists($classes[$tmpClass])) throw new Exception('The action file(' . $classes[$tmpClass] . ') doesn\'t exist.');
 
 		// get the file
 		require_once $classes[$tmpClass];
 
 		// is the class callable?
-		if(!class_exists($class, false))
-			throw new Exception('The file is present but the class name should be ' . $class);
+		if(!class_exists($class, false)) throw new Exception('The file is present but the class name should be ' . $class);
 	}
 
 	/**
@@ -303,6 +297,10 @@ class Knife
 	 */
 	private function startChecks()
 	{
+		// check the settings file
 		$this->checkSettings();
+
+		// build the paths
+		$this->buildPaths();
 	}
 }
