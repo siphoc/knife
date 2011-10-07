@@ -23,14 +23,12 @@ class KnifeDatabase
 	 */
 	private $database;
 
-
 	/**
 	 * Debug setting. Queries are logged when enabled
 	 *
 	 * @var	bool
 	 */
 	private $debug = false;
-
 
 	/**
 	 * Database driver
@@ -39,14 +37,12 @@ class KnifeDatabase
 	 */
 	private $driver;
 
-
 	/**
 	 * Database handler object
 	 *
 	 * @var	PDO
 	 */
 	private $handler;
-
 
 	/**
 	 * Database hostname
@@ -55,14 +51,12 @@ class KnifeDatabase
 	 */
 	private $hostname;
 
-
 	/**
 	 * Database password
 	 *
 	 * @var	string
 	 */
 	private $password;
-
 
 	/**
 	 * Database port
@@ -71,7 +65,6 @@ class KnifeDatabase
 	 */
 	private $port;
 
-
 	/**
 	 * List of all executed queries and their parameters
 	 *
@@ -79,14 +72,12 @@ class KnifeDatabase
 	 */
 	private $queries = array();
 
-
 	/**
 	 * Database username
 	 *
 	 * @var	string
 	 */
 	private $username;
-
 
 	/**
 	 * Creates a database connection instance.
@@ -107,7 +98,6 @@ class KnifeDatabase
 		$this->setDatabase($database);
 		$this->setPort($port);
 	}
-
 
 	/**
 	 * Creates a new database connection if it was not yet made.
@@ -137,7 +127,6 @@ class KnifeDatabase
 		// set nasty option
 		$this->handler->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 	}
-
 
 	/**
 	 * Query to delete records, which returns the number of affected rows.
@@ -198,7 +187,6 @@ class KnifeDatabase
 		return (int) $statement->rowCount();
 	}
 
-
 	/**
 	 * Drops one or more tables.
 	 *
@@ -208,7 +196,6 @@ class KnifeDatabase
 	{
 		$this->execute('DROP TABLE ' . implode(', ', array_map(array($this, 'quoteName'), (array) $tables)));
 	}
-
 
 	/**
 	 * Executes a query.
@@ -258,7 +245,6 @@ class KnifeDatabase
 		// debug enabled
 		if($this->debug) $this->queries[] = array('query' => $query, 'parameters' => $parameters);
 	}
-
 
 	/**
 	 * Retrieve a single column.
@@ -313,7 +299,6 @@ class KnifeDatabase
 		return $statement->fetchAll(PDO::FETCH_COLUMN);
 	}
 
-
 	/**
 	 * Retrieve the debug setting
 	 *
@@ -324,7 +309,6 @@ class KnifeDatabase
 		return $this->debug;
 	}
 
-
 	/**
 	 * Fetch the name of the database driver
 	 *
@@ -334,7 +318,6 @@ class KnifeDatabase
 	{
 		return $this->driver;
 	}
-
 
 	/**
 	 * Retrieves the possible ENUM values
@@ -368,7 +351,6 @@ class KnifeDatabase
 		// return
 		return (array) explode(',', $types);
 	}
-
 
 	/**
 	 * Retrieve the raw database instance (PDO object)

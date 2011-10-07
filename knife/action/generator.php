@@ -108,9 +108,9 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	/**
 	 * Builds a specific location action
 	 *
-	 * @return	void
-	 * @param
-	 * @param
+	 * @param	string $module		The module.
+	 * @param	string $location	The working location.
+	 * @param	string $actions		The actions to build
 	 */
 	private function buildLocationAction($module, $location, $actions = null)
 	{
@@ -147,8 +147,6 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 
 	/**
 	 * Inserts a backend action into the database.
-	 *
-	 * @return	void
 	 */
 	private function databaseInfo()
 	{

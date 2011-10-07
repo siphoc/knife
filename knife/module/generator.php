@@ -363,7 +363,6 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		exit;
 	}
 
-
 	/**
 	 * Shows info about a specific module
 	 *

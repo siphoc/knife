@@ -18,7 +18,6 @@ final class FrontendclassnameConfig extends FrontendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
@@ -26,5 +25,3 @@ final class FrontendclassnameConfig extends FrontendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
-
-?>

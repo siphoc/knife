@@ -18,7 +18,6 @@ final class BackendclassnameConfig extends BackendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
@@ -26,5 +25,3 @@ final class BackendclassnameConfig extends BackendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
-
-?>

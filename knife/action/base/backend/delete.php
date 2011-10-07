@@ -13,8 +13,6 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -47,5 +45,3 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
-
-?>

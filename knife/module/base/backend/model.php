@@ -14,14 +14,12 @@ class BackendclassnameModel
 	/**
 	 * Deletes an item
 	 *
-	 * @return	void
 	 * @param	int $id		The id of the item to delete.
 	 */
 	public static function delete($id)
 	{
 		BackendModel::getDB(true)->delete('subname', 'id = ?', (int) $id);
 	}
-
 
 	/**
 	 * Checks if an item exists
@@ -37,7 +35,6 @@ class BackendclassnameModel
 														(int) $id);
 	}
 
-
 	/**
 	 * Fetches an item
 	 *
@@ -51,7 +48,6 @@ class BackendclassnameModel
 															WHERE i.id = ?',
 															(int) $id);
 	}
-
 
 	/**
 	 * Retrieve the unique URL for an item
@@ -114,7 +110,6 @@ class BackendclassnameModel
 		return $URL;
 	}
 
-
 	/**
 	 * This inserts an item in the database
 	 *
@@ -130,11 +125,9 @@ class BackendclassnameModel
 		return (int) BackendModel::getDB(true)->insert('subname', $data);
 	}
 
-
 	/**
 	 * This updates an item in the database
 	 *
-	 * @return	void
 	 * @param	array $data		The data to update.
 	 * @param	int $itemId		The item id to update.
 	 */
@@ -147,5 +140,3 @@ class BackendclassnameModel
 		BackendModel::getDB(true)->update('subname', $data, 'id = ?', (int) $itemId);
 	}
 }
-
-?>

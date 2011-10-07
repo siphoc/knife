@@ -123,7 +123,6 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 		$this->makeFile($newPath . 'layout/css/screen.css');
 	}
 
-
 	/**
 	 * This action will create a theme. This will not overwrite an existing theme.
 	 *

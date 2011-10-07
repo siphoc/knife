@@ -13,8 +13,6 @@ class FrontendclassnameIndex extends FrontendBaseBlock
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -31,22 +29,16 @@ class FrontendclassnameIndex extends FrontendBaseBlock
 		$this->loadTemplate();
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
 		$this->data = false;
 	}
 
-
 	/**
 	 * Parse the data
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -54,5 +46,3 @@ class FrontendclassnameIndex extends FrontendBaseBlock
 		$this->tpl->assign('items', $this->data);
 	}
 }
-
-?>

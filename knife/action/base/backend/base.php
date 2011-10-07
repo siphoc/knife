@@ -13,8 +13,6 @@ class Backendmodulenameactionname extends BackendBaseAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -28,16 +26,11 @@ class Backendmodulenameactionname extends BackendBaseAction
 		$this->display();
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
 
 	}
 }
-
-?>

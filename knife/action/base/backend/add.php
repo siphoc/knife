@@ -13,8 +13,6 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -34,11 +32,8 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -57,11 +52,8 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -79,11 +71,8 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -120,5 +109,3 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

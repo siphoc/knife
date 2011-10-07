@@ -13,8 +13,6 @@ class classnameInstall extends ModuleInstaller
 {
 	/**
 	 * Execute the installer
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -37,5 +35,3 @@ class classnameInstall extends ModuleInstaller
 		$subnameID = $this->insertExtra('subname', 'block', 'classname', null, null, 'N', 1000);
 	}
 }
-
-?>

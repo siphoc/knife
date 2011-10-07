@@ -62,7 +62,6 @@ class Knife
 	 */
 	public static $version;
 
-
 	/**
 	 * The database
 	 *
