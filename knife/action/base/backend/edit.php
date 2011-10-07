@@ -139,6 +139,9 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 				BackendmodulenameModel::update($item, $this->id);
 				$item['id'] = $this->id;
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', $item);
+
 				// everything is saved, so redirect to the index
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited');
 			}
