@@ -9,7 +9,7 @@
  * @author		authorname
  * @since		versionname
  */
-class Backendmodulenameactionname extends BackendBaseActionAdd
+class Backendmodulenameactionname extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
@@ -20,16 +20,16 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if($this->id !== null && BackendsubnameModel::exists($this->id))
+		if($this->id !== null && BackendmodulenameModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
 			// get data
-			$this->record = (array) BackendsubnameModel::get($this->id);
+			$this->record = (array) BackendmodulenameModel::get($this->id);
 
 			// delete item
-			BackendsubnameModel::delete($this->id);
+			BackendmodulenameModel::delete($this->id);
 
 			// trigger event
 			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
