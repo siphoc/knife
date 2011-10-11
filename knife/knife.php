@@ -123,6 +123,7 @@ class Knife
 		$classes['knifeactiongenerator'] = CLIPATH . 'knife/action/generator.php';
 		$classes['knifedatabase'] = CLIPATH . 'knife/database/database.php';
 		$classes['knifeshowgenerator'] = CLIPATH . 'knife/engine/show_generator.php';
+		$classes['knifewidgetgenerator'] = CLIPATH . 'knife/widget/generator.php';
 
 		// is the class set?
 		if(!array_key_exists($tmpClass, $classes)) throw new Exception('This isn\'t a valid action.');
