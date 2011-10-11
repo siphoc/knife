@@ -150,6 +150,8 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 
 		// return
 		return true;
+
+		// @todo calculate sequence
 	}
 
 	/**

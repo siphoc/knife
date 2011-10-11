@@ -9,7 +9,7 @@
  * @author		authorname
  * @since		versionname
  */
-class Frontendmodulenamewidgetname extends FrontendBaseWidget
+class FrontendmodulenameWidgetwidgetname extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra

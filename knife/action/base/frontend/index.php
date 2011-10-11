@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This is the index-action (default), it will display the overview of subname posts
+ * This is the actionname-action (default), it will display the overview of subname posts
  *
  * @package		frontend
  * @subpackage	subname
@@ -9,7 +9,7 @@
  * @author		authorname
  * @since		versionname
  */
-class FrontendclassnameIndex extends FrontendBaseBlock
+class Frontendmodulenameactionname extends FrontendBaseBlock
 {
 	/**
 	 * Execute the action
