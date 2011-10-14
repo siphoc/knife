@@ -69,6 +69,7 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 	 */
 	private function createDirs()
 	{
+		// @todo make modules
 		// tree structure of the directory
 		$dirs = array(
 					'main' => FRONTENDPATH . 'themes/' . $this->themeName,
