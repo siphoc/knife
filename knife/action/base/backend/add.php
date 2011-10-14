@@ -41,7 +41,7 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 
 		// set hidden values
-		$rbtVisibleValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'N');
+		$rbtVisibleValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'N');
 		$rbtVisibleValues[] = array('label' => BL::lbl('Published'), 'value' => 'Y');
 
 		// create elements
