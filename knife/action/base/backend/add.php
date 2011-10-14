@@ -104,7 +104,7 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_add', $item);
 
 				// everything is saved, so redirect to the index
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=added');
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&highlight=row-' . $item['id']);
 			}
 		}
 	}
