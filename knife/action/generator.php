@@ -17,22 +17,60 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 *
 	 * @var	string
 	 */
-	protected $actionName, $fileName, $templateName, $inputName, $successArray, $addBlock;
+	protected $actionName, $fileName, $templateName, $inputName, $failArray, $successArray, $addBlock;
 
 	/**
 	 * Execute the action
 	 */
 	protected function init()
 	{
-		// build the first location actions
-		$this->buildLocationAction($this->arg[0], @$this->arg[1], @$this->arg[2]);
+		// get the action location
+		foreach($this->arg as $key => $data)
+		{
+			// don't use the first key
+			if($key == 0) continue;
 
-		// is there a second location given?
-		if(isset($this->arg[3])) $this->buildLocationAction($this->arg[0], $this->arg[3], @$this->arg[4]);
+			// build the data
+			$actionData = $this->buildActionData($data);
 
-		// print the good actions
-		$this->successHandler('The actions ' . implode(', ', $this->successArray) . ' are created.');
-		if(!empty($failArray)) $this->errorHandler(__CLASS__, 'buildAction');
+			// build the action
+			$this->buildLocationAction($this->arg[0], $actionData['location'], $actionData['actions']);
+
+			// print the good actions
+			if(empty($this->failArray)) $this->successHandler('The ' . $this->getLocation() . ' actions are created.');
+			else $this->errorHandler(__CLASS__, 'buildAction');
+		}
+	}
+
+	/**
+	 * Build the action info
+	 *
+	 * @return	array
+	 * @param	string $data		The data to convert into an array.
+	 */
+	private function buildActionData($data)
+	{
+		// the data array
+		$arrReturn = array();
+		$arrData = explode('=', $data);
+
+		// is this a valid location
+		if($arrData[0] != 'f' && $arrData[0] != 'frontend' && $arrData[0] != 'backend' && $arrData[0] != 'b')
+		{
+			throw new Exception('This(' . $arrData[0] . ' is not a valid location');
+		}
+
+		// are there actions givne?
+		if(!isset($arrData[1])) throw new Exception('You need to provide at least one action');
+
+		// get the location
+		$arrReturn['location'] = ($arrData[0] == 'f' || $arrData == 'frontend') ? 'frontend' : 'backend';
+
+		// the actions
+		$arrReturn['actions'] = $arrData[1];
+
+		// return
+		return $arrReturn;
 	}
 
 	/**
@@ -152,6 +190,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 			$this->makeFile($templatePath, $actionTpl);
 		}
 
+		// return
 		return true;
 
 		// @todo if it is a form action, build form via database(with table parameter)
@@ -165,11 +204,8 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 * @param	string $location	The working location.
 	 * @param	string $actions		The actions to build
 	 */
-	private function buildLocationAction($module, $location, $actions = null)
+	private function buildLocationAction($module, $location, $actions)
 	{
-		// do we have a second action parameter?
-		if(isset($location) && $actions == null) throw new Exception('Please provide an action name.');
-
 		// set variables
 		$this->setLocation($location);
 		$this->setModule($module);
@@ -197,18 +233,18 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 					$this->addBlock = true;
 					$action = $arrBlock[0];
 				}
-
-				// build action variables
-				$this->inputName = $action;
-				$this->actionName = $this->buildName($action);
-				$this->fileName = $this->buildFileName($action);
-				$this->templateName = $this->buildFileName($action, 'tpl');
 			}
+
+			// build action variables
+			$this->inputName = $action;
+			$this->actionName = $this->buildName($action);
+			$this->fileName = $this->buildFileName($action);
+			$this->templateName = $this->buildFileName($action, 'tpl');
 
 			// build the action
 			$success = $this->buildAction();
 			if($success) array_push($this->successArray, $this->actionName);
-			else array_push($failArray, $this->actionName);
+			else array_push($this->failArray, $this->actionName);
 		}
 	}
 

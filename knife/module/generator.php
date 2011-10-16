@@ -58,29 +58,14 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		if(!empty($explode))
 		{
 			// frontend action
-			if(strtolower($explode[0]) == 'f' || strtolower($explode[0]) == 'frontend')
-			{
-				// data
-				$data = explode(',', $explode[1]);
-				$type = 'frontend';
-			}
-
-			// backend action
-			if(strtolower($explode[0]) == 'b' || strtolower($explode[0]) == 'backend')
-			{
-				// data
-				$data = explode(',', $explode[1]);
-				$type = 'backend';
-			}
-
-			foreach($data as $action)
+			if(strtolower($explode[0]) == 'f' || strtolower($explode[0]) == 'b')
 			{
 				// create action data
 				$actionData = array();
 				array_push($actionData, $this->arg[0]);
-				array_push($actionData, $type);
-				array_push($actionData, $action);
+				array_push($actionData, $actions);
 
+				// create a new action
 				$action = new KnifeActionGenerator($actionData);
 			}
 		}
