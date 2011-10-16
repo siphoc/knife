@@ -95,7 +95,7 @@ class Knife
 
 		// rebase
 		$passArgs = array();
-		foreach($arguments as $parameter) $passArgs[] = $parameter;
+		foreach($arguments as $parameter) $passArgs[] = strtolower($parameter);
 
 		// execute the action
 		$tmpClass = new $callClass($passArgs);
