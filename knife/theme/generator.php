@@ -44,13 +44,13 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 		$return = $createdTheme = $this->createTheme();
 
 		// other action given?
-		if(isset($this->arg[1]) && ($this->arg[1] == 'all' || $this->arg[1] == 'copy'))
+		if(isset($this->arg[1]) && $this->arg[1] == 'copy')
 		{
 			// reset the return
 			$return = true;
 
 			// if the action is all, get the active modules
-			if($this->arg[1] == 'all') $this->arg[2] = implode(',', $this->getAllActiveModules());
+			if($this->arg[2] == 'all') $this->arg[2] = implode(',', $this->getAllActiveModules());
 
 			// the action is copy, check if we have arguments
 			if(!isset($this->arg[2])) $return = false;
@@ -73,10 +73,13 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 			}
 		}
 
+		// we have an error
 		if(!$return) $this->errorHandler(__CLASS__, 'createTheme');
 		else
 		{
+			// we've created a new theme
 			if($createdTheme) $this->successHandler('The theme "' . ucfirst($this->themeName) . '" is created.');
+			// we've only added some modules
 			else $this->successHandler('The module files are successfully copied.');
 		}
 	}
@@ -226,13 +229,13 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 	 *
 	 * The data needed to create a theme: 'themename'
 	 *
-	 * Additional options: all, copy [:modulenames]
+	 * Additional options: copy [:modulenames], copy all
 	 * When using the additional options, a theme will be created when the specified theme
 	 * is'nt present yet.
 	 *
 	 * Examples:
 	 *   ft theme knife                     This will build the basic theme.
-	 *   ft theme knife all                 This will build the theme with all the modules
+	 *   ft theme knife copy all            This will build the theme with all the modules
 	 *   ft theme knife copy blog,search    This will copy the specified modules.
 	 */
 	protected function createTheme()
