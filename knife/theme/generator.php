@@ -235,7 +235,7 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 	 *
 	 * Examples:
 	 *   ft theme knife                     This will build the basic theme.
-	 *   ft theme knife copy all            This will build the theme with all the modules
+	 *   ft theme knife copy all            This will copy all the modules.
 	 *   ft theme knife copy blog,search    This will copy the specified modules.
 	 */
 	protected function createTheme()
