@@ -17,7 +17,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 *
 	 * @var	string
 	 */
-	protected $actionName, $fileName, $templateName, $inputName, $successArray;
+	protected $actionName, $fileName, $templateName, $inputName, $successArray, $addBlock;
 
 	/**
 	 * Execute the action
@@ -33,6 +33,54 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		// print the good actions
 		$this->successHandler('The actions ' . implode(', ', $this->successArray) . ' are created.');
 		if(!empty($failArray)) $this->errorHandler(__CLASS__, 'buildAction');
+	}
+
+	/**
+	 * This will add a block to a specific action
+	 */
+	private function addBlock()
+	{
+		// try adding the block
+		try
+		{
+			// do we have an extra already?
+			$existExtra = (bool) Knife::getDB()->getVar('SELECT COUNT(m.id)
+															FROM pages_extras AS m
+															WHERE m.module = ? AND m.action = ? AND m.type = ?',
+															array((string) strtolower($this->getModule()), (string) substr($this->fileName, 0, -4), 'block'));
+
+			// we have no extra yet
+			if(!$existExtra)
+			{
+				// set next sequence number for this module
+				$sequence = Knife::getDB()->getVar('SELECT MAX(sequence) + 1 FROM pages_extras WHERE module = ?', array((string) strtolower($this->getModule())));
+
+				// this is the first extra for this module: generate new 1000-series
+				if(is_null($sequence)) $sequence = $sequence = Knife::getDB()->getVar('SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM pages_extras');
+
+				// the data
+				$data['module'] = strtolower($this->getModule());
+				$data['type'] = 'block';
+				$data['label'] = $this->actionName;
+				$data['action'] = substr($this->fileName, 0, -4);
+				$data['sequence'] = $sequence;
+
+				// insert
+				Knife::getDB(true)->insert('pages_extras', $data);
+			}
+		}
+		// we have errors
+		catch(Exception $e)
+		{
+			// dev mode
+			if(DEV_MODE) throw $e;
+
+			// no dev mode, return false
+			return false;
+		}
+
+		// return
+		return true;
 	}
 
 	/**
@@ -52,7 +100,10 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		$templatePath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . strtolower($this->getModule()) . '/layout/templates/' . $this->templateName;
 
 		// check if the action doesn't exist yet
-		if(file_exists($actionPath)) throw new Exception('The action(' . $this->getLocation() . '/' .  strtolower($this->getModule()) . '/' . strtolower($this->actionName) . ') already exists.');
+		if(file_exists($actionPath) && !$this->addBlock) throw new Exception('The action(' . $this->getLocation() . '/' .  strtolower($this->getModule()) . '/' . strtolower($this->actionName) . ') already exists.');
+
+		// if we only need to add a block, return that value
+		if(file_exists($actionPath) && $this->addBlock) return $this->addBlock();
 
 		// backend action
 		if($this->getLocation() == 'backend')
@@ -68,6 +119,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				$tmpCheck = strpos($this->fileName, $action);
 				if($tmpCheck !== false)
 				{
+					// a setting page is an edit action
 					if($action == 'settings') $action = 'edit';
 					$baseAction = $action;
 				}
@@ -79,7 +131,11 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		// frontend aciton
 		else
 		{
+			// set the base action
 			$baseAction = 'index';
+
+			// add the block
+			if($this->addBlock) $this->addBlock();
 		}
 
 		// base file
@@ -99,8 +155,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		return true;
 
 		// @todo if it is a form action, build form via database(with table parameter)
-		// @todo if it is an edit action, build form via add action(if exists)
-		// @todo make it possible to choose the extension
+		// @todo if it is an edit action, build form via add action(if exists, else database)
 	}
 
 	/**
@@ -130,11 +185,25 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		// loop the actions
 		foreach($actionNames as $action)
 		{
-			// build action variables
-			$this->inputName = $action;
-			$this->actionName = $this->buildName($action);
-			$this->fileName = $this->buildFileName($action);
-			$this->templateName = $this->buildFileName($action, 'tpl');
+			// if we're working in the frontend, we might add a block
+			if($this->getLocation() == 'frontend')
+			{
+				// explode for blocks
+				$arrBlock = explode(':block', $action);
+
+				// we need to create a block
+				if(count($arrBlock) == 2)
+				{
+					$this->addBlock = true;
+					$action = $arrBlock[0];
+				}
+
+				// build action variables
+				$this->inputName = $action;
+				$this->actionName = $this->buildName($action);
+				$this->fileName = $this->buildFileName($action);
+				$this->templateName = $this->buildFileName($action, 'tpl');
+			}
 
 			// build the action
 			$success = $this->buildAction();
