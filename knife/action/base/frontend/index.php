@@ -12,6 +12,13 @@
 class Frontendmodulenameactionname extends FrontendBaseBlock
 {
 	/**
+	 * The record
+	 *
+	 * @var	array
+	 */
+	private $record;
+
+	/**
 	 * Execute the action
 	 */
 	public function execute()
@@ -34,7 +41,7 @@ class Frontendmodulenameactionname extends FrontendBaseBlock
 	 */
 	private function getData()
 	{
-		$this->data = false;
+		$this->record = false;
 	}
 
 	/**
@@ -43,6 +50,6 @@ class Frontendmodulenameactionname extends FrontendBaseBlock
 	protected function parse()
 	{
 		// parse the data
-		$this->tpl->assign('items', $this->data);
+		$this->tpl->assign('items', $this->record);
 	}
 }

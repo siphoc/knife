@@ -12,6 +12,13 @@
 class FrontendmodulenameWidgetwidgetname extends FrontendBaseWidget
 {
 	/**
+	 * The record
+	 *
+	 * @var	array
+	 */
+	private $record;
+
+	/**
 	 * Execute the extra
 	 */
 	public function execute()
@@ -34,7 +41,7 @@ class FrontendmodulenameWidgetwidgetname extends FrontendBaseWidget
 	 */
 	private function loadData()
 	{
-		$this->data = false;
+		$this->record = false;
 	}
 
 	/**
@@ -42,6 +49,6 @@ class FrontendmodulenameWidgetwidgetname extends FrontendBaseWidget
 	 */
 	protected function parse()
 	{
-		$this->tpl->assign('widgetname', $this->data);
+		$this->tpl->assign('widgetname', $this->record);
 	}
 }
