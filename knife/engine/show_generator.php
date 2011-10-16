@@ -75,4 +75,12 @@ class KnifeShowGenerator extends KnifeBaseGenerator
 		// show info how to build module
 		else $this->errorHandler('KnifeModuleGenerator', 'createModule');
 	}
+
+	/**
+	 * Shows info for the themes
+	 */
+	private function showTheme()
+	{
+		$this->errorHandler('KnifeThemeGenerator', 'createTheme');
+	}
 }
