@@ -367,9 +367,31 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 	/**
 	 * Shows info about a specific module
 	 *
-	 * @param	string $module		The module to show info from
+	 * @param	string $module		The module to show info from.
 	 */
-	public function showInfo()
+	public function showInfo($module)
 	{
+		// the database instance
+		$db = Knife::getDB();
+
+		// the description
+		$moduleDescription = $db->getVar('SELECT m.description
+											FROM modules AS m
+											WHERE m.name = ?',
+											array((string) $module));
+
+		// get the actions
+		$moduleDbActions = $db->getRecords('SELECT a.action
+											FROM group_rights_actions AS a
+											WHERE a.module = ?',
+											array((string) $module));
+
+		// get the extras
+		$moduleExtras = $db->getRecords('SELECT e.type, e.label
+											FROM pages_extras AS e
+											WHERE e.module = ?',
+											array((string) $module));
+
+		// build the output
 	}
 }

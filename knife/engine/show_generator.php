@@ -59,4 +59,20 @@ class KnifeShowGenerator extends KnifeBaseGenerator
 		$modules = new KnifeModuleGenerator();
 		$modules->showAll();
 	}
+
+	/**
+	 * Gives info about a specific module or how to build a module
+	 */
+	private function showModule()
+	{
+		// there is a specific modulename given
+		if(isset($this->arg[1]))
+		{
+			// get the module info
+			$module = new KnifeModuleGenerator();
+			$module->showInfo($this->arg[1]);
+		}
+		// show info how to build module
+		else $this->errorHandler('KnifeModuleGenerator', 'createModule');
+	}
 }
