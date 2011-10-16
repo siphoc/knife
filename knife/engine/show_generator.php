@@ -12,6 +12,15 @@
 class KnifeShowGenerator extends KnifeBaseGenerator
 {
 	/**
+	 * Execute the action. This is used to get data form the action but
+	 * not doing anything with it.
+	 */
+	protected function execute()
+	{
+		$this->errorHandler(__CLASS__, 'init');
+	}
+
+	/**
 	 * Usage: ft <command> [<args>]
 	 *
 	 * The most commonly used fork commands are(type ft help <command> for more info):

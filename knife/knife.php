@@ -19,7 +19,7 @@ if(PHP_SAPI !== 'cli') die('We expect this to be running on the command line.');
 /*
  * This is the version number of the current CLI Tool
  */
-define('KNIFE_VERSION', '0.1');
+define('KNIFE_VERSION', '0.6');
 
 /*
  * Set error reporting
@@ -85,6 +85,14 @@ class Knife
 		/* Spoon stuff */
 		require_once LIBRARYPATH . 'globals.php';
 
+		// reset some actions
+		switch($argv[1])
+		{
+			case 'help':
+				$argv[1] = 'show';
+			break;
+		}
+
 		// set the class to call
 		$callClass = 'Knife' . ucfirst($argv[1]) . 'Generator';
 
@@ -123,6 +131,7 @@ class Knife
 		$classes['knifeactiongenerator'] = CLIPATH . 'knife/action/generator.php';
 		$classes['knifedatabase'] = CLIPATH . 'knife/database/database.php';
 		$classes['knifeshowgenerator'] = CLIPATH . 'knife/engine/show_generator.php';
+		$classes['knifehelpgenerator'] = CLIPATH . 'knife/engine/show_generator.php';
 		$classes['knifewidgetgenerator'] = CLIPATH . 'knife/widget/generator.php';
 
 		// is the class set?

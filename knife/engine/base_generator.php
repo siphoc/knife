@@ -7,7 +7,7 @@
  * @package		knife
  *
  * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
- * @since		0.1
+ * @since		0.6
  */
 class KnifeBaseGenerator
 {
@@ -54,6 +54,7 @@ class KnifeBaseGenerator
 
 		// initiate
 		if(!empty($arguments)) $this->init();
+		else $this->execute();
 	}
 
 	/**
@@ -162,6 +163,11 @@ class KnifeBaseGenerator
 		// throw new exception
 		throw new Exception($reflectionDocumentation);
 	}
+
+	/**
+	 * The execute action, this will be used for a read action of an object.
+	 */
+	protected function execute() {}
 
 	/**
 	 * Fetches all the module names
