@@ -164,6 +164,31 @@ class KnifeBaseGenerator
 	}
 
 	/**
+	 * Fetches all the module names
+	 *
+	 * @return	array
+	 */
+	protected function getAllActiveModules()
+	{
+		try
+		{
+			// get the active modules
+			$modules = Knife::getDB()->getRecords('SELECT m.name
+													FROM modules AS m
+													WHERE m.active = ?',
+													array('Y'));
+		}
+		catch(Exception $e)
+		{
+			if(DEV_MODE) throw $e;
+			else throw new Exception('Something went wrong while connecting to the database.');
+		}
+
+		// return
+		return $modules;
+	}
+
+	/**
 	 * Gets the location
 	 *
 	 * @return	string
