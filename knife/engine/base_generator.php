@@ -173,7 +173,7 @@ class KnifeBaseGenerator
 		try
 		{
 			// get the active modules
-			$modules = Knife::getDB()->getRecords('SELECT m.name
+			$modules = Knife::getDB()->getColumn('SELECT m.name
 													FROM modules AS m
 													WHERE m.active = ?',
 													array('Y'));
