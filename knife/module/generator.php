@@ -362,7 +362,7 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 											array((string) $module));
 
 		// get the extras
-		$moduleExtras = $db->getRecords('SELECT e.type, e.label
+		$moduleExtras = $db->getRecords('SELECT e.type, e.label, e.action
 											FROM pages_extras AS e
 											WHERE e.module = ?',
 											array((string) $module));
@@ -377,7 +377,7 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		if(!empty($moduleExtras))
 		{
 			$output.= "\nInstalled extras:\n";
-			foreach($moduleExtras as $extra) $output.= '  ' . $extra['type'] . ': ' . $extra['label'] . "\n";
+			foreach($moduleExtras as $extra) $output.= '  ' . $extra['type'] . ': ' . $extra['label'] . " (" . $extra['action'] . ")\n";
 		}
 
 		// print it
