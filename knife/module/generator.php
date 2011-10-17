@@ -55,6 +55,7 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		// get the position and actions
 		$explode = explode('=', $actions);
 
+		// we have actions to create
 		if(!empty($explode))
 		{
 			// frontend action
@@ -78,14 +79,14 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 	{
 		// the backend
 		$backendDirs = array(
-						'main' => BACKENDPATH . 'modules/' . $this->buildDirName($this->moduleName),
-						'sub' => array(
-									'actions', 'ajax',
-									'engine' => array('cronjobs'),
-									'installer' => array('data'),
-									'js', 'widgets',
-									'layout' => array('templates', 'widgets')
-						)
+			'main' => BACKENDPATH . 'modules/' . $this->buildDirName($this->moduleName),
+			'sub' => array(
+				'actions', 'ajax',
+				'engine' => array('cronjobs'),
+				'installer' => array('data'),
+				'js', 'widgets',
+				'layout' => array('templates', 'widgets')
+			)
 		);
 
 		// make the backend directories
@@ -93,12 +94,12 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 
 		// the frontend
 		$frontendDirs = array(
-							'main' => FRONTENDPATH . 'modules/' . $this->buildDirName($this->moduleName),
-							'sub' => array(
-										'actions', 'ajax', 'engine', 'widgets',
-										'layout' => array('templates', 'widgets'),
-										'js'
-							)
+			'main' => FRONTENDPATH . 'modules/' . $this->buildDirName($this->moduleName),
+			'sub' => array(
+				'actions', 'ajax', 'engine', 'widgets',
+				'layout' => array('templates', 'widgets'),
+				'js'
+			)
 		);
 
 		// make the frontend directories
@@ -221,8 +222,6 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 			$parameters['module'] = strtolower($this->moduleName);
 			$db->insert('groups_rights_modules', $parameters);
 
-			// @todo create block
-
 			/*
 			 * Insert index action
 			 */
@@ -280,7 +279,6 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		foreach($allDirs as $key => $dir)
 		{
 			// if it is a file
-			// @todo get good fix for non module directories
 			if(!is_dir(BACKENDPATH . 'modules/' . $dir) || $dir === '.' || $dir === '..' || $dir === '.svn' || array_key_exists($dir, $modules)) continue;
 
 			// check if the module is active
