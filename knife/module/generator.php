@@ -119,12 +119,6 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		$modelInput = $this->replaceFileInfo(CLIPATH . 'knife/module/base/backend/model.php');
 		$this->makeFile($backendPath . 'engine/model.php', $modelInput);
 
-		// index action
-		$indexInput = $this->replaceFileInfo(CLIPATH . 'knife/action/base/backend/index.php');
-		$this->makeFile($backendPath . 'actions/index.php', $indexInput);
-		$indexInput = $this->replaceFileInfo(CLIPATH . 'knife/action/base/backend/index.tpl');
-		$this->makeFile($backendPath . 'layout/templates/index.tpl', $indexInput);
-
 		// config file
 		$configInput = $this->replaceFileInfo(CLIPATH . 'knife/module/base/backend/config.php');
 		$this->makeFile($backendPath . 'config.php', $configInput);
@@ -163,12 +157,6 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		// javascript
 		$jsInput = $this->replaceFileInfo(CLIPATH . 'knife/module/base/frontend/javascript.js');
 		$this->makeFile($frontendPath . 'js/' . strtolower($this->moduleName) . '.js', $jsInput);
-
-		// index action
-		$indexInput = $this->replaceFileInfo(CLIPATH . 'knife/action/base/frontend/index.php');
-		$this->makeFile($frontendPath . 'actions/index.php', $indexInput);
-		$indexInput = $this->replaceFileInfo(CLIPATH . 'knife/action/base/frontend/index.tpl');
-		$this->makeFile($frontendPath . 'layout/templates/index.tpl', $indexInput);
 	}
 
 	/**
@@ -196,6 +184,10 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 
 		// define the module
 		define('MODULE', $this->moduleName);
+
+		// build the index files
+		$this->createActions('f=index');
+		$this->createActions('b=index');
 
 		// there are more arguments given
 		if(isset($this->arg[1])) $this->createActions($this->arg[1]);
