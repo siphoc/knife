@@ -78,9 +78,6 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 		// call parent
 		parent::parse();
 
-		// parse the form
-		$this->frm->parse($this->tpl);
-
 		// assign the item
 		$this->tpl->assign('item', $this->record);
 
