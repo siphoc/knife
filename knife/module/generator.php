@@ -357,7 +357,7 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 
 		// get the actions
 		$moduleDbActions = $db->getRecords('SELECT a.action
-											FROM group_rights_actions AS a
+											FROM groups_rights_actions AS a
 											WHERE a.module = ?',
 											array((string) $module));
 
@@ -368,5 +368,20 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 											array((string) $module));
 
 		// build the output
+		$output = $moduleDescription . "\n\n";
+		if(!empty($moduleDbActions))
+		{
+			$output.= "Installed actions:\n";
+			foreach($moduleDbActions as $action) $output.= '  ' . $action['action'] . "\n";
+		}
+		if(!empty($moduleExtras))
+		{
+			$output.= "\nInstalled extras:\n";
+			foreach($moduleExtras as $extra) $output.= '  ' . $extra['type'] . ': ' . $extra['label'] . "\n";
+		}
+
+		// print it
+		echo $output;
+		exit;
 	}
 }
