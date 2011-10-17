@@ -13,6 +13,8 @@ class Backendmodulenameactionname extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
+	 *
+	 * @return	void
 	 */
 	public function execute()
 	{

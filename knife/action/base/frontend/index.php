@@ -20,6 +20,8 @@ class Frontendmodulenameactionname extends FrontendBaseBlock
 
 	/**
 	 * Execute the action
+	 *
+	 * @return	void
 	 */
 	public function execute()
 	{
@@ -36,16 +38,22 @@ class Frontendmodulenameactionname extends FrontendBaseBlock
 		$this->loadTemplate();
 	}
 
+
 	/**
 	 * Get the data
+	 *
+	 * @return	void
 	 */
 	private function getData()
 	{
 		$this->record = false;
 	}
 
+
 	/**
 	 * Parse the data
+	 *
+	 * @return	void
 	 */
 	protected function parse()
 	{

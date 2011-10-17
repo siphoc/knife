@@ -13,6 +13,8 @@ class BackendclassnameIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action
+	 *
+	 * @return	void
 	 */
 	public function execute()
 	{
@@ -29,8 +31,11 @@ class BackendclassnameIndex extends BackendBaseActionIndex
 		$this->display();
 	}
 
+
 	/**
 	 * Load the dataGrid
+	 *
+	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -41,8 +46,11 @@ class BackendclassnameIndex extends BackendBaseActionIndex
 		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
+
 	/**
 	 * Parse
+	 *
+	 * @return	void
 	 */
 	protected function parse()
 	{

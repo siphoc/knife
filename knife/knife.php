@@ -129,6 +129,7 @@ class Knife
 		$classes['knifethemegenerator'] = CLIPATH . 'knife/theme/generator.php';
 		$classes['knifemodulegenerator'] = CLIPATH . 'knife/module/generator.php';
 		$classes['knifeactiongenerator'] = CLIPATH . 'knife/action/generator.php';
+		$classes['knifeajaxgenerator'] = CLIPATH . 'knife/ajax/generator.php';
 		$classes['knifedatabase'] = CLIPATH . 'knife/database/database.php';
 		$classes['knifeshowgenerator'] = CLIPATH . 'knife/engine/show_generator.php';
 		$classes['knifehelpgenerator'] = CLIPATH . 'knife/engine/show_generator.php';
