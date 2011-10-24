@@ -36,6 +36,6 @@ class classnameInstall extends ModuleInstaller
 
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
-		$navigationBlogId = $this->setNavigation($navigationModulesId, 'classname', 'subname/index');
+		$navigationclassnameId = $this->setNavigation($navigationModulesId, 'classname', 'subname/index');
 	}
 }
