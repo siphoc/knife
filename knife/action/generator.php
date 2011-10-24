@@ -147,7 +147,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		if($this->getLocation() == 'backend')
 		{
 			// check if we need a specific base file
-			$baseActions = array('add', 'edit', 'delete', 'settings');
+			$baseActions = array('add', 'edit', 'delete', 'settings', 'index');
 			$baseAction = 'base';
 
 			// loop the baseactions

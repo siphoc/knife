@@ -9,7 +9,7 @@
  * @author		authorname
  * @since		versionname
  */
-class BackendclassnameIndex extends BackendBaseActionIndex
+class BackendmodulenameIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action
