@@ -33,5 +33,9 @@ class classnameInstall extends ModuleInstaller
 
 		// add extra's
 		$subnameID = $this->insertExtra('subname', 'block', 'classname', null, null, 'N', 1000);
+
+		// set navigation
+		$navigationModulesId = $this->setNavigation(null, 'Modules');
+		$navigationBlogId = $this->setNavigation($navigationModulesId, 'classname', 'subname/index');
 	}
 }
