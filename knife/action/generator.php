@@ -134,11 +134,11 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	protected function buildAction()
 	{
 		// action path
-		$actionPath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . strtolower($this->getModule()) . '/actions/' . $this->fileName;
-		$templatePath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . strtolower($this->getModule()) . '/layout/templates/' . $this->templateName;
+		$actionPath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . $this->getModuleFolder() . '/actions/' . $this->fileName;
+		$templatePath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . $this->getModuleFolder() . '/layout/templates/' . $this->templateName;
 
 		// check if the action doesn't exist yet
-		if(file_exists($actionPath) && !$this->addBlock) throw new Exception('The action(' . $this->getLocation() . '/' .  strtolower($this->getModule()) . '/' . strtolower($this->actionName) . ') already exists.');
+		if(file_exists($actionPath) && !$this->addBlock) throw new Exception('The action(' . $this->getLocation() . '/' .  $this->getModuleFolder() . '/' . strtolower($this->actionName) . ') already exists.');
 
 		// if we only need to add a block, return that value
 		if(file_exists($actionPath) && $this->addBlock) return $this->addBlock();
@@ -209,7 +209,6 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		// set variables
 		$this->setLocation($location);
 		$this->setModule($module);
-
 		// arrays with succes and failures
 		$this->successArray = array();
 		$failArray = array();
@@ -260,7 +259,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		{
 			// set the parameters
 			$parameters['group_id'] = 1;
-			$parameters['module'] = strtolower($this->getModule());
+			$parameters['module'] = $this->getModuleFolder();
 			$parameters['action'] = strtolower($this->buildFileName($this->inputName, ''));
 			$parameters['level'] = 7;
 

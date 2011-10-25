@@ -37,7 +37,7 @@ class KnifeBaseGenerator
 	 *
 	 * @var	string
 	 */
-	protected $module;
+	protected $module, $moduleFolder;
 
 	/**
 	 * Constructor
@@ -69,7 +69,7 @@ class KnifeBaseGenerator
 		$name = strtolower($name);
 
 		// remove all non alphabetical or underscore characters
-		$name = preg_replace("/[^a-z\s]/", "", $name);
+		$name = preg_replace("/[^a-z_\s]/", "", $name);
 
 		// return
 		return $name;
@@ -215,6 +215,16 @@ class KnifeBaseGenerator
 	}
 
 	/**
+	 * Gets the module
+	 *
+	 * @return	string
+	 */
+	protected function getModuleFolder()
+	{
+		return $this->moduleFolder;
+	}
+
+	/**
 	 * The init function, this sets the needed variable names
 	 * and calls the required actions.
 	 */
@@ -329,7 +339,11 @@ class KnifeBaseGenerator
 	protected function setModule($module)
 	{
 		// module exists?
-		if(is_dir(BASEPATH . 'default_www/' . $this->location . '/modules/' . $module)) $this->module = (string) $this->buildName($module);
+		if(is_dir(BASEPATH . 'default_www/' . $this->location . '/modules/' . $module))
+		{
+			$this->module = (string) $this->buildName($module);
+			$this->moduleFolder = $this->buildDirName($module);
+		}
 		// doesnt exist
 		else throw new Exception('The given module(' . $module . ') does not exist.');
 	}
