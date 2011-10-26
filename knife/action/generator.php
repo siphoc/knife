@@ -133,9 +133,12 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 */
 	protected function buildAction()
 	{
+		// the location path
+		$locationPath = ($this->getLocation() == 'frontend') ? FRONTENDPATH : BACKENDPATH;
+
 		// action path
-		$actionPath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . $this->getModuleFolder() . '/actions/' . $this->fileName;
-		$templatePath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . $this->getModuleFolder() . '/layout/templates/' . $this->templateName;
+		$actionPath = $locationPath . 'modules/' . $this->getModuleFolder() . '/actions/' . $this->fileName;
+		$templatePath = $locationPath . 'modules/' . $this->getModuleFolder() . '/layout/templates/' . $this->templateName;
 
 		// check if the action doesn't exist yet
 		if(file_exists($actionPath) && !$this->addBlock) throw new Exception('The action(' . $this->getLocation() . '/' .  $this->getModuleFolder() . '/' . strtolower($this->actionName) . ') already exists.');

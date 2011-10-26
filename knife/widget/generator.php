@@ -54,9 +54,12 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 	 */
 	protected function buildWidget()
 	{
+		// the location path
+		$locationPath = ($this->getLocation() == 'frontend') ? FRONTENDPATH : BACKENDPATH;
+
 		// widget path
-		$widgetPath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . $this->getModuleFolder() . '/widgets/' . $this->fileName;
-		$templatePath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . $this->getModuleFolder() . '/layout/widgets/' . $this->templateName;
+		$widgetPath = $locationPath . 'modules/' . $this->getModuleFolder() . '/widgets/' . $this->fileName;
+		$templatePath = $locationPath . 'modules/' . $this->getModuleFolder() . '/layout/widgets/' . $this->templateName;
 
 		// check if the widget doesn't exist yet
 		if(file_exists($widgetPath)) throw new Exception('The widget(' . $this->getLocation() . '/' .  $this->getModuleFolder() . '/' . strtolower($this->widgetName) . ') already exists.');

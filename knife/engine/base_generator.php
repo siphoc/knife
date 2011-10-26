@@ -338,8 +338,11 @@ class KnifeBaseGenerator
 	 */
 	protected function setModule($module)
 	{
+		// the location path
+		$locationPath = ($this->location == 'frontend') ? FRONTENDPATH : BACKENDPATH;
+
 		// module exists?
-		if(is_dir(BASEPATH . 'default_www/' . $this->location . '/modules/' . $module))
+		if(is_dir($locationPath . 'modules/' . $module))
 		{
 			$this->module = (string) $this->buildName($module);
 			$this->moduleFolder = $this->buildDirName($module);

@@ -159,52 +159,66 @@ class Knife
 		$workingDir = getcwd();
 
 		// are we in default_www or library?
+		$posFrontend = strpos($workingDir, 'frontend');
+		$posBackend = strpos($workingDir, 'backend');
 		$posDefWWW = strpos($workingDir, 'default_www');
-		$posDefLib = strpos($workingDir, 'library');
+		$posLib = strpos($workingDir, 'library');
 
-		// we're not in one of forks working dirs
-		if(empty($posDefWWW) && empty($posDefLib))
+		// this is a check if we're in one of the directories
+		if($posFrontend !== false || $posBackend !== false || $posLib !== false || $posDefWWW !== false)
 		{
-			// is there a library path and default_www path available?
-			if(!is_dir($workingDir . '/default_www') && !is_dir($workingDir . '/library'))
+			// we're in a 2.x version of fork, with default_www
+			if($posDefWWW !== false)
 			{
-				throw new Exception('This is not a valid Fork NG path. Please initiate in your home folder of your project.');
+				// get the base path
+				$basePath = explode('default_www', $workingDir);
+				$basePath = $backendPath[0];
+				$frontendPath = $basePath . 'default_www/frontend/';
+				$backendPath = $basePath . 'default_www/backend/';
+				$libraryPath = $basePath . 'library/';
 			}
+			// we're in 3.x
+			else
+			{
+				// get the base path
+				if($posFrontend !== false) $basePath = explode('frontend', $workingDir);
+				elseif($posBackend !== false) $basePath = explode('backend', $workingDir);
+				elseif($posLib !== false) $basePath = explode('library', $workingDir);
 
-			// create working paths
-			$frontendPath = $workingDir . '/default_www/frontend/';
-			$backendPath = $workingDir . '/default_www/backend/';
-			$libraryPath = $workingDir . '/library/';
-			$basePath = $workingDir . '/';
+				// set the paths
+				$basePath = $basePath[0];
+				$frontendPath = $basePath . 'frontend/';
+				$backendPath = $basePath . 'backend/';
+				$libraryPath = $basePath . 'library/';
+			}
 		}
-		// we're in one
-		else
+		// we're not in a fork subdirectory
+		elseif(file_exists($workingDir . '/VERSION.md') && (is_dir($workingDir . '/default_www') || is_dir($workingDir . '/frontend')) && is_dir($workingDir . '/library'))
 		{
-			// where to split on
-			$splitChar = (!empty($posDefWWW)) ? 'default_www' : 'library';
-
-			// split the directory to go into default_www
-			$workingDir = explode($splitChar, $workingDir);
-			$workingDir = $workingDir[0];
-
-			// create paths
-			$frontendPath = $workingDir . 'default_www/frontend/';
-			$backendPath = $workingDir . 'default_www/backend/';
-			$libraryPath = $workingDir . 'library/';
-			$basePath = $workingDir;
+			// we're in a 2.x version of fork, with default_www
+			if(is_dir($workingDir . '/default_www'))
+			{
+				$frontendPath = $workingDir . '/default_www/frontend/';
+				$backendPath = $workingDir . '/default_www/backend/';
+				$basePath = $workingDir . '/';
+				$libraryPath = $workingDir . '/library/';
+			}
+			// we're in fork 3.x
+			else
+			{
+				$frontendPath = $workingDir . '/frontend/';
+				$backendPath = $workingDir . '/backend/';
+				$basePath = $workingDir . '/';
+				$libraryPath = $workingDir . '/library/';
+			}
 		}
+		else throw new Exception('You are not in a working fork directory');
 
 		// read the version
 		$oVersion = fopen($basePath . 'VERSION.md', 'r');
 		$rVersion = fread($oVersion, filesize($basePath . 'VERSION.md'));
-		define('VERSION', trim($rVersion));
-		$rVersion = (int) str_replace('.', '', $rVersion);
-
-		// check if the frontend and backend exist (old fork doesn't have this)
-		if(!is_dir($frontendPath) || !is_dir($backendPath) || $rVersion < 200)
-		{
-			throw new Exception('This is an older version of Fork. The Fork tool only works with V2+.');
-		}
+		$rVersion = str_replace("\n", '', $rVersion);
+		define('VERSION', $rVersion);
 
 		// set paths for overall use
 		define('FRONTENDPATH', $frontendPath);
