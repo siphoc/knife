@@ -47,7 +47,8 @@ class KnifeShowGenerator extends KnifeBaseGenerator
 	 */
 	private function showVersion()
 	{
-		Knife::dump(VERSION);
+		echo 'Fork version: ' . VERSION;
+		exit;
 	}
 
 	/**
