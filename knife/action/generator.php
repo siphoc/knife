@@ -288,7 +288,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		// replace
 		$fileInput = $this->readFile($file);
 		$fileInput = str_replace('modulename', $this->getModule(), $fileInput);
-		$fileInput = str_replace('subname', strtolower($this->getModule()), $fileInput);
+		$fileInput = str_replace('subname', $this->getModuleFolder(), $fileInput);
 		$fileInput = str_replace('actionname', $this->actionName, $fileInput);
 		$fileInput = str_replace('versionname', VERSION, $fileInput);
 		$fileInput = str_replace('authorname', AUTHOR, $fileInput);
