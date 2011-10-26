@@ -212,6 +212,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		// set variables
 		$this->setLocation($location);
 		$this->setModule($module);
+
 		// arrays with succes and failures
 		$this->successArray = array();
 		$failArray = array();
@@ -235,6 +236,47 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 					$this->addBlock = true;
 					$action = $arrBlock[0];
 				}
+			}
+			// its the backend
+			else
+			{
+				// generate install.php action data
+				$actionSetting = '$this->setActionRights(1, \'' . $this->getModuleFolder() . '\', \'' . $this->buildName($action) . '\')';
+
+				// read the installer into an array
+				$aInstall = file(BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/install.php');
+
+				// the new file array
+				$fileArray = array();
+
+				// fileKey
+				$fileKey = 0;
+
+				// loop the installer lines
+				foreach($aInstall as $key => $line)
+				{
+					// trim the line
+					$trimmedLine = trim($line);
+
+					// get the index action, this should always be present
+					if($trimmedLine == '$this->setActionRights(1, \'' . $this->getModuleFolder() . '\', \'index\');')
+					{
+						// the new rule
+						$fileArray[$fileKey] = "\t\t" . '$this->setActionRights(1, \'' . $this->getModuleFolder() . '\', \'' . $action . '\');' . "\n";
+
+						// reset the line key
+						$fileKey++;
+					}
+
+					// add the line
+					$fileArray[$fileKey] = $line;
+
+					// count up
+					$fileKey++;
+				}
+
+				// rewrite the file
+				file_put_contents(BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/install.php', $fileArray);
 			}
 
 			// build action variables
