@@ -44,7 +44,7 @@ spl_autoload_register(array('Knife', 'autoLoader'));
  *
  *
  * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
- * @since		0.1
+ * @since		0.7
  */
 class Knife
 {
@@ -134,6 +134,7 @@ class Knife
 		$classes['knifeshowgenerator'] = CLIPATH . 'knife/engine/show_generator.php';
 		$classes['knifehelpgenerator'] = CLIPATH . 'knife/engine/show_generator.php';
 		$classes['knifewidgetgenerator'] = CLIPATH . 'knife/widget/generator.php';
+		$classes['knifeexportgenerator'] = CLIPATH . 'knife/export/generator.php';
 
 		// is the class set?
 		if(!array_key_exists($tmpClass, $classes)) throw new Exception('This isn\'t a valid action.');

@@ -146,7 +146,6 @@ class KnifeThemeGenerator extends KnifeBaseGenerator
 		}
 	}
 
-
 	/**
 	 * Creates the database info
 	 */

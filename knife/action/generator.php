@@ -8,7 +8,7 @@
  * @subpackage	action
  *
  * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
- * @since		0.3
+ * @since		0.7
  */
 class KnifeActionGenerator extends KnifeBaseGenerator
 {
@@ -123,6 +123,8 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 
 	/**
 	 * This will generate an action. It willn ot overwrite an existing action.
+	 *
+	 * The action will automaticly be added in the install.php file.
 	 *
 	 * The data needed for this action: 'modulename', 'location', 'actionname(s)'
 	 *

@@ -8,7 +8,7 @@
  * @subpackage	module
  *
  * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
- * @since		0.4
+ * @since		0.7
  */
 class KnifeModuleGenerator extends KnifeBaseGenerator
 {
