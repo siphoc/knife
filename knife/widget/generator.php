@@ -24,15 +24,22 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 	 */
 	protected function init()
 	{
-		// build the first location widgets
-		$this->buildLocationWidget($this->arg[0], @$this->arg[1], @$this->arg[2]);
+		// get the action location
+		foreach($this->arg as $key => $data)
+		{
+			// don't use the first key
+			if($key == 0) continue;
 
-		// is there a second location given?
-		if(isset($this->arg[3])) $this->buildLocationWidget($this->arg[0], $this->arg[3], @$this->arg[4]);
+			// build the data
+			$widgetData = $this->buildWidgetData($data);
 
-		// print the good widgets
-		$this->successHandler('The widgets ' . implode(', ', $this->successArray) . ' are created.');
-		if(!empty($failArray)) $this->errorHandler(__CLASS__, 'buildWidget');
+			// build the action
+			$this->buildLocationWidget($this->arg[0], $widgetData['location'], $widgetData['actions']);
+
+			// print the good widgets
+			$this->successHandler('The widgets are created.');
+			if(!empty($failArray)) $this->errorHandler(__CLASS__, 'buildWidget');
+		}
 	}
 
 	/**
@@ -41,18 +48,18 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 	 * The data needed for this widget: 'modulename', 'location', 'widgetname(s)'
 	 *
 	 * Examples:
-	 * ft widget blog backend edit,add,categories
-	 * ft widget blog frontend detail,archive
-	 * ft widget blog backend edit,delete,add_category frontend detail,archive
+	 * ft widget blog b=edit,add,categories
+	 * ft widget blog f=detail,archive
+	 * ft widget blog b=edit,delete,add_category f=detail,archive
 	 */
 	protected function buildWidget()
 	{
 		// widget path
-		$widgetPath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . strtolower($this->getModule()) . '/widgets/' . $this->fileName;
-		$templatePath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . strtolower($this->getModule()) . '/layout/widgets/' . $this->templateName;
+		$widgetPath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . $this->getModuleFolder() . '/widgets/' . $this->fileName;
+		$templatePath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . $this->getModuleFolder() . '/layout/widgets/' . $this->templateName;
 
 		// check if the widget doesn't exist yet
-		if(file_exists($widgetPath)) throw new Exception('The widget(' . $this->getLocation() . '/' .  strtolower($this->getModule()) . '/' . strtolower($this->widgetName) . ') already exists.');
+		if(file_exists($widgetPath)) throw new Exception('The widget(' . $this->getLocation() . '/' .  $this->getModuleFolder() . '/' . strtolower($this->widgetName) . ') already exists.');
 
 		// backend widget
 		if($this->getLocation() == 'backend')
@@ -80,6 +87,37 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 		$this->makeFile($templatePath, $widgetTpl);
 
 		return true;
+	}
+
+	/**
+	 * Build the action info
+	 *
+	 * @return	array
+	 * @param	string $data		The data to convert into an array.
+	 */
+	private function buildWidgetData($data)
+	{
+		// the data array
+		$arrReturn = array();
+		$arrData = explode('=', $data);
+
+		// is this a valid location
+		if($arrData[0] != 'f' && $arrData[0] != 'frontend' && $arrData[0] != 'backend' && $arrData[0] != 'b')
+		{
+			throw new Exception('This(' . $arrData[0] . ' is not a valid location');
+		}
+
+		// are there actions givne?
+		if(!isset($arrData[1])) throw new Exception('You need to provide at least one action');
+
+		// get the location
+		$arrReturn['location'] = ($arrData[0] == 'f' || $arrData == 'frontend') ? 'frontend' : 'backend';
+
+		// the actions
+		$arrReturn['actions'] = $arrData[1];
+
+		// return
+		return $arrReturn;
 	}
 
 	/**

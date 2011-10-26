@@ -31,14 +31,14 @@ class KnifeAjaxGenerator extends KnifeBaseGenerator
 			if($key == 0) continue;
 
 			// build the data
-			$actionData = $this->buildActionData($data);
+			$actionData = $this->buildAjaxData($data);
 
 			// build the action
 			$this->buildLocationAction($this->arg[0], $actionData['location'], $actionData['actions']);
 
 			// print the good actions
-			if(empty($this->failArray)) $this->successHandler('The ' . $this->getLocation() . ' actions are created.');
-			else $this->errorHandler(__CLASS__, 'buildAction');
+			if(empty($this->failArray)) $this->successHandler('The ' . $this->getLocation() . ' ajax handlers are created.');
+			else $this->errorHandler(__CLASS__, 'buildAjax');
 		}
 	}
 
@@ -48,7 +48,7 @@ class KnifeAjaxGenerator extends KnifeBaseGenerator
 	 * @return	array
 	 * @param	string $data		The data to convert into an array.
 	 */
-	private function buildActionData($data)
+	private function buildAjaxData($data)
 	{
 		// the data array
 		$arrReturn = array();
@@ -83,7 +83,7 @@ class KnifeAjaxGenerator extends KnifeBaseGenerator
 	 * ft action blog frontend detail,archive
 	 * ft action blog backend edit,delete,add_category frontend detail,archive
 	 */
-	protected function buildAction()
+	protected function buildAjax()
 	{
 		// action path
 		$actionPath = BASEPATH . 'default_www/' . $this->getLocation() . '/modules/' . strtolower($this->getModule()) . '/ajax/' . $this->fileName;
@@ -103,7 +103,7 @@ class KnifeAjaxGenerator extends KnifeBaseGenerator
 	}
 
 	/**
-	 * Builds a specific location action
+	 * Builds a specific location ajax handler
 	 *
 	 * @param	string $module		The module.
 	 * @param	string $location	The working location.
@@ -147,7 +147,7 @@ class KnifeAjaxGenerator extends KnifeBaseGenerator
 			$this->templateName = $this->buildFileName($action, 'tpl');
 
 			// build the action
-			$success = $this->buildAction();
+			$success = $this->buildAjax();
 			if($success) array_push($this->successArray, $this->actionName);
 			else array_push($this->failArray, $this->actionName);
 		}
