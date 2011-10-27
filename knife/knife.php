@@ -173,7 +173,7 @@ class Knife
 			{
 				// get the base path
 				$basePath = explode('default_www', $workingDir);
-				$basePath = $backendPath[0];
+				$basePath = $basePath[0];
 				$frontendPath = $basePath . 'default_www/frontend/';
 				$backendPath = $basePath . 'default_www/backend/';
 				$libraryPath = $basePath . 'library/';
