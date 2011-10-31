@@ -79,13 +79,17 @@ class KnifeExportGenerator extends KnifeBaseGenerator
 			if(is_dir(FRONTENDPATH . 'modules/' . $this->getModuleFolder() . '/'))
 			{
 				$zipFile->addEmptyDir('frontend');
-				$zipFile = $this->addToArchive($zipFile, FRONTENDPATH . 'modules/' . $this->getModuleFolder() . '/', 'frontend/');
+				$zipFile->addEmptyDir('frontend/modules');
+				$zipFile->addEmptyDir('frontend/modules/faq');
+				$zipFile = $this->addToArchive($zipFile, FRONTENDPATH . 'modules/' . $this->getModuleFolder() . '/', 'frontend/modules/faq/');
 			}
 
 			if(is_dir(BACKENDPATH . 'modules/' . $this->getModuleFolder()))
 			{
 				$zipFile->addEmptyDir('backend');
-				$zipFile = $this->addToArchive($zipFile, BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/', 'backend/');
+				$zipFile->addEmptyDir('backend/modules');
+				$zipFile->addEmptyDir('backend/modules/faq');
+				$zipFile = $this->addToArchive($zipFile, BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/', 'backend/modules/faq/');
 			}
 		}
 		$zipFile->close();
@@ -105,6 +109,11 @@ class KnifeExportGenerator extends KnifeBaseGenerator
 		// no module name given
 		if(!isset($this->arg[1])) throw new Exception('Please provide a theme name');
 
-		// get the files
+		// the directory name
+		$dirName = $this->buildDirName($this->arg[1]);
+
+		if(!is_dir(FRONTENDPATH . 'themes/' . $dirName)) throw new Exception('Please provide an existing theme name');
+
+
 	}
 }
