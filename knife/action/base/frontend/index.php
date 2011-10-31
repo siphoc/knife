@@ -1,63 +1,41 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the actionname-action (default), it will display the overview of subname posts
  *
- * @package		frontend
- * @subpackage	subname
- *
  * @author		authorname
- * @since		versionname
  */
 class Frontendmodulenameactionname extends FrontendBaseBlock
 {
 	/**
-	 * The record
-	 *
 	 * @var	array
 	 */
 	private $record;
 
-	/**
-	 * Execute the action
-	 *
-	 * @return	void
-	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
-		// get the data
-		$this->getData();
+		$this->loadData();
 
-		// parse
 		$this->parse();
-
-		// load the template
 		$this->loadTemplate();
 	}
 
-
-	/**
-	 * Get the data
-	 *
-	 * @return	void
-	 */
-	private function getData()
+	private function loadData()
 	{
 		$this->record = false;
 	}
 
-
-	/**
-	 * Parse the data
-	 *
-	 * @return	void
-	 */
 	protected function parse()
 	{
-		// parse the data
 		$this->tpl->assign('items', $this->record);
 	}
 }

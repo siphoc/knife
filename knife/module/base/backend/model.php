@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the subname module
  *
- * @package		backend
- * @subpackage	subname
- *
  * @author		authorname
- * @since		versionname
  */
 class BackendclassnameModel
 {
 	/**
-	 * Deletes an item
-	 *
-	 * @param	int $id		The id of the item to delete.
+	 * @param int $id
 	 */
 	public static function delete($id)
 	{
@@ -22,10 +23,8 @@ class BackendclassnameModel
 	}
 
 	/**
-	 * Checks if an item exists
-	 *
-	 * @return	bool
-	 * @param	int $id		The item id.
+	 * @param int $id
+	 * @return bool
 	 */
 	public static function exists($id)
 	{
@@ -36,10 +35,8 @@ class BackendclassnameModel
 	}
 
 	/**
-	 * Fetches an item
-	 *
-	 * @return	array
-	 * @param	int $id		The id of the item to fetch.
+	 * @param int $id
+	 * @return array
 	 */
 	public static function get($id)
 	{
@@ -52,9 +49,9 @@ class BackendclassnameModel
 	/**
 	 * Retrieve the unique URL for an item
 	 *
-	 * @return	string
-	 * @param	string $URL			The URL to base on.
-	 * @param	int[optional] $id	The id of the item to ignore.
+	 * @param string $URL
+	 * @param int[optional] $id
+	 * @return string
 	 */
 	public static function getURL($URL, $id = null)
 	{
@@ -84,7 +81,6 @@ class BackendclassnameModel
 				return self::getURL($URL);
 			}
 		}
-
 		// current category should be excluded
 		else
 		{
@@ -111,32 +107,24 @@ class BackendclassnameModel
 	}
 
 	/**
-	 * This inserts an item in the database
-	 *
-	 * @return	int
-	 * @param	array $data		The data to insert.
+	 * @param array $data
+	 * @return int
 	 */
 	public static function insert(array $data)
 	{
-		// set the created on date
 		$data['created_on'] = BackendModel::getUTCDate();
 
-		// insert
 		return (int) BackendModel::getDB(true)->insert('subname', $data);
 	}
 
 	/**
-	 * This updates an item in the database
-	 *
 	 * @param	array $data		The data to update.
 	 * @param	int $itemId		The item id to update.
 	 */
 	public static function update(array $data, $itemId)
 	{
-		// set the edited on date
 		$data['edited_on'] = BackendModel::getUTCDate();
 
-		// update
 		BackendModel::getDB(true)->update('subname', $data, 'id = ?', (int) $itemId);
 	}
 }

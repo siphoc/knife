@@ -1,60 +1,36 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action (default), it will display the overview of subname posts
  *
- * @package		backend
- * @subpackage	subname
- *
- * @author		authorname
- * @since		versionname
+ * @author authorname
  */
 class BackendmodulenameIndex extends BackendBaseActionIndex
 {
-	/**
-	 * Execute the action
-	 *
-	 * @return	void
-	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the dataGrid
 		$this->loadDataGrid();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
-	/**
-	 * Load the dataGrid
-	 *
-	 * @return	void
-	 */
 	private function loadDataGrid()
 	{
-		// create the dataGrid
 		$this->dataGrid = new BackendDataGridDB(QUERY, PARAMETERS);
-
-		// add edit column
 		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
-
-	/**
-	 * Parse
-	 *
-	 * @return	void
-	 */
 	protected function parse()
 	{
-		// parse the dataGrid
+		// parse the dataGrid if there are results
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }
