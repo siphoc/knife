@@ -57,6 +57,15 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 		// the location path
 		$locationPath = ($this->getLocation() == 'frontend') ? FRONTENDPATH : BACKENDPATH;
 
+		if(!is_dir($locationPath . 'modules/' . $this->getModuleFolder() . '/widgets'))
+		{
+			mkdir($locationPath . 'modules/' . $this->getModuleFolder() . '/widgets');
+		}
+		if(!is_dir($locationPath . 'modules/' . $this->getModuleFolder() . '/layout/widgets/'))
+		{
+			mkdir($locationPath . 'modules/' . $this->getModuleFolder() . '/layout/widgets/');
+		}
+
 		// widget path
 		$widgetPath = $locationPath . 'modules/' . $this->getModuleFolder() . '/widgets/' . $this->fileName;
 		$templatePath = $locationPath . 'modules/' . $this->getModuleFolder() . '/layout/widgets/' . $this->templateName;
