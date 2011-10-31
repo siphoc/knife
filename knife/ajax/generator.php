@@ -88,8 +88,12 @@ class KnifeAjaxGenerator extends KnifeBaseGenerator
 		// the location path
 		$locationPath = ($this->getLocation() == 'frontend') ? FRONTENDPATH : BACKENDPATH;
 
+		$actionFolder = $locationPath . 'modules/' . $this->getModuleFolder() . '/ajax';
+
+		if(!is_dir($actionFolder)) mkdir($actionFolder);
+
 		// action path
-		$actionPath = $locationPath . 'modules/' . strtolower($this->getModule()) . '/ajax/' . $this->fileName;
+		$actionPath = $actionFolder . '/' . $this->fileName;
 
 		// check if the action doesn't exist yet
 		if(file_exists($actionPath)) throw new Exception('The ajax handler(' . $this->getLocation() . '/' .  strtolower($this->getModule()) . '/' . strtolower($this->actionName) . ') already exists.');

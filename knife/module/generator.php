@@ -81,11 +81,10 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		$backendDirs = array(
 			'main' => BACKENDPATH . 'modules/' . $this->buildDirName($this->moduleName),
 			'sub' => array(
-				'actions', 'ajax',
+				'actions', 'js',
 				'engine' => array('cronjobs'),
 				'installer' => array('data'),
-				'js', 'widgets',
-				'layout' => array('templates', 'widgets')
+				'layout' => array('templates')
 			)
 		);
 
@@ -96,8 +95,8 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		$frontendDirs = array(
 			'main' => FRONTENDPATH . 'modules/' . $this->buildDirName($this->moduleName),
 			'sub' => array(
-				'actions', 'ajax', 'engine', 'widgets',
-				'layout' => array('templates', 'widgets'),
+				'actions', 'engine',
+				'layout' => array('templates'),
 				'js'
 			)
 		);

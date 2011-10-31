@@ -57,18 +57,15 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 		// the location path
 		$locationPath = ($this->getLocation() == 'frontend') ? FRONTENDPATH : BACKENDPATH;
 
-		if(!is_dir($locationPath . 'modules/' . $this->getModuleFolder() . '/widgets'))
-		{
-			mkdir($locationPath . 'modules/' . $this->getModuleFolder() . '/widgets');
-		}
-		if(!is_dir($locationPath . 'modules/' . $this->getModuleFolder() . '/layout/widgets/'))
-		{
-			mkdir($locationPath . 'modules/' . $this->getModuleFolder() . '/layout/widgets/');
-		}
+		$actionFolder = $locationPath . 'modules/' . $this->getModuleFolder() . '/widgets';
+		$templateFolder = $locationPath . 'modules/' . $this->getModuleFolder() . '/layout/widgets/';
+
+		if(!is_dir($actionFolder)) mkdir($actionFolder);
+		if(!is_dir($templateFolder)) mkdir($templateFolder);
 
 		// widget path
-		$widgetPath = $locationPath . 'modules/' . $this->getModuleFolder() . '/widgets/' . $this->fileName;
-		$templatePath = $locationPath . 'modules/' . $this->getModuleFolder() . '/layout/widgets/' . $this->templateName;
+		$widgetPath = $actionFolder . '/' . $this->fileName;
+		$templatePath = $templateFolder . '/' . $this->templateName;
 
 		// check if the widget doesn't exist yet
 		if(file_exists($widgetPath)) throw new Exception('The widget(' . $this->getLocation() . '/' .  $this->getModuleFolder() . '/' . strtolower($this->widgetName) . ') already exists.');
