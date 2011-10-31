@@ -27,6 +27,36 @@ class KnifeExportGenerator extends KnifeBaseGenerator
 	}
 
 	/**
+	 * This recursivly adds files to the given zip file
+	 *
+	 * @param ZipArchive $zipArchive
+	 * @param string directory
+	 * @return ZipArchive
+	 */
+	private function addToArchive(ZipArchive $zipArchive, $directory, $putInto)
+	{
+		if($handle = opendir($directory))
+		{
+			while(($file = readdir($handle)) !== false)
+			{
+				if(is_file($directory . $file))
+				{
+					$fileContents = file_get_contents($directory . $file);
+					$zipArchive->addFile($directory . $file, $putInto . $file);
+				}
+				elseif($file != '.' && $file != '..' && $file != '.svn')
+				{
+					$zipArchive->addEmptyDir($putInto . $file . '/');
+					$this->addToArchive($zipArchive, $directory . $file . '/', $putInto . $file . '/');
+				}
+			}
+		}
+		closedir($handle);
+
+		return $zipArchive;
+	}
+
+	/**
 	 * This action will export a module so it can easily be transferred to install somewhere
 	 * else.
 	 *
@@ -41,6 +71,24 @@ class KnifeExportGenerator extends KnifeBaseGenerator
 		if(!isset($this->arg[1])) throw new Exception('Please provide a module name');
 
 		// get the files
+		$this->setModule($this->arg[1]);
+
+		$zipFile = new ZipArchive();
+		if($zipFile->open(BASEPATH . $this->getModuleFolder() . '.zip', ZipArchive::CREATE))
+		{
+			if(is_dir(FRONTENDPATH . 'modules/' . $this->getModuleFolder() . '/'))
+			{
+				$zipFile->addEmptyDir('frontend');
+				$zipFile = $this->addToArchive($zipFile, FRONTENDPATH . 'modules/' . $this->getModuleFolder() . '/', 'frontend/');
+			}
+
+			if(is_dir(BACKENDPATH . 'modules/' . $this->getModuleFolder()))
+			{
+				$zipFile->addEmptyDir('backend');
+				$zipFile = $this->addToArchive($zipFile, BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/', 'backend/');
+			}
+		}
+		$zipFile->close();
 	}
 
 	/**
