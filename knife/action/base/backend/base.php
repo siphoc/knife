@@ -10,10 +10,13 @@
 /**
  * This is the actionname action, it will display a form to create a new item
  *
- * @author		authorname
+ * @author authorname
  */
 class Backendmodulenameactionname extends BackendBaseAction
 {
+	/**
+	 * Execute the action
+	 */
 	public function execute()
 	{
 		parent::execute();
@@ -22,6 +25,9 @@ class Backendmodulenameactionname extends BackendBaseAction
 		$this->display();
 	}
 
+	/**
+	 * Parse the page
+	 */
 	protected function parse()
 	{
 

@@ -10,10 +10,13 @@
 /**
  * This is an ajax handler
  *
- * @author		authorname
+ * @author authorname
  */
 class BackendmodulenameAjaxactionname extends BackendBaseAJAXAction
 {
+	/**
+	 * Execute the action
+	 */
 	public function execute()
 	{
 		parent::execute();

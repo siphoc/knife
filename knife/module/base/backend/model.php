@@ -10,11 +10,13 @@
 /**
  * In this file we store all generic functions that we will be using in the subname module
  *
- * @author		authorname
+ * @author authorname
  */
 class BackendclassnameModel
 {
 	/**
+	 * Delete a certain item
+	 *
 	 * @param int $id
 	 */
 	public static function delete($id)
@@ -23,6 +25,8 @@ class BackendclassnameModel
 	}
 
 	/**
+	 * Checks if a certain item exists
+	 *
 	 * @param int $id
 	 * @return bool
 	 */
@@ -35,6 +39,8 @@ class BackendclassnameModel
 	}
 
 	/**
+	 * Fetches a certain item
+	 *
 	 * @param int $id
 	 * @return array
 	 */
@@ -107,6 +113,8 @@ class BackendclassnameModel
 	}
 
 	/**
+	 * Insert an item in the database
+	 *
 	 * @param array $data
 	 * @return int
 	 */
@@ -118,6 +126,8 @@ class BackendclassnameModel
 	}
 
 	/**
+	 * Updates an item
+	 *
 	 * @param	array $data		The data to update.
 	 * @param	int $itemId		The item id to update.
 	 */

@@ -10,10 +10,13 @@
 /**
  * This is the add-action, it will display a form to create a new item
  *
- * @author		authorname
+ * @author authorname
  */
 class Backendmodulenameactionname extends BackendBaseActionDelete
 {
+	/**
+	 * Execute the action
+	 */
 	public function execute()
 	{
 		$this->id = $this->getParameter('id', 'int');

@@ -10,10 +10,13 @@
 /**
  * This is an ajax handler
  *
- * @author		authorname
+ * @author authorname
  */
 class FrontendmodulenameAjaxactionname extends FrontendBaseAJAXAction
 {
+	/**
+	 * Execute the action
+	 */
 	public function execute()
 	{
 		parent::execute();

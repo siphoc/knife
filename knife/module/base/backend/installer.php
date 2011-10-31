@@ -10,14 +10,19 @@
 /**
  * Installer for the subname module
  *
- * @author		authorname
+ * @author authorname
  */
 class classnameInstall extends ModuleInstaller
 {
-	public function execute()
+	public function install()
 	{
+		// import the sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
+
+		// install the module in the database
 		$this->addModule('subname', 'The subname module.');
+
+		// install the locale, this is set here beceause we need the module for this
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
 		$this->setModuleRights(1, 'subname');

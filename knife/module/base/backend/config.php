@@ -10,11 +10,7 @@
 /**
  * This is the configuration-object for the subname module
  *
- * @package		backend
- * @subpackage	subname
- *
- * @author		authorname
- * @since		versionname
+ * @author authorname
  */
 final class BackendclassnameConfig extends BackendBaseConfig
 {

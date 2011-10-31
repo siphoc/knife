@@ -10,10 +10,13 @@
 /**
  * This is the add-action, it will display a form to create a new item
  *
- * @author		authorname
+ * @author authorname
  */
 class Backendmodulenameactionname extends BackendBaseActionAdd
 {
+	/**
+	 * Execute the actions
+	 */
 	public function execute()
 	{
 		parent::execute();
@@ -25,6 +28,9 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 		$this->display();
 	}
 
+	/**
+	 * Load the form
+	 */
 	private function loadForm()
 	{
 		$rbtVisibleValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'N');
@@ -37,6 +43,9 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 	}
 
+	/**
+	 * Parse the page
+	 */
 	protected function parse()
 	{
 		parent::parse();
@@ -47,11 +56,13 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
 	}
 
+	/**
+	 * Validate the form
+	 */
 	private function validateForm()
 	{
 		if($this->frm->isSubmitted())
 		{
-			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// validation

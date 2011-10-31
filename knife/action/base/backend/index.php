@@ -14,20 +14,30 @@
  */
 class BackendmodulenameIndex extends BackendBaseActionIndex
 {
+	/**
+	 * Execute the action
+	 */
 	public function execute()
 	{
 		parent::execute();
 		$this->loadDataGrid();
+
 		$this->parse();
 		$this->display();
 	}
 
+	/**
+	 * Load the dataGrid
+	 */
 	private function loadDataGrid()
 	{
 		$this->dataGrid = new BackendDataGridDB(QUERY, PARAMETERS);
 		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
+	/**
+	 * Parse the page
+	 */
 	protected function parse()
 	{
 		// parse the dataGrid if there are results

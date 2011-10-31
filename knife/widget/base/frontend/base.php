@@ -10,7 +10,7 @@
 /**
  * This is a widget
  *
- * @author		authorname
+ * @author authorname
  */
 class FrontendmodulenameWidgetwidgetname extends FrontendBaseWidget
 {
@@ -19,6 +19,9 @@ class FrontendmodulenameWidgetwidgetname extends FrontendBaseWidget
 	 */
 	private $record;
 
+	/**
+	 * Exceute the action
+	 */
 	public function execute()
 	{
 		parent::execute();
@@ -29,11 +32,17 @@ class FrontendmodulenameWidgetwidgetname extends FrontendBaseWidget
 		$this->parse();
 	}
 
+	/**
+	 * Load the data
+	 */
 	private function loadData()
 	{
 		$this->record = false;
 	}
 
+	/**
+	 * Parse the widget
+	 */
 	protected function parse()
 	{
 		$this->tpl->assign('widgetname', $this->record);

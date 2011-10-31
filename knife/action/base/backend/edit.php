@@ -14,6 +14,9 @@
  */
 class Backendmodulenameactionname extends BackendBaseActionEdit
 {
+	/**
+	 * Execute the action
+	 */
 	public function execute()
 	{
 		parent::execute();
@@ -26,15 +29,20 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 		$this->display();
 	}
 
+	/**
+	 * Load the item data
+	 */
 	private function loadData()
 	{
 		$this->id = $this->getParameter('id', 'int');
 		if(!BackendmodulenameModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 
-		// the data
 		$this->record = BackendmodulenameModel::get($this->id);
 	}
 
+	/**
+	 * Load the form
+	 */
 	private function loadForm()
 	{
 		// set hidden values
@@ -50,12 +58,12 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 	}
 
+	/**
+	 * Parse the page
+	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
-
-		// assign the item
 		$this->tpl->assign('item', $this->record);
 
 		// get url
@@ -64,14 +72,14 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
 	}
 
+	/**
+	 * Validate the form
+	 */
 	private function validateForm()
 	{
 		if($this->frm->isSubmitted())
 		{
-			// set callback for generating an unique URL
 			$this->meta->setUrlCallback('BackendmodulenameModel', 'getURL', array($this->record['id']));
-
-			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// validation

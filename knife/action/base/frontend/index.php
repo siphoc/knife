@@ -10,15 +10,20 @@
 /**
  * This is the actionname-action (default), it will display the overview of subname posts
  *
- * @author		authorname
+ * @author authorname
  */
 class Frontendmodulenameactionname extends FrontendBaseBlock
 {
 	/**
+	 * The record data
+	 *
 	 * @var	array
 	 */
 	private $record;
 
+	/**
+	 * Execute the action
+	 */
 	public function execute()
 	{
 		parent::execute();

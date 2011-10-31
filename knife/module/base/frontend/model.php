@@ -10,7 +10,7 @@
 /**
  * In this file we store all generic functions that we will be using in the subname module
  *
- * @author		authorname
+ * @author authorname
  */
 class FrontendclassnameModel
 {
