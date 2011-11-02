@@ -127,8 +127,16 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		$infoInput = $this->replaceFileInfo(CLIPATH . 'knife/module/base/backend/info.xml');
 		$this->makeFile($backendPath . 'info.xml', $infoInput);
 
-		$installInput = $this->replaceFileInfo(CLIPATH . 'knife/module/base/backend/installer.php');
-		$this->makeFile($backendPath . 'installer/installer.php', $installInput);
+		if(VERSION > 300)
+		{
+			$installInput = $this->replaceFileInfo(CLIPATH . 'knife/module/base/backend/installer.php');
+			$this->makeFile($backendPath . 'installer/installer.php', $installInput);
+		}
+		else
+		{
+			$installInput = $this->replaceFileInfo(CLIPATH . 'knife/module/base/backend/install.php');
+			$this->makeFile($backendPath . 'installer/install.php', $installInput);
+		}
 
 		// locale
 		$localeInput = $this->replaceFileInfo(CLIPATH . 'knife/module/base/backend/locale.xml');
