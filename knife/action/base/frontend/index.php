@@ -34,11 +34,17 @@ class Frontendmodulenameactionname extends FrontendBaseBlock
 		$this->loadTemplate();
 	}
 
+	/**
+	 * Load the data
+	 */
 	private function loadData()
 	{
 		$this->record = false;
 	}
 
+	/**
+	 * Parse the page
+	 */
 	protected function parse()
 	{
 		$this->tpl->assign('items', $this->record);
