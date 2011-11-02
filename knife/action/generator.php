@@ -82,19 +82,29 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		try
 		{
 			// do we have an extra already?
-			$existExtra = (bool) Knife::getDB()->getVar('SELECT COUNT(m.id)
-															FROM pages_extras AS m
-															WHERE m.module = ? AND m.action = ? AND m.type = ?',
-															array((string) strtolower($this->getModule()), (string) substr($this->fileName, 0, -4), 'block'));
+			$existExtra = (bool) Knife::getDB()->getVar(
+				'SELECT COUNT(m.id)
+				 FROM modules_extras AS m
+				 WHERE m.module = ? AND m.action = ? AND m.type = ?',
+				array((string) strtolower($this->getModule()), (string) substr($this->fileName, 0, -4), 'block')
+			);
 
 			// we have no extra yet
 			if(!$existExtra)
 			{
 				// set next sequence number for this module
-				$sequence = Knife::getDB()->getVar('SELECT MAX(sequence) + 1 FROM pages_extras WHERE module = ?', array((string) strtolower($this->getModule())));
+				$sequence = Knife::getDB()->getVar(
+					'SELECT MAX(sequence) + 1
+					 FROM modules_extras
+					 WHERE module = ?',
+					array((string) strtolower($this->getModule()))
+				);
 
 				// this is the first extra for this module: generate new 1000-series
-				if(is_null($sequence)) $sequence = $sequence = Knife::getDB()->getVar('SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM pages_extras');
+				if(is_null($sequence)) $sequence = $sequence = Knife::getDB()->getVar(
+					'SELECT CEILING(MAX(sequence) / 1000) * 1000
+					 FROM modules_extras'
+				);
 
 				// the data
 				$data['module'] = strtolower($this->getModule());
@@ -104,7 +114,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				$data['sequence'] = $sequence;
 
 				// insert
-				Knife::getDB(true)->insert('pages_extras', $data);
+				Knife::getDB(true)->insert('modules_extras', $data);
 			}
 		}
 		// we have errors
@@ -246,7 +256,16 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				$actionSetting = '$this->setActionRights(1, \'' . $this->getModuleFolder() . '\', \'' . $this->buildName($action) . '\')';
 
 				// read the installer into an array
-				$aInstall = file(BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/install.php');
+				if(file_exists(BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/install.php'))
+				{
+					$installer = BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/install.php';
+				}
+				elseif(file_exists(BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/installer.php'))
+				{
+					$installer = BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/installer.php';
+				}
+				else throw new Exception('The installer is not found.');
+				$aInstall = file($installer);
 
 				// the new file array
 				$fileArray = array();
@@ -278,7 +297,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				}
 
 				// rewrite the file
-				file_put_contents(BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/install.php', $fileArray);
+				file_put_contents($installer, $fileArray);
 			}
 
 			// build action variables

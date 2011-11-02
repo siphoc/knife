@@ -212,7 +212,7 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 			 */
 			$parameters = array();
 			$parameters['name'] = strtolower($this->moduleName);
-			$parameters['description'] = 'The ' . strtolower($this->moduleName) . ' module';
+			if(VERSION > 300) $parameters['installed_on'] = gmdate('Y-m-d H:i:s');
 			$db->insert('modules', $parameters);
 
 			// group module rights

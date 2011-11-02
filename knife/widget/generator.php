@@ -186,7 +186,7 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 			$parameters['action'] = strtolower($this->buildFileName($this->inputName, ''));
 
 			// insert
-			$db->insert('pages_extras', $parameters);
+			$db->insert('modules_extras', $parameters);
 		}
 		// houston, we have a problem.
 		catch(Exception $e)
