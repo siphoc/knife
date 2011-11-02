@@ -32,10 +32,12 @@ class BackendclassnameModel
 	 */
 	public static function exists($id)
 	{
-		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
-														FROM subname AS i
-														WHERE i.id = ?',
-														(int) $id);
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT COUNT(i.id)
+			 FROM subname AS i
+			 WHERE i.id = ?',
+			array((int) $id)
+		);
 	}
 
 	/**
@@ -46,10 +48,12 @@ class BackendclassnameModel
 	 */
 	public static function get($id)
 	{
-		return (array) BackendModel::getDB()->getRecord('SELECT i.*
-															FROM subname AS i
-															WHERE i.id = ?',
-															(int) $id);
+		return (array) BackendModel::getDB()->getRecord(
+			'SELECT i.*
+			 FROM subname AS i
+			 WHERE i.id = ?',
+			array((int) $id)
+		);
 	}
 
 	/**
@@ -71,11 +75,12 @@ class BackendclassnameModel
 		if($id === null)
 		{
 			// get number of categories with this URL
-			$number = (int) $db->getVar('SELECT COUNT(i.id)
-											FROM subname AS i
-											INNER JOIN meta AS m ON i.meta_id = m.id
-											WHERE i.language = ? AND m.url = ?',
-											array(BL::getWorkingLanguage(), $URL));
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
+				 FROM subname AS i
+				 INNER JOIN meta AS m ON i.meta_id = m.id
+				 WHERE i.language = ? AND m.url = ?',
+				array(BL::getWorkingLanguage(), $URL));
 
 			// already exists
 			if($number != 0)
@@ -91,11 +96,12 @@ class BackendclassnameModel
 		else
 		{
 			// get number of items with this URL
-			$number = (int) $db->getVar('SELECT COUNT(i.id)
-											FROM subname AS i
-											INNER JOIN meta AS m ON i.meta_id = m.id
-											WHERE i.language = ? AND m.url = ? AND i.id != ?',
-											array(BL::getWorkingLanguage(), $URL, $id));
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
+				 FROM subname AS i
+				 INNER JOIN meta AS m ON i.meta_id = m.id
+				 WHERE i.language = ? AND m.url = ? AND i.id != ?',
+				array(BL::getWorkingLanguage(), $URL, $id));
 
 			// already exists
 			if($number != 0)
