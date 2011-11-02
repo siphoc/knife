@@ -78,13 +78,16 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 */
 	private function addBlock()
 	{
+		if(VERSION > 300) $extras = 'modules_extras';
+		else $extras = 'pages_extras';
+
 		// try adding the block
 		try
 		{
 			// do we have an extra already?
 			$existExtra = (bool) Knife::getDB()->getVar(
 				'SELECT COUNT(m.id)
-				 FROM modules_extras AS m
+				 FROM ' . $extras . ' AS m
 				 WHERE m.module = ? AND m.action = ? AND m.type = ?',
 				array((string) strtolower($this->getModule()), (string) substr($this->fileName, 0, -4), 'block')
 			);
@@ -95,7 +98,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				// set next sequence number for this module
 				$sequence = Knife::getDB()->getVar(
 					'SELECT MAX(sequence) + 1
-					 FROM modules_extras
+					 FROM ' . $extras . '
 					 WHERE module = ?',
 					array((string) strtolower($this->getModule()))
 				);
@@ -103,7 +106,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				// this is the first extra for this module: generate new 1000-series
 				if(is_null($sequence)) $sequence = $sequence = Knife::getDB()->getVar(
 					'SELECT CEILING(MAX(sequence) / 1000) * 1000
-					 FROM modules_extras'
+					 FROM ' . $extras . ''
 				);
 
 				// the data
@@ -114,7 +117,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				$data['sequence'] = $sequence;
 
 				// insert
-				Knife::getDB(true)->insert('modules_extras', $data);
+				Knife::getDB(true)->insert($extras, $data);
 			}
 		}
 		// we have errors
@@ -250,7 +253,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				}
 			}
 			// its the backend
-			else
+			elseif($action != 'index')
 			{
 				// generate install.php action data
 				$actionSetting = '$this->setActionRights(1, \'' . $this->getModuleFolder() . '\', \'' . $this->buildName($action) . '\')';
