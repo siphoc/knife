@@ -96,6 +96,14 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 				BackendmodulenameModel::update($item, $this->id);
 				$item['id'] = $this->id;
 
+				if(is_callable(array('BackendSearchModel', 'editIndex')))
+				{
+					BackendSearchModel::editIndex(
+						$this->getModule(),
+						$item['id'],
+						array('title' => $item['title'], 'text' => $item['title'])
+					);
+				}
 				BackendModel::triggerEvent($this->getModule(), 'after_edit', $item);
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&highlight=row-' . $item['id']);
 			}
