@@ -48,7 +48,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 * @return	array
 	 * @param	string $data		The data to convert into an array.
 	 */
-	private function buildActionData($data)
+	protected function buildActionData($data)
 	{
 		// the data array
 		$arrReturn = array();
@@ -76,7 +76,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	/**
 	 * This will add a block to a specific action
 	 */
-	private function addBlock()
+	protected function addBlock()
 	{
 		if(VERSION > 300) $extras = 'modules_extras';
 		else $extras = 'pages_extras';
@@ -222,7 +222,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 * @param	string $location	The working location.
 	 * @param	string $actions		The actions to build
 	 */
-	private function buildLocationAction($module, $location, $actions)
+	protected function buildLocationAction($module, $location, $actions)
 	{
 		// set variables
 		$this->setLocation($location);
@@ -319,7 +319,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	/**
 	 * Inserts a backend action into the database.
 	 */
-	private function databaseInfo()
+	protected function databaseInfo()
 	{
 		// database instance
 		$db = Knife::getDB(true);
@@ -352,7 +352,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 * @return	string
 	 * @param	string $file		The file name.
 	 */
-	private function replaceFileInfo($file)
+	protected function replaceFileInfo($file)
 	{
 		// replace
 		$fileInput = $this->readFile($file);

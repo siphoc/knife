@@ -32,7 +32,7 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 	/**
 	 * Load the item data
 	 */
-	private function loadData()
+	protected function loadData()
 	{
 		$this->id = $this->getParameter('id', 'int');
 		if(!BackendmodulenameModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
@@ -43,7 +43,7 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 	/**
 	 * Load the form
 	 */
-	private function loadForm()
+	protected function loadForm()
 	{
 		// set hidden values
 		$rbtVisibleValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'N');
@@ -75,7 +75,7 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 	/**
 	 * Validate the form
 	 */
-	private function validateForm()
+	protected function validateForm()
 	{
 		if($this->frm->isSubmitted())
 		{

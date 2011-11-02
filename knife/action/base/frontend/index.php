@@ -37,7 +37,7 @@ class Frontendmodulenameactionname extends FrontendBaseBlock
 	/**
 	 * Load the data
 	 */
-	private function loadData()
+	protected function loadData()
 	{
 		$this->record = false;
 	}

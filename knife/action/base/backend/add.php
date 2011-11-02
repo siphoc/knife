@@ -31,7 +31,7 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 	/**
 	 * Load the form
 	 */
-	private function loadForm()
+	protected function loadForm()
 	{
 		$rbtVisibleValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'N');
 		$rbtVisibleValues[] = array('label' => BL::lbl('Published'), 'value' => 'Y');
@@ -59,7 +59,7 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 	/**
 	 * Validate the form
 	 */
-	private function validateForm()
+	protected function validateForm()
 	{
 		if($this->frm->isSubmitted())
 		{
