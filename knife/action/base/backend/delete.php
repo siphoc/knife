@@ -8,7 +8,7 @@
  */
 
 /**
- * This is the add-action, it will display a form to create a new item
+ * This is the elete-action, it delete an item
  *
  * @author authorname
  */

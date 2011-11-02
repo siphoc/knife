@@ -34,8 +34,11 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 	 */
 	protected function loadData()
 	{
-		$this->id = $this->getParameter('id', 'int');
-		if(!BackendmodulenameModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		$this->id = $this->getParameter('id', 'int', null);
+		if($this->id == null || !BackendmodulenameModel::exists($this->id))
+		{
+			$this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		}
 
 		$this->record = BackendmodulenameModel::get($this->id);
 	}
