@@ -27,11 +27,9 @@ class Frontendmodulenameactionname extends FrontendBaseBlock
 	public function execute()
 	{
 		parent::execute();
-
-		$this->loadData();
-
-		$this->parse();
 		$this->loadTemplate();
+		$this->loadData();
+		$this->parse();
 	}
 
 	/**
