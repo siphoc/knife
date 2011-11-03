@@ -63,9 +63,9 @@ class BackendclassnameModel
 	 * @param int[optional] $id
 	 * @return string
 	 */
-	public static function getURL($url, $id = null)
+	public static function getUrl($url, $id = null)
 	{
-		// redefine URL
+		// redefine Url
 		$url = SpoonFilter::urlise((string) $url);
 
 		// get db
@@ -74,7 +74,7 @@ class BackendclassnameModel
 		// new item
 		if($id === null)
 		{
-			// get number of categories with this URL
+			// get number of categories with this Url
 			$number = (int) $db->getVar(
 				'SELECT COUNT(i.id)
 				 FROM subname AS i
@@ -89,13 +89,13 @@ class BackendclassnameModel
 				$url = BackendModel::addNumber($url);
 
 				// try again
-				return self::getURL($url);
+				return self::getUrl($url);
 			}
 		}
 		// current category should be excluded
 		else
 		{
-			// get number of items with this URL
+			// get number of items with this Url
 			$number = (int) $db->getVar(
 				'SELECT COUNT(i.id)
 				 FROM subname AS i
@@ -110,11 +110,11 @@ class BackendclassnameModel
 				$url = BackendModel::addNumber($url);
 
 				// try again
-				return self::getURL($url, $id);
+				return self::getUrl($url, $id);
 			}
 		}
 
-		// return the unique URL!
+		// return the unique Url!
 		return $url;
 	}
 

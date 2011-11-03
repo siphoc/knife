@@ -59,7 +59,7 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
-		$this->meta->setUrlCallback('BackendmodulenameModel', 'getURL', array($this->record['id']));
+		$this->meta->setUrlCallback('BackendmodulenameModel', 'getUrl', array($this->record['id']));
 	}
 
 	/**
