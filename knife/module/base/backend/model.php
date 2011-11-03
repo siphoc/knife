@@ -57,16 +57,16 @@ class BackendclassnameModel
 	}
 
 	/**
-	 * Retrieve the unique URL for an item
+	 * Retrieve the unique url for an item
 	 *
-	 * @param string $URL
+	 * @param string $url
 	 * @param int[optional] $id
 	 * @return string
 	 */
-	public static function getURL($URL, $id = null)
+	public static function getURL($url, $id = null)
 	{
 		// redefine URL
-		$URL = SpoonFilter::urlise((string) $URL);
+		$url = SpoonFilter::urlise((string) $url);
 
 		// get db
 		$db = BackendModel::getDB();
@@ -80,16 +80,16 @@ class BackendclassnameModel
 				 FROM subname AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
 				 WHERE i.language = ? AND m.url = ?',
-				array(BL::getWorkingLanguage(), $URL));
+				array(BL::getWorkingLanguage(), $url));
 
 			// already exists
 			if($number != 0)
 			{
 				// add number
-				$URL = BackendModel::addNumber($URL);
+				$url = BackendModel::addNumber($url);
 
 				// try again
-				return self::getURL($URL);
+				return self::getURL($url);
 			}
 		}
 		// current category should be excluded
@@ -101,21 +101,21 @@ class BackendclassnameModel
 				 FROM subname AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
 				 WHERE i.language = ? AND m.url = ? AND i.id != ?',
-				array(BL::getWorkingLanguage(), $URL, $id));
+				array(BL::getWorkingLanguage(), $url, $id));
 
 			// already exists
 			if($number != 0)
 			{
 				// add number
-				$URL = BackendModel::addNumber($URL);
+				$url = BackendModel::addNumber($url);
 
 				// try again
-				return self::getURL($URL, $id);
+				return self::getURL($url, $id);
 			}
 		}
 
 		// return the unique URL!
-		return $URL;
+		return $url;
 	}
 
 	/**
