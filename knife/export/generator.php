@@ -80,19 +80,22 @@ class KnifeExportGenerator extends KnifeBaseGenerator
 			{
 				$zipFile->addEmptyDir('frontend');
 				$zipFile->addEmptyDir('frontend/modules');
-				$zipFile->addEmptyDir('frontend/modules/faq');
-				$zipFile = $this->addToArchive($zipFile, FRONTENDPATH . 'modules/' . $this->getModuleFolder() . '/', 'frontend/modules/faq/');
+				$zipFile->addEmptyDir('frontend/modules/' . $this->getModuleFolder());
+				$zipFile = $this->addToArchive($zipFile, FRONTENDPATH . 'modules/' . $this->getModuleFolder() . '/', 'frontend/modules/' . $this->getModuleFolder() . '/');
 			}
 
 			if(is_dir(BACKENDPATH . 'modules/' . $this->getModuleFolder()))
 			{
 				$zipFile->addEmptyDir('backend');
 				$zipFile->addEmptyDir('backend/modules');
-				$zipFile->addEmptyDir('backend/modules/faq');
-				$zipFile = $this->addToArchive($zipFile, BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/', 'backend/modules/faq/');
+				$zipFile->addEmptyDir('backend/modules/' . $this->getModuleFolder());
+				$zipFile = $this->addToArchive($zipFile, BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/', 'backend/modules/' . $this->getModuleFolder() . '/');
 			}
 		}
 		$zipFile->close();
+
+		// print success message
+		echo 'The module is exported. You can find it at ' . BASEPATH . $this->getModuleFolder() . '.zip' . "\n";
 	}
 
 	/**
@@ -129,6 +132,7 @@ class KnifeExportGenerator extends KnifeBaseGenerator
 			// no templated, we need those!
 			if(empty($themeInfo)) throw new Exception('There are no templates for this theme');
 
+			// this will be the generated template information
 			$templateString = '';
 			foreach($themeInfo as $template)
 			{
@@ -167,6 +171,7 @@ class KnifeExportGenerator extends KnifeBaseGenerator
 				$templateString.= '</template>' . "\n";
 			}
 
+			// replace the basic values and save the file
 			$basicFile = $this->readFile(CLIPATH . 'knife/theme/base/info.xml');
 			$basicFile = str_replace('themename', $dirName, $basicFile);
 			$basicFile = str_replace('forkversion', VERSION, $basicFile);
@@ -175,5 +180,15 @@ class KnifeExportGenerator extends KnifeBaseGenerator
 			$basicFile = str_replace('created_templates', $templateString, $basicFile);
 			$this->makeFile($themePath . '/info.xml', $basicFile);
 		}
+
+		$zipFile = new ZipArchive();
+		if($zipFile->open(BASEPATH . $dirName . '.zip', ZipArchive::CREATE))
+		{
+			$zipFile = $this->addToArchive($zipFile, $themePath . '/', '/');
+		}
+		$zipFile->close();
+
+		// print success message
+		echo 'The theme is exported. You can find it at ' . BASEPATH . $dirName . '.zip' . "\n";
 	}
 }
