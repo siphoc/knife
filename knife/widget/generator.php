@@ -196,6 +196,53 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 			$parameters['action'] = strtolower($this->buildFileName($this->inputName, ''));
 			$parameters['sequence'] = $sequence;
 			$db->insert($dbTable, $parameters);
+
+			// read the installer into an array
+			if(file_exists(BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/install.php'))
+			{
+				$installer = BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/install.php';
+			}
+			elseif(file_exists(BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/installer.php'))
+			{
+				$installer = BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/installer.php';
+			}
+			else throw new Exception('The installer is not found.');
+			$aInstall = file($installer);
+
+			// the new file array
+			$fileArray = array();
+
+			// fileKey
+			$fileKey = 0;
+			$insert = false;
+
+			// loop the installer lines
+			foreach($aInstall as $key => $line)
+			{
+				// trim the line
+				$trimmedLine = trim($line);
+				if($insert)
+				{
+					// the new rule
+					$fileArray[$fileKey] = "\t\t" . '$this->insertExtra(\'' . $this->getModuleFolder() . '\', \'widget\', \'' . $parameters['label'] . '\', \'' . $parameters['action'] . '\');' . "\n";
+
+					// reset the line key
+					$fileKey++;
+					$insert = false;
+				}
+
+				// get the index action, this should always be present
+				if($trimmedLine == "// add extra's") $insert = true;
+
+				// add the line
+				$fileArray[$fileKey] = $line;
+
+				// count up
+				$fileKey++;
+			}
+
+			// rewrite the file
+			file_put_contents($installer, $fileArray);
 		}
 		// houston, we have a problem.
 		catch(Exception $e)
