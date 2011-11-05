@@ -13,7 +13,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 *
 	 * @var	string
 	 */
-	protected $actionName, $fileName, $templateName, $inputName, $failArray, $successArray, $addBlock;
+	protected $actionName, $fileName, $templateName, $inputName, $failArray, $successArray, $addBlock, $actionType;
 
 	/**
 	 * Execute the action
@@ -224,6 +224,9 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				}
 			}
 
+			// there is an overruling of the user, use that aciton type
+			if(isset($this->actionType)) $baseAction = $this->actionType;
+
 			// insert info in the database to grant access
 			if(!$this->databaseInfo()) return false;
 		}
@@ -282,6 +285,15 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		// loop the actions
 		foreach($actionNames as $action)
 		{
+			// is there an action specified?
+			$allActions = array('index', 'edit', 'add', 'delete');
+			$arrAction = explode(':', $action);
+			if(isset($arrAction[1]) && array_search($arrAction[1], $allActions) !== false)
+			{
+				$this->actionType = $arrAction[1];
+				$action = $arrAction[0];
+			}
+
 			// if we're working in the frontend, we might add a block
 			if($this->getLocation() == 'frontend')
 			{
