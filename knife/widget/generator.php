@@ -179,14 +179,22 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 
 		try
 		{
+			$dbTable = (VERSIONCODE < 300) ? 'pages_extras' : 'modules_extras';
+
+			// set next sequence number for this module
+			$sequence = Knife::getDB()->getVar(
+				'SELECT MAX(sequence) + 1
+				 FROM ' . $dbTable . '
+				 WHERE module = ?',
+				array((string) $this->getModuleFolder())
+			);
+
 			// set the parameters
-			$parameters['module'] = strtolower($this->getModule());
+			$parameters['module'] = $this->getModuleFolder();
 			$parameters['type'] = 'widget';
 			$parameters['label'] = $this->widgetName;
 			$parameters['action'] = strtolower($this->buildFileName($this->inputName, ''));
-			$dbTable = (VERSIONCODE < 300) ? 'pages_extras' : 'modules_extras';
-
-			// insert
+			$parameters['sequence'] = $sequence;
 			$db->insert($dbTable, $parameters);
 		}
 		// houston, we have a problem.
@@ -198,8 +206,6 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 
 		// return
 		return true;
-
-		// @todo calculate sequence
 	}
 
 	/**

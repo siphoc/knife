@@ -89,7 +89,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				'SELECT COUNT(m.id)
 				 FROM ' . $extras . ' AS m
 				 WHERE m.module = ? AND m.action = ? AND m.type = ?',
-				array((string) strtolower($this->getModule()), (string) substr($this->fileName, 0, -4), 'block')
+				array((string) $this->getModuleFolder(), (string) substr($this->fileName, 0, -4), 'block')
 			);
 
 			// we have no extra yet
@@ -100,7 +100,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 					'SELECT MAX(sequence) + 1
 					 FROM ' . $extras . '
 					 WHERE module = ?',
-					array((string) strtolower($this->getModule()))
+					array((string) $this->getModuleFolder())
 				);
 
 				// this is the first extra for this module: generate new 1000-series
@@ -110,7 +110,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 				);
 
 				// the data
-				$data['module'] = strtolower($this->getModule());
+				$data['module'] = $this->getModuleFolder();
 				$data['type'] = 'block';
 				$data['label'] = $this->actionName;
 				$data['action'] = substr($this->fileName, 0, -4);
