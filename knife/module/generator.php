@@ -134,7 +134,7 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		}
 		else
 		{
-			$installInput = $this->replaceFileInfo(CLIPATH . 'knife/module/base/backend/install.php');
+			$installInput = $this->replaceFileInfo(CLIPATH . 'knife/module/base/backend/installer.php');
 			$this->makeFile($backendPath . 'installer/install.php', $installInput);
 		}
 

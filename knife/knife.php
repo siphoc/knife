@@ -70,6 +70,13 @@ class Knife
 	private static $db;
 
 	/**
+	 * The arguments
+	 *
+	 * @var array
+	 */
+	private $argv;
+
+	/**
 	 * This is the constructor for the CLI Tool
 	 *
 	 * @param	array $argv		The arguments passed by the command line.
@@ -78,6 +85,7 @@ class Knife
 	{
 		// no argument set?
 		if(!isset($argv[1])) throw new Exception('Please, specify an action.');
+		$this->argv = $argv;
 
 		// do startup checks
 		$this->startChecks();
@@ -103,7 +111,7 @@ class Knife
 
 		// rebase
 		$passArgs = array();
-		foreach($arguments as $parameter) $passArgs[] = strtolower($parameter);
+		foreach($arguments as $parameter) $passArgs[] = $parameter;
 
 		// execute the action
 		$tmpClass = new $callClass($passArgs);
@@ -135,6 +143,7 @@ class Knife
 		$classes['knifehelpgenerator'] = CLIPATH . 'knife/engine/show_generator.php';
 		$classes['knifewidgetgenerator'] = CLIPATH . 'knife/widget/generator.php';
 		$classes['knifeexportgenerator'] = CLIPATH . 'knife/export/generator.php';
+		$classes['knifesettingsgenerator'] = CLIPATH . 'knife/engine/settings_generator.php';
 
 		// is the class set?
 		if(!array_key_exists($tmpClass, $classes)) throw new Exception('This isn\'t a valid action.');
@@ -244,13 +253,18 @@ class Knife
 		$rFile = fread($oFile, filesize($settingsPath));
 
 		// author
-		$author = preg_match('/#authorname=(.*);/', $rFile, $authorMatch);
+		$author = preg_match('/#author.name=(.*);/', $rFile, $authorMatch);
 		$authorName = $authorMatch[1];
-		$author = preg_match('/#authoremail=(.*);/', $rFile, $authorMatch);
+		$author = preg_match('/#author.email=(.*);/', $rFile, $authorMatch);
 		$authorEmail = $authorMatch[1];
-		$author = preg_match('/#authorurl=(.*);/', $rFile, $authorMatch);
+		$author = preg_match('/#author.url=(.*);/', $rFile, $authorMatch);
 		$authorUrl = $authorMatch[1];
 		$author = $authorName . ' <' . $authorEmail . '>';
+
+		if(($authorName == '' || $authorEmail == '' || $authorUrl == '') && $this->argv[1] != 'settings')
+		{
+			throw new Exception('You need to set your basic settings');
+		}
 
 		define('AUTHOR', $author);
 		define('AUTHORNAME', $authorName);
