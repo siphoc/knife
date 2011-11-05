@@ -4,11 +4,7 @@
  * This source file is a part of the Knife CLI Tool for Fork CMS.
  * More information can be found on http://www.fork-cms.com
  *
- * @package		knife
- * @subpackage	widget
- *
- * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
- * @since		0.5
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class KnifeWidgetGenerator extends KnifeBaseGenerator
 {

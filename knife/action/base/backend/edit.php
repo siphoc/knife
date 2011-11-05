@@ -91,8 +91,8 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 
 			if($this->frm->isCorrect())
 			{
-				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['meta_id'] = $this->meta->save(true);
+				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 				$item['visible'] = $this->frm->getField('visible')->getValue();
 

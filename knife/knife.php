@@ -4,10 +4,7 @@
  * This source file is a part of the Knife CLI Tool for Fork CMS.
  * More information can be found on http://www.fork-cms.com
  *
- * @package		knife
- *
- * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
- * @since		0.1
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 
 /*
@@ -19,7 +16,7 @@ if(PHP_SAPI !== 'cli') die('We expect this to be running on the command line.');
 /*
  * This is the version number of the current CLI Tool
  */
-define('KNIFE_VERSION', '0.6');
+define('KNIFE_VERSION', '0.9');
 
 /*
  * Set error reporting
