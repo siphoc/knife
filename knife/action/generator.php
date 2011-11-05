@@ -78,7 +78,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 */
 	protected function addBlock()
 	{
-		if(VERSION > 300) $extras = 'modules_extras';
+		if(VERSIONCODE > 300) $extras = 'modules_extras';
 		else $extras = 'pages_extras';
 
 		// try adding the block

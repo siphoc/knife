@@ -229,6 +229,7 @@ class Knife
 		$rVersion = fread($oVersion, filesize($basePath . 'VERSION.md'));
 		$rVersion = str_replace("\n", '', $rVersion);
 		define('VERSION', $rVersion);
+		define('VERSIONCODE', str_replace('.', '', $rVersion));
 
 		// set paths for overall use
 		define('FRONTENDPATH', $frontendPath);

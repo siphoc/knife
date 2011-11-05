@@ -184,7 +184,7 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 			$parameters['type'] = 'widget';
 			$parameters['label'] = $this->widgetName;
 			$parameters['action'] = strtolower($this->buildFileName($this->inputName, ''));
-			$dbTable = (VERSION < 300) ? 'pages_extras' : 'modules_extras';
+			$dbTable = (VERSIONCODE < 300) ? 'pages_extras' : 'modules_extras';
 
 			// insert
 			$db->insert($dbTable, $parameters);
