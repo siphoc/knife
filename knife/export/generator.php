@@ -111,9 +111,69 @@ class KnifeExportGenerator extends KnifeBaseGenerator
 
 		// the directory name
 		$dirName = $this->buildDirName($this->arg[1]);
+		$themePath = FRONTENDPATH . 'themes/' . $dirName;
+		$db = Knife::getDB();
 
 		if(!is_dir(FRONTENDPATH . 'themes/' . $dirName)) throw new Exception('Please provide an existing theme name');
 
+		// there is no info file, create one
+		if(!file_exists($themePath . '/info.xml'))
+		{
+			$themeInfo = $db->getRecords(
+				'SELECT t.*
+				 FROM themes_templates AS t
+				 WHERE t.theme = ?',
+				array($dirName)
+			);
 
+			// no templated, we need those!
+			if(empty($themeInfo)) throw new Exception('There are no templates for this theme');
+
+			$templateString = '';
+			foreach($themeInfo as $template)
+			{
+				$templateName = $template['label'];
+				$templateData = unserialize($template['data']);
+				$templatePath = $template['path'];
+				$defaultExtras = (isset($templateData['default_extras'])) ? $templateData['default_extras'] : array();
+
+				$templateString.= '<template label="' . $templateName . '" path="' . $templatePath .'">' . "\n";
+				$templateString.= "\t<positions>" . "\n";
+				foreach($templateData['names'] as $position)
+				{
+					if(isset($defaultExtras[$position]))
+					{
+						$templateString.= "\t\t" . '<position name="' . $position . '">' . "\n";
+						$templateString.= "\t\t\t<defaults>" . "\n";
+
+						// fetch the default info
+						$defaultInfo = $db->getRecord(
+							'SELECT e.*
+							 FROM modules_extras AS e
+							 WHERE e.id = ?',
+							array((int) $defaultExtras[$position][0])
+						);
+						$templateString.= "\t\t\t\t" . '<' . $defaultInfo['type'] . ' module="' . $defaultInfo['module'] . '" action="' . $defaultInfo['action'] . '" />' . "\n";
+
+						$templateString.= "\t\t\t</defaults>" . "\n";
+						$templateString.= "\t\t</position>" . "\n";
+					}
+					else $templateString.= "\t\t" . '<position name="' . $position . '" />' . "\n";
+				}
+				$templateString.= "\t</positions>" . "\n";
+				$templateString.= "\t<format>" . "\n";
+				$templateString.= "\t\t" . $templateData['format'] . "\n";
+				$templateString.= "\t</format>" . "\n";
+				$templateString.= '</template>' . "\n";
+			}
+
+			$basicFile = $this->readFile(CLIPATH . 'knife/theme/base/info.xml');
+			$basicFile = str_replace('themename', $dirName, $basicFile);
+			$basicFile = str_replace('forkversion', VERSION, $basicFile);
+			$basicFile = str_replace('authorname', AUTHORNAME, $basicFile);
+			$basicFile = str_replace('authorurl', AUTHORURL, $basicFile);
+			$basicFile = str_replace('created_templates', $templateString, $basicFile);
+			$this->makeFile($themePath . '/info.xml', $basicFile);
+		}
 	}
 }

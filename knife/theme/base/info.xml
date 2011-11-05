@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+	<name>themename</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>forkversion</minimum_version>
+	</requirements>
+	<thumbnail>thumbnail.png</thumbnail>
+	<description>
+		<![CDATA[
+			This is an auto generated info file.
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name>authorname</name>
+			<url>authorurl</url>
+		</author>
+	</authors>
+	<metanavigation supported="false" />
+	<templates>
+		created_templates
+	</templates>
+</theme>

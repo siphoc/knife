@@ -244,8 +244,18 @@ class Knife
 		$rFile = fread($oFile, filesize($settingsPath));
 
 		// author
-		$author = preg_match('/#author=(.*);/', $rFile, $authorMatch);
-		define('AUTHOR', $authorMatch[1]);
+		$author = preg_match('/#authorname=(.*);/', $rFile, $authorMatch);
+		$authorName = $authorMatch[1];
+		$author = preg_match('/#authoremail=(.*);/', $rFile, $authorMatch);
+		$authorEmail = $authorMatch[1];
+		$author = preg_match('/#authorurl=(.*);/', $rFile, $authorMatch);
+		$authorUrl = $authorMatch[1];
+		$author = $authorName . ' <' . $authorEmail . '>';
+
+		define('AUTHOR', $author);
+		define('AUTHORNAME', $authorName);
+		define('AUTHOREMAIL', $authorEmail);
+		define('AUTHORURL', $authorUrl);
 
 		// close the file
 		fclose($oFile);
