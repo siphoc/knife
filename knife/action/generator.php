@@ -78,7 +78,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 */
 	protected function addBlock()
 	{
-		if(VERSIONCODE > 300) $extras = 'modules_extras';
+		if(VERSIONCODE >= 300) $extras = 'modules_extras';
 		else $extras = 'pages_extras';
 
 		// try adding the block
@@ -118,6 +118,53 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 
 				// insert
 				Knife::getDB(true)->insert($extras, $data);
+
+				// read the installer into an array
+				if(file_exists(BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/install.php'))
+				{
+					$installer = BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/install.php';
+				}
+				elseif(file_exists(BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/installer.php'))
+				{
+					$installer = BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/installer/installer.php';
+				}
+				else throw new Exception('The installer is not found.');
+				$aInstall = file($installer);
+
+				// the new file array
+				$fileArray = array();
+
+				// fileKey
+				$fileKey = 0;
+				$insert = false;
+
+				// loop the installer lines
+				foreach($aInstall as $key => $line)
+				{
+					// trim the line
+					$trimmedLine = trim($line);
+					if($insert)
+					{
+						// the new rule
+						$fileArray[$fileKey] = "\t\t" . '$this->insertExtra(\'' . $this->getModuleFolder() . '\', \'block\', \'' . $data['label'] . '\', \'' . $data['action'] . '\');' . "\n";
+
+						// reset the line key
+						$fileKey++;
+						$insert = false;
+					}
+
+					// get the index action, this should always be present
+					if($trimmedLine == "// add extra's") $insert = true;
+
+					// add the line
+					$fileArray[$fileKey] = $line;
+
+					// count up
+					$fileKey++;
+				}
+
+				// rewrite the file
+				file_put_contents($installer, $fileArray);
 			}
 		}
 		// we have errors
