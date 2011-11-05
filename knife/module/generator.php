@@ -356,12 +356,6 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		// the database instance
 		$db = Knife::getDB();
 
-		// the description
-		$moduleInstalled = $db->getVar('SELECT m.installed_on
-											FROM modules AS m
-											WHERE m.name = ?',
-											array((string) $module));
-
 		// get the actions
 		$moduleDbActions = $db->getRecords('SELECT a.action
 											FROM groups_rights_actions AS a
@@ -375,8 +369,25 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 											WHERE e.module = ?',
 											array((string) $module));
 
-		// build the output
-		$output = 'Installed on: ' . $moduleInstalled . "\n\n";
+		if(VERSIONCODE > 300)
+		{
+			// the installation date
+			$moduleInstalled = $db->getVar('SELECT m.installed_on
+												FROM modules AS m
+												WHERE m.name = ?',
+												array((string) $module));
+			$output = 'Installed on: ' . $moduleInstalled . "\n\n";
+		}
+		else
+		{
+			// the description
+			$moduleDescription = $db->getVar('SELECT m.description
+												FROM modules AS m
+												WHERE m.name = ?',
+												array((string) $module));
+			$output = $moduleDescription . "\n\n";
+		}
+
 		if(!empty($moduleDbActions))
 		{
 			$output.= "Installed actions:\n";
