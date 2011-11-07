@@ -175,7 +175,7 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 
 		try
 		{
-			$dbTable = (VERSIONCODE < 300) ? 'pages_extras' : 'modules_extras';
+			$dbTable = (VERSIONCODE <= 3) ? 'pages_extras' : 'modules_extras';
 
 			// set next sequence number for this module
 			$sequence = Knife::getDB()->getVar(
@@ -264,7 +264,6 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 		$fileInput = str_replace('modulename', $this->getModule(), $fileInput);
 		$fileInput = str_replace('subname', strtolower($this->getModule()), $fileInput);
 		$fileInput = str_replace('widgetname', $this->widgetName, $fileInput);
-		$fileInput = str_replace('versionname', VERSION, $fileInput);
 		$fileInput = str_replace('authorname', AUTHOR, $fileInput);
 
 		// return

@@ -74,7 +74,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 	 */
 	protected function addBlock()
 	{
-		if(VERSIONCODE >= 300) $extras = 'modules_extras';
+		if(VERSIONCODE >= 3) $extras = 'modules_extras';
 		else $extras = 'pages_extras';
 
 		// try adding the block
@@ -414,7 +414,6 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		$fileInput = str_replace('modulename', $this->getModule(), $fileInput);
 		$fileInput = str_replace('subname', $this->getModuleFolder(), $fileInput);
 		$fileInput = str_replace('actionname', $this->actionName, $fileInput);
-		$fileInput = str_replace('versionname', VERSION, $fileInput);
 		$fileInput = str_replace('authorname', AUTHOR, $fileInput);
 
 		// return

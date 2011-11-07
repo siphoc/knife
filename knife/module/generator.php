@@ -123,7 +123,7 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		$infoInput = $this->replaceFileInfo(CLIPATH . 'knife/module/base/backend/info.xml');
 		$this->makeFile($backendPath . 'info.xml', $infoInput);
 
-		if(VERSIONCODE > 300)
+		if(VERSIONCODE >= 3)
 		{
 			$installInput = $this->replaceFileInfo(CLIPATH . 'knife/module/base/backend/installer.php');
 			$this->makeFile($backendPath . 'installer/installer.php', $installInput);
@@ -216,7 +216,7 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 			 */
 			$parameters = array();
 			$parameters['name'] = strtolower($this->moduleName);
-			if(VERSIONCODE > 300) $parameters['installed_on'] = gmdate('Y-m-d H:i:s');
+			if(VERSIONCODE >= 3) $parameters['installed_on'] = gmdate('Y-m-d H:i:s');
 			$db->insert('modules', $parameters);
 
 			// group module rights
@@ -255,7 +255,6 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 		$fileInput = $this->readFile($file);
 		$fileInput = str_replace('classname', $this->buildName($this->moduleName), $fileInput);
 		$fileInput = str_replace('subname', strtolower($this->buildName($this->moduleName)), $fileInput);
-		$fileInput = str_replace('versionname', VERSION, $fileInput);
 		$fileInput = str_replace('authorname', AUTHOR, $fileInput);
 
 		// return
@@ -359,13 +358,13 @@ class KnifeModuleGenerator extends KnifeBaseGenerator
 											array((string) $module));
 
 		// get the extras
-		$extrasTable = (VERSIONCODE < 300) ? 'pages_extras' : 'modules_extras';
+		$extrasTable = (VERSIONCODE <= 3) ? 'pages_extras' : 'modules_extras';
 		$moduleExtras = $db->getRecords('SELECT e.type, e.label, e.action
 											FROM ' . $extrasTable . ' AS e
 											WHERE e.module = ?',
 											array((string) $module));
 
-		if(VERSIONCODE > 300)
+		if(VERSIONCODE >= 3)
 		{
 			// the installation date
 			$moduleInstalled = $db->getVar('SELECT m.installed_on

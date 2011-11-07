@@ -227,7 +227,8 @@ class Knife
 		$rVersion = fread($oVersion, filesize($basePath . 'VERSION.md'));
 		$rVersion = str_replace("\n", '', $rVersion);
 		define('VERSION', $rVersion);
-		define('VERSIONCODE', str_replace('.', '', $rVersion));
+		$versionCode = explode('.', $rVersion);
+		define('VERSIONCODE', $versionCode[0]);
 
 		// set paths for overall use
 		define('FRONTENDPATH', $frontendPath);
@@ -253,11 +254,11 @@ class Knife
 
 		// author
 		$author = preg_match('/#author.name=(.*);/', $rFile, $authorMatch);
-		$authorName = $authorMatch[1];
+		$authorName = ($author == 1) ? $authorMatch[1] : '';
 		$author = preg_match('/#author.email=(.*);/', $rFile, $authorMatch);
-		$authorEmail = $authorMatch[1];
+		$authorEmail = ($author == 1) ? $authorMatch[1] : '';
 		$author = preg_match('/#author.url=(.*);/', $rFile, $authorMatch);
-		$authorUrl = $authorMatch[1];
+		$authorUrl = ($author == 1) ? $authorMatch[1] : '';
 		$author = $authorName . ' <' . $authorEmail . '>';
 
 		if(($authorName == '' || $authorEmail == '' || $authorUrl == '') && $this->argv[1] != 'settings')
