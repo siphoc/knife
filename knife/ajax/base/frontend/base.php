@@ -25,6 +25,6 @@ class FrontendmodulenameAjaxactionname extends FrontendBaseAJAXAction
 		$itemId = (int) trim(SpoonFilter::getPostValue('id', null, '', 'int'));
 
 		// output
-		$this->output(self::OK, $return, FL::msg('Success'));
+		$this->output(self::OK, null, FL::msg('Success'));
 	}
 }
