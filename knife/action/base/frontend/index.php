@@ -8,7 +8,7 @@
  */
 
 /**
- * This is the actionname-action (default), it will display the overview of subname posts
+ * This is the actionname-action, it will display the overview of subname posts
  *
  * @author authorname
  */
