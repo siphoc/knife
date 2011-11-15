@@ -86,15 +86,16 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// validation
-			$this->frm->getField('title')->isFilled(BL::err('FieldIsRequired'));
+			$fields = $this->frm->getFields();
+			$fields['title']->isFilled(BL::err('FieldIsRequired'));
 			$this->meta->validate();
 
 			if($this->frm->isCorrect())
 			{
 				$item['meta_id'] = $this->meta->save(true);
-				$item['title'] = $this->frm->getField('title')->getValue();
+				$item['title'] = $fields['title']->getValue();
 				$item['language'] = BL::getWorkingLanguage();
-				$item['visible'] = $this->frm->getField('visible')->getValue();
+				$item['visible'] = $fields['visible']->getValue();
 
 				BackendmodulenameModel::update($item, $this->id);
 				$item['id'] = $this->id;
