@@ -26,9 +26,9 @@ class FrontendmodulenameWidgetwidgetname extends FrontendBaseWidget
 	{
 		parent::execute();
 
+		$this->loadTemplate();
 		$this->loadData();
 
-		$this->loadTemplate();
 		$this->parse();
 	}
 

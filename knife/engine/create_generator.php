@@ -37,7 +37,7 @@ class KnifeCreateGenerator extends KnifeBaseGenerator
 			$eventName = trim($eventData[1]);
 			$eventName = str_replace('\'', '', $eventName);
 
-			$returnString.= "\t\t" . '<event application="' . $location . '" name="' . $eventName . '"><![CDATA[Triggered when .]]></event>' . "\n";
+			$returnString.= "\t\t" . '<event application="' . $location . '" name="' . $eventName . '"><![CDATA[Triggered when ' . $eventName . '.]]></event>' . "\n";
 		}
 
 		return $returnString;
@@ -46,8 +46,6 @@ class KnifeCreateGenerator extends KnifeBaseGenerator
 	/**
 	 * This will generate the info.xml file from the module files. It will go trough
 	 * them and search for triggers.
-	 *
-	 * BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 	 */
 	protected function createInfoFile()
 	{
