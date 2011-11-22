@@ -12,24 +12,25 @@
  *
  * @author authorname
  */
-class FrontendmodulenameWidgetwidgetname extends FrontendBaseWidget
+class BackendmodulenameWidgetwidgetname extends BackendBaseWidget
 {
 	/**
-	 * @var	array
+	 * The widget data
+	 *
+	 * @var array
 	 */
-	private $record;
+	protected $record = array();
 
 	/**
-	 * Exceute the action
+	 * Execute the widget
 	 */
 	public function execute()
 	{
-		parent::execute();
-
-		$this->loadTemplate();
+		$this->setColumn('middle');
+		$this->setPosition(0);
 		$this->loadData();
-
 		$this->parse();
+		$this->display();
 	}
 
 	/**
@@ -37,13 +38,13 @@ class FrontendmodulenameWidgetwidgetname extends FrontendBaseWidget
 	 */
 	private function loadData()
 	{
-		$this->record = false;
+		$this->record = array();
 	}
 
 	/**
-	 * Parse the widget
+	 * Parse into template
 	 */
-	protected function parse()
+	private function parse()
 	{
 		$this->tpl->assign('widgetwidgetname', $this->record);
 	}

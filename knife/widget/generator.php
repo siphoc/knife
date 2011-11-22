@@ -67,15 +67,7 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 		if(file_exists($widgetPath)) throw new Exception('The widget(' . $this->getLocation() . '/' .  $this->getModuleFolder() . '/' . strtolower($this->widgetName) . ') already exists.');
 
 		// backend widget
-		if($this->getLocation() == 'backend')
-		{
-
-		}
-		// frontend aciton
-		else
-		{
-			$baseWidget = 'base';
-		}
+		$baseWidget = 'base';
 
 		// insert info in the database to grant access
 		if(!$this->databaseInfo()) return false;
