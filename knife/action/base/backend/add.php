@@ -75,7 +75,7 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 				$item['meta_id'] = $this->meta->save();
 				$item['title'] = $fields['title']->getValue();
 				$item['language'] = BL::getWorkingLanguage();
-				$item['visible'] = $fields['title']->getValue();
+				$item['visible'] = $fields['visible']->getValue();
 
 				$item['id'] = BackendmodulenameModel::insert($item);
 
