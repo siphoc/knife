@@ -167,7 +167,7 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 
 		try
 		{
-			$dbTable = (VERSIONCODE <= 3) ? 'pages_extras' : 'modules_extras';
+			$dbTable = (VERSIONCODE < 3) ? 'pages_extras' : 'modules_extras';
 
 			// set next sequence number for this module
 			$sequence = Knife::getDB()->getVar(
