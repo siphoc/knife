@@ -177,6 +177,9 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 				array((string) $this->getModuleFolder())
 			);
 
+			// fallback
+			if($sequence === null) $sequence = 0;
+
 			// set the parameters
 			$parameters['module'] = $this->getModuleFolder();
 			$parameters['type'] = 'widget';
@@ -235,7 +238,7 @@ class KnifeWidgetGenerator extends KnifeBaseGenerator
 		// houston, we have a problem.
 		catch(Exception $e)
 		{
-			if(DEV_MODE) throw new Exception('Something went wrong while inserting the data into the database.');
+			if(DEV_MODE) throw $e;
 			else return false;
 		}
 
