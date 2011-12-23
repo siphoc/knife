@@ -12,7 +12,7 @@
  *
  * @author authorname
  */
-class classnameInstall extends ModuleInstaller
+class classnameInstaller extends ModuleInstaller
 {
 	public function install()
 	{
