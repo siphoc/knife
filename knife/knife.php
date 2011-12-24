@@ -13,10 +13,15 @@
  */
 if(PHP_SAPI !== 'cli') die('We expect this to be running on the command line.');
 
+/**
+ * Set the timezone
+ */
+date_default_timezone_set('Europe/Brussels');
+
 /*
  * This is the version number of the current CLI Tool
  */
-define('KNIFE_VERSION', '0.9');
+define('KNIFE_VERSION', '1');
 
 /*
  * Set error reporting
@@ -88,7 +93,7 @@ class Knife
 		$this->startChecks();
 
 		/* Spoon stuff */
-		require_once LIBRARYPATH . 'globals.php';
+		if(file_exists(LIBRARYPATH . 'globals.php')) require_once LIBRARYPATH . 'globals.php';
 
 		// reset some actions
 		switch($argv[1])
@@ -231,6 +236,7 @@ class Knife
 		define('VERSIONCODE', $versionCode[0]);
 
 		// set paths for overall use
+		define('PROJECT_NAME', trim(strrchr($workingDir, '/'), '/'));
 		define('FRONTENDPATH', $frontendPath);
 		define('BACKENDPATH', $backendPath);
 		define('BASEPATH', $basePath);

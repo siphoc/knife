@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# @author Jelmer Snoeck <jelmer.snoeck@siphoc.com>
+
+rm -f `find frontend/cache/cached_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find frontend/cache/navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find frontend/cache/compiled_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+
+rm -f `find backend/cache/navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find backend/cache/compiled_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+
+exit 0

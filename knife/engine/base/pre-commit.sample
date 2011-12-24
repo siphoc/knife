@@ -1,0 +1,74 @@
+#!/usr/bin/php
+#
+# @author Jelmer Snoeck <jelmer.snoeck@siphoc.om>
+
+<?php
+
+	// say that we're starting the codesniffer
+	echo "Running the Fork Codesnifer\n";
+
+	// set the base parameters
+	$mainDir = dirname(__FILE__) . '/../../';
+	$codeSniffer = $mainDir . 'tools/codesniffer/Fork';
+	$sniffCommand = 'phpcs -v --standard="' . $codeSniffer . '" --extensions=php --report=full';
+
+	// the diff file checks
+	$diffFiles = array();
+	$return = 0;
+
+	// get the files that have changed
+	exec("git diff-index --name-only --cached --diff-filter=ACMR HEAD", $diffFiles, $return);
+
+	// check if there are files changed
+	if($return > 0)
+	{
+		echo "Something went wrong while trying to get the changed files\n\n";
+		exit(1);
+	}
+	else
+	{
+		// the allowed extensions
+		$allowedExtensions = array('.php');
+		$stagedFiles = '';
+
+		// go trough the files and only add the allowed extensions to the codesniffer
+		foreach($diffFiles as $file)
+		{
+			// get the file extension
+			$fileExtension = strrchr($file, '.');
+
+			// match it against the allowed extensions
+			if(array_search($fileExtension, $allowedExtensions) !== false) $stagedFiles .= $file . ' ';
+		}
+
+		trim($stagedFiles);
+
+		// run the codesniffer
+		$execOutput = array();
+		$isFailure = 0;
+		exec($sniffCommand . ' ' . $stagedFiles, $execOutput, $isFailure);
+
+		// no sniffing errors
+		if(!(bool) $isFailure)
+		{
+			echo "No errors\n";
+			exit(1);
+		}
+		else
+		{
+			// print the data
+			foreach($execOutput as $line)
+			{
+				echo $line . "\n";
+			}
+
+			// there were errors, so don't commit (this is bypassed by adding -n to your git checkout)
+			exit(1);
+		}
+	}
+
+	// print success message
+	echo "No errors\n";
+	exit(0);
+
+?>

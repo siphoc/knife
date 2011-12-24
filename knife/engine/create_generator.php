@@ -77,7 +77,61 @@ class KnifeCreateGenerator extends KnifeBaseGenerator
 	 */
 	protected function createGlobals()
 	{
+		// create the specified git hooks if this projects uses git
+		if(is_dir(BASEPATH . '.git/hooks'))
+		{
+			// define the base paths
+			$preCommitSample = CLIPATH . 'knife/engine/base/pre-commit.sample';
+			$postCheckoutSample = CLIPATH . 'knife/engine/base/post-checkout.sample';
+			$gitHooksDir = BASEPATH . '.git/hooks/';
 
+			// copy the files
+			copy($preCommitSample, $gitHooksDir . 'pre-commit');
+			copy($postCheckoutSample, $gitHooksDir . 'post-checkout');
+		}
+
+		/*
+		 * Create the globals
+		 */
+
+		// define the base locations
+		$globalsFrontendBase = LIBRARYPATH . 'globals_frontend.base.php';
+		$globalsFrontend = LIBRARYPATH . 'globals_frontend.php';
+		$globalsBackendBase = LIBRARYPATH . 'globals_backend.base.php';
+		$globalsBackend = LIBRARYPATH . 'globals_backend.base.php';
+		$globalsBase = CLIPATH . 'knife/engine/base/globals.base.php';
+		$globals = LIBRARYPATH . 'globals.php';
+
+		// copy those that can be copied
+		copy($globalsFrontendBase, $globalsFrontend);
+		copy($globalsBackendBase, $globalsBackend);
+
+		// get the globals content to replace it with some data
+		$globalsContent = file_get_contents($globalsBase);
+		$globalsContent = str_replace('<projectname>', PROJECT_NAME, $globalsContent);
+		$globalsContent = str_replace('<version>', VERSION, $globalsContent);
+		file_put_contents($globals, $globalsContent);
+
+		/*
+		 * Create the config files
+		 */
+
+		// define the base locations
+		$configBase = CLIPATH . 'knife/engine/base/config.base.php';
+		$configFrontend = FRONTENDPATH . 'cache/config/config.php';
+		$configBackend = BACKENDPATH . 'cache/config/config.php';
+
+		// copy the files
+		copy($configBase, $configFrontend);
+		copy($configBase, $configBackend);
+
+		/*
+		 * If there is still an installer, set the installed.txt file
+		 */
+		if(is_dir(BASEPATH . 'install/cache'))
+		{
+			file_put_contents(BASEPATH . 'install/cache/installed.txt', 'This fork is installed with the Fork CLI tool on ' . date('Y-m-d H:i'));
+		}
 	}
 
 	/**
