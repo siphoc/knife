@@ -101,6 +101,10 @@ class Knife
 			case 'help':
 				$argv[1] = 'show';
 			break;
+			case 'init':
+				$argv[1] = 'create';
+				$argv[2] = 'globals';
+			break;
 		}
 
 		// set the class to call

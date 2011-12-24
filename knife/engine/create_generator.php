@@ -98,7 +98,7 @@ class KnifeCreateGenerator extends KnifeBaseGenerator
 		$globalsFrontendBase = LIBRARYPATH . 'globals_frontend.base.php';
 		$globalsFrontend = LIBRARYPATH . 'globals_frontend.php';
 		$globalsBackendBase = LIBRARYPATH . 'globals_backend.base.php';
-		$globalsBackend = LIBRARYPATH . 'globals_backend.base.php';
+		$globalsBackend = LIBRARYPATH . 'globals_backend.php';
 		$globalsBase = CLIPATH . 'knife/engine/base/globals.base.php';
 		$globals = LIBRARYPATH . 'globals.php';
 

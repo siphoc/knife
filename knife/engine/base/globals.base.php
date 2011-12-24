@@ -23,7 +23,7 @@ define('ACTION_RIGHTS_LEVEL', '7');
  * Spoon configuration
  */
 define('SPOON_DEBUG', !isProductionSite());
-define('SPOON_DEBUG_EMAIL', !isProductionSite() ? '' : '<projectname>@fork-cms.be');
+define('SPOON_DEBUG_EMAIL', !isProductionSite() ? '' : '<projectname>-bugs@fork-cms.be');
 define('SPOON_DEBUG_MESSAGE', 'Internal error.');
 define('SPOON_CHARSET', 'utf-8');
 
@@ -37,7 +37,7 @@ define('FORK_VERSION', '<version>');
  */
 define('DB_TYPE', 'mysql');
 define('DB_PORT', '3306');
-define('DB_DATABASE', '');
+define('DB_DATABASE', '<projectname>');
 
 if(isProductionSite())
 {
