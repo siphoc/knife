@@ -28,10 +28,10 @@ class Backendmodulenameactionname extends BackendBaseActionDelete
 			$this->record = (array) BackendmodulenameModel::get($this->id);
 
 			BackendmodulenameModel::delete($this->id);
+			BackendSearchModel::removeIndex($this->getModule(), $this->id);
 
 			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
-			if(is_callable(array('BackendSearchModel', 'removeIndex'))) BackendSearchModel::removeIndex($this->getModule(), $this->id);
 			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
 		}
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');

@@ -79,14 +79,12 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 
 				$item['id'] = BackendmodulenameModel::insert($item);
 
-				if(is_callable(array('BackendSearchModel', 'addIndex')))
-				{
-					BackendSearchModel::addIndex(
-						$this->getModule(),
-						$item['id'],
-						array('title' => $item['title'], 'text' => $item['title'])
-					);
-				}
+				BackendSearchModel::addIndex(
+					$this->getModule(),
+					$item['id'],
+					array('title' => $item['title'], 'text' => $item['title'])
+				);
+
 				BackendModel::triggerEvent($this->getModule(), 'after_add', $item);
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&highlight=row-' . $item['id']);
 			}
