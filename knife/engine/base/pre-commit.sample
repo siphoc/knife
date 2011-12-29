@@ -32,43 +32,21 @@
 		$stagedFiles = '';
 
 		// go trough the files and only add the allowed extensions to the codesniffer
-		foreach($diffFiles as $file)
-		{
-			// get the file extension
-			$fileExtension = strrchr($file, '.');
-
-			// match it against the allowed extensions
-			if(array_search($fileExtension, $allowedExtensions) !== false) $stagedFiles .= $file . ' ';
-		}
-
+		foreach($diffFiles as $file) if(in_array(strrchr($file, '.'), $allowedExtensions) !== false) $stagedFiles .= $file . ' ';
 		trim($stagedFiles);
+
+		if($stagedFiles == '') exit(0);
 
 		// run the codesniffer
 		$execOutput = array();
 		$isFailure = 0;
 		exec($sniffCommand . ' ' . $stagedFiles, $execOutput, $isFailure);
 
-		// no sniffing errors
-		if(!(bool) $isFailure)
-		{
-			echo "No errors\n";
-			exit(1);
-		}
-		else
-		{
-			// print the data
-			foreach($execOutput as $line)
-			{
-				echo $line . "\n";
-			}
+		// print the data
+		foreach($execOutput as $line) echo $line . "\n";
 
-			// there were errors, so don't commit (this is bypassed by adding -n to your git checkout)
-			exit(1);
-		}
+		if(!(bool) $isFailure) exit(0);
+		else exit(1);
 	}
-
-	// print success message
-	echo "No errors\n";
-	exit(0);
 
 ?>

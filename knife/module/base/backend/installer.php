@@ -20,7 +20,7 @@ class classnameInstaller extends ModuleInstaller
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// install the module in the database
-		$this->addModule('subname', 'The subname module.');
+		$this->addModule('subname');
 
 		// install the locale, this is set here beceause we need the module for this
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
