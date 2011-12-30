@@ -74,8 +74,7 @@ class BackendclassnameModel
 		// new item
 		if($id === null)
 		{
-			// get number of categories with this Url
-			$number = (int) $db->getVar(
+			$numberOfItems = (int) $db->getVar(
 				'SELECT COUNT(i.id)
 				 FROM subname AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
@@ -83,7 +82,7 @@ class BackendclassnameModel
 				array(BL::getWorkingLanguage(), $url));
 
 			// already exists
-			if($number != 0)
+			if($numberOfItems != 0)
 			{
 				// add number
 				$url = BackendModel::addNumber($url);
@@ -95,8 +94,7 @@ class BackendclassnameModel
 		// current category should be excluded
 		else
 		{
-			// get number of items with this Url
-			$number = (int) $db->getVar(
+			$numberOfItems = (int) $db->getVar(
 				'SELECT COUNT(i.id)
 				 FROM subname AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
@@ -104,7 +102,7 @@ class BackendclassnameModel
 				array(BL::getWorkingLanguage(), $url, $id));
 
 			// already exists
-			if($number != 0)
+			if($numberOfItems != 0)
 			{
 				// add number
 				$url = BackendModel::addNumber($url);
