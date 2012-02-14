@@ -70,7 +70,7 @@ class KnifeExportGenerator extends KnifeBaseGenerator
 		$this->setModule($this->arg[1]);
 
 		// this will create the events in the info.xml file.
-		new KnifeCreateGenerator(array(0 => 'info', 1 => $this->getModule()));
+		if(!file_exists(BACKENDPATH . 'modules/' . $this->getModuleFolder() . '/info.xml')) new KnifeCreateGenerator(array(0 => 'info', 1 => $this->getModule()));
 
 		$zipFile = new ZipArchive();
 		if($zipFile->open(BASEPATH . $this->getModuleFolder() . '.zip', ZipArchive::CREATE))

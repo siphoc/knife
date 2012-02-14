@@ -81,13 +81,16 @@ class KnifeCreateGenerator extends KnifeBaseGenerator
 		if(is_dir(BASEPATH . '.git/hooks'))
 		{
 			// define the base paths
-			$preCommitSample = CLIPATH . 'knife/engine/base/pre-commit.sample';
-			$postCheckoutSample = CLIPATH . 'knife/engine/base/post-checkout.sample';
+			$preCommitSample = file_get_contents(CLIPATH . 'knife/engine/base/pre-commit.sample');
+			$postCheckoutSample = file_get_contents(CLIPATH . 'knife/engine/base/post-checkout.sample');
 			$gitHooksDir = BASEPATH . '.git/hooks/';
 
 			// copy the files
-			copy($preCommitSample, $gitHooksDir . 'pre-commit');
-			copy($postCheckoutSample, $gitHooksDir . 'post-checkout');
+			copy($gitHooksDir . 'pre-commit.sample', $gitHooksDir . 'pre-commit');
+			file_put_contents($gitHooksDir . 'pre-commit', $preCommitSample);
+
+//			copy($gitHooksDir . 'post-checkout.sample', $gitHooksDir . 'post-checkout');
+//			file_put_contents($gitHooksDir . 'post-checkout', $postCheckoutSample);
 		}
 
 		/*
