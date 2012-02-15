@@ -1,5 +1,8 @@
 This is the Fork CLI Tool. This tool is build to make life of the developers easier.
 
+To make this usable in your terminal, add export PATH=$PATH:/Path/To/Knife/
+You'll now be able to call the knife tool via 'ft'
+
 More documentation can be found here:
 https://github.com/siphoc/knife/wiki/_pages
 
