@@ -57,8 +57,8 @@ else
  */
 function isProductionSite()
 {
-	static $productionDomains = array('www.<projectname>.be', '<projectname>.be');
-	return in_array(SITE_DOMAIN, $productionDomains);
+	static $developmentDomains = array('<projectname>.dev');
+	return !in_array(SITE_DOMAIN, $developmentDomains);
 }
 
 /**
