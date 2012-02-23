@@ -97,7 +97,7 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 				$item['language'] = BL::getWorkingLanguage();
 				$item['visible'] = $fields['visible']->getValue();
 
-				BackendmodulenameModel::update($item, $this->id);
+				BackendmodulenameModel::update($this->id, $item);
 				$item['id'] = $this->id;
 
 				BackendSearchModel::editIndex(

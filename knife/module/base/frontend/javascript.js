@@ -7,16 +7,16 @@
 
 /**
  * Interaction for the subname module
- * 
+ *
  * @author authorname
  */
-jsFrontend.subname = {
-	
+jsFrontend.subname =
+{
 	// constructor
 	init: function()
-	{	
+	{
 		
 	}
 }
 
-$(jsFrontend.subname.init); 
+$(jsFrontend.subname.init);

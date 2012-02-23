@@ -132,10 +132,10 @@ class BackendclassnameModel
 	/**
 	 * Updates an item
 	 *
-	 * @param	array $data		The data to update.
-	 * @param	int $itemId		The item id to update.
+	 * @param int $itemId
+	 * @param array $data
 	 */
-	public static function update(array $data, $itemId)
+	public static function update($itemId, array $data)
 	{
 		$data['edited_on'] = BackendModel::getUTCDate();
 
