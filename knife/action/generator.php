@@ -60,7 +60,7 @@ class KnifeActionGenerator extends KnifeBaseGenerator
 		if(!isset($arrData[1])) throw new Exception('You need to provide at least one action');
 
 		// get the location
-		$arrReturn['location'] = ($arrData[0] == 'f' || $arrData == 'frontend') ? 'frontend' : 'backend';
+		$arrReturn['location'] = ($arrData[0] == 'f' || $arrData[0] == 'frontend') ? 'frontend' : 'backend';
 
 		// the actions
 		$arrReturn['actions'] = $arrData[1];
