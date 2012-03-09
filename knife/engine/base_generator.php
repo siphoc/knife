@@ -86,8 +86,8 @@ class KnifeBaseGenerator
 		$ext = strtolower($ext);
 
 		// remove all non alphabetical or underscore characters
-		$name = preg_replace("/[^a-z_\s]/", "", $name);
-		$ext = preg_replace("/[^a-z\s]/", "", $ext);
+		$name = preg_replace("/[^a-z0-9_\s]/", "", $name);
+		$ext = preg_replace("/[^a-z0-9\s]/", "", $ext);
 
 		// need extension?
 		$newName = $name;
@@ -109,7 +109,7 @@ class KnifeBaseGenerator
 		$name = strtolower($name);
 
 		// remove all non alphabetical or underscore characters
-		$name = preg_replace("/[^a-zA-Z_\s]/", "", $name);
+		$name = preg_replace("/[^a-zA-Z0-9_\s]/", "", $name);
 
 		// split the name on _
 		$parts = explode('_', $name);
