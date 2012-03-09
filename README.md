@@ -1,28 +1,23 @@
+#Knife
 This is the Fork CLI Tool. This tool is build to make life of the developers easier.
 
-To make this usable in your terminal, add export PATH=$PATH:/Path/To/Knife/
+To make this usable in your terminal, add 'alias ft=/Path/To/Knife' in your .bashrc
 You'll now be able to call the knife tool via 'ft'
+
+##Setting up
+Don't forget to setup your knife, otherwise it'll use my credits in your projects. The .ftconfig file is meant as an example.
+
+##Documentation
+At the moment, the inline help function is not very helpfull yet, this is a work in progress.
 
 More documentation can be found here:
 https://github.com/siphoc/knife/wiki/_pages
 
-@author	Jelmer Snoeck <jelmer.snoeck@netlash.com>
-
---------------------------------------
-Show information
-
-One of the functionalities of the Fork tool is to show information about your current project.
-
-Currently, these options are available:
-show version      This will show the current Fork Version of your project.
-show modules      This will show all the modules in your project and if they are installed or not.
-
--------------------------------------
-Possible issues:
+##Possible issues
 
 ------PDO ERROR-----
 At the moment, I'm using plain PDO, in the future this tool will connect with Spoon. One of the errors you could
-come across is that your mysql socket isn't available. 
+come across is that your mysql socket isn't available.
 
 The error will be recognizable by:
 SQLSTATE[HY000] [2002] No such file or directory
