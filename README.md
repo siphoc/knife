@@ -24,7 +24,7 @@ SQLSTATE[HY000] [2002] No such file or directory
 
 If you come accross this problem, don't worry, don't panic. Just breath.
 
-Now, as a real ninja go to terminal(where your're obviously already in) and type vi /etc/php.ini (or wherever your php ini is)
+Now, as a real ninja go to terminal(where your're obviously already in) and type vi /etc/php.ini (or wherever your php ini is, just make sure it is the one the command line uses. To check this you could type php --ini)
 
 search the line pdo_mysql.default_socket=/a/path/to/a/mysql.sock
 
