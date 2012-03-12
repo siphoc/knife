@@ -79,7 +79,7 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 
 				$item['id'] = BackendmodulenameModel::insert($item);
 
-				BackendSearchModel::addIndex(
+				BackendSearchModel::saveIndex(
 					$this->getModule(),
 					$item['id'],
 					array('title' => $item['title'], 'text' => $item['title'])

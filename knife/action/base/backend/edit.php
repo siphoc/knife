@@ -100,7 +100,7 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 				BackendmodulenameModel::update($this->id, $item);
 				$item['id'] = $this->id;
 
-				BackendSearchModel::editIndex(
+				BackendSearchModel::saveIndex(
 					$this->getModule(),
 					$item['id'],
 					array('title' => $item['title'], 'text' => $item['title'])
