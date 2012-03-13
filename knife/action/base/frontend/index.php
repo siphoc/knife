@@ -17,7 +17,7 @@ class Frontendmodulenameactionname extends FrontendBaseBlock
 	/**
 	 * The record data
 	 *
-	 * @var	array
+	 * @var array
 	 */
 	private $record;
 
