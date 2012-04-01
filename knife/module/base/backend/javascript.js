@@ -20,5 +20,4 @@ jsBackend.subname =
 	}
 }
 
-
 $(jsBackend.subname.init);

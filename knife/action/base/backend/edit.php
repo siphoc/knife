@@ -37,7 +37,9 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int', null);
 		if($this->id == null || !BackendmodulenameModel::exists($this->id))
 		{
-			$this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+			$this->redirect(
+				BackendModel::createURLForAction('index') . '&error=non-existing'
+			);
 		}
 
 		$this->record = BackendmodulenameModel::get($this->id);
@@ -49,17 +51,33 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 	protected function loadForm()
 	{
 		// set hidden values
-		$rbtVisibleValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'N');
-		$rbtVisibleValues[] = array('label' => BL::lbl('Published'), 'value' => 'Y');
+		$rbtVisibleValues[] = array(
+			'label' => BL::lbl('Hidden'),
+			'value' => 'N'
+		);
+		$rbtVisibleValues[] = array(
+			'label' => BL::lbl('Published'),
+			'value' => 'Y'
+		);
 
 		// create form
 		$this->frm = new BackendForm('edit');
-		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
-		$this->frm->addRadiobutton('visible', $rbtVisibleValues, $this->record['visible']);
+		$this->frm->addText(
+			'title', $this->record['title'], null,
+			'inputText title', 'inputTextError title'
+		);
+		$this->frm->addRadiobutton(
+			'visible', $rbtVisibleValues, $this->record['visible']
+		);
 
 		// meta
-		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
-		$this->meta->setUrlCallback('BackendmodulenameModel', 'getUrl', array($this->record['id']));
+		$this->meta = new BackendMeta(
+			$this->frm, $this->record['meta_id'], 'title', true
+		);
+		$this->meta->setUrlCallback(
+			'BackendmodulenameModel', 'getUrl',
+			array($this->record['id'])
+		);
 	}
 
 	/**
@@ -106,8 +124,12 @@ class Backendmodulenameactionname extends BackendBaseActionEdit
 					array('title' => $item['title'], 'text' => $item['title'])
 				);
 
-				BackendModel::triggerEvent($this->getModule(), 'after_edit', $item);
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&highlight=row-' . $item['id']);
+				BackendModel::triggerEvent(
+					$this->getModule(), 'after_edit', $item
+				);
+				$this->redirect(
+					BackendModel::createURLForAction('index') . '&report=edited&highlight=row-' . $item['id']
+				);
 			}
 		}
 	}

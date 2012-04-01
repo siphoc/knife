@@ -8,7 +8,7 @@
  */
 
 /**
- * This is the actionname action, it will display a form to create a new item
+ * This is the actionname action
  *
  * @author authorname
  */

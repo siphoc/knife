@@ -139,6 +139,8 @@ class BackendclassnameModel
 	{
 		$data['edited_on'] = BackendModel::getUTCDate();
 
-		BackendModel::getDB(true)->update('subname', $data, 'id = ?', (int) $itemId);
+		BackendModel::getDB(true)->update(
+			'subname', $data, 'id = ?', (int) $itemId
+		);
 	}
 }

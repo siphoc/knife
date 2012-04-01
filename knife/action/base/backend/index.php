@@ -31,8 +31,14 @@ class BackendmodulenameIndex extends BackendBaseActionIndex
 	 */
 	protected function loadDataGrid()
 	{
-		$this->dataGrid = new BackendDataGridDB(QUERY, PARAMETERS);
-		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dataGrid = new BackendDataGridDB(
+			QUERY, PARAMETERS
+		);
+		$this->dataGrid->addColumn(
+			'edit', null, BL::lbl('Edit'),
+			BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+			BL::lbl('Edit')
+		);
 	}
 
 	/**
@@ -41,6 +47,9 @@ class BackendmodulenameIndex extends BackendBaseActionIndex
 	protected function parse()
 	{
 		// parse the dataGrid if there are results
-		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+		$this->tpl->assign(
+			'dataGrid',
+			($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false
+		);
 	}
 }

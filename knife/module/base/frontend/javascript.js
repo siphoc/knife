@@ -15,7 +15,7 @@ jsFrontend.subname =
 	// constructor
 	init: function()
 	{
-		
+
 	}
 }
 

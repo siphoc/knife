@@ -22,7 +22,7 @@ class FrontendmodulenameAjaxactionname extends FrontendBaseAJAXAction
 		parent::execute();
 
 		// get parameters
-		$itemId = (int) trim(SpoonFilter::getPostValue('id', null, '', 'int'));
+		$itemId = SpoonFilter::getPostValue('id', null, '', 'int');
 
 		// output
 		$this->output(self::OK, null, FL::msg('Success'));

@@ -33,11 +33,19 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 	 */
 	protected function loadForm()
 	{
-		$rbtVisibleValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'N');
-		$rbtVisibleValues[] = array('label' => BL::lbl('Published'), 'value' => 'Y');
+		$rbtVisibleValues[] = array(
+			'label' => BL::lbl('Hidden'),
+			'value' => 'N'
+		);
+		$rbtVisibleValues[] = array(
+			'label' => BL::lbl('Published'),
+			'value' => 'Y'
+		);
 
 		$this->frm = new BackendForm('add');
-		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+		$this->frm->addText(
+			'title', null, null, 'inputText title', 'inputTextError title'
+		);
 		$this->frm->addRadiobutton('visible', $rbtVisibleValues, 'Y');
 
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
@@ -85,8 +93,12 @@ class Backendmodulenameactionname extends BackendBaseActionAdd
 					array('title' => $item['title'], 'text' => $item['title'])
 				);
 
-				BackendModel::triggerEvent($this->getModule(), 'after_add', $item);
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&highlight=row-' . $item['id']);
+				BackendModel::triggerEvent(
+					$this->getModule(), 'after_add', $item
+				);
+				$this->redirect(
+					BackendModel::createURLForAction('index') . '&report=added&highlight=row-' . $item['id']
+				);
 			}
 		}
 	}

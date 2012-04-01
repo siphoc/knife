@@ -17,14 +17,14 @@ final class FrontendclassnameConfig extends FrontendBaseConfig
 	/**
 	 * The default action
 	 *
-	 * @var	string
+	 * @var string
 	 */
 	protected $defaultAction = 'index';
 
 	/**
 	 * The disabled actions
 	 *
-	 * @var	array
+	 * @var array
 	 */
 	protected $disabledActions = array();
 }

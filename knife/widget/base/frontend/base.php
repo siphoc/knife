@@ -8,14 +8,14 @@
  */
 
 /**
- * This is a widget
+ * This is a frontend widget
  *
  * @author authorname
  */
 class FrontendmodulenameWidgetwidgetname extends FrontendBaseWidget
 {
 	/**
-	 * @var	array
+	 * @var array
 	 */
 	private $record;
 
