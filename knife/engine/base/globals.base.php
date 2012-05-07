@@ -22,8 +22,6 @@ define('ACTION_RIGHTS_LEVEL', '7');
 /**
  * Spoon configuration
  */
-define('SPOON_DEBUG', enableDebug());
-define('SPOON_DEBUG_EMAIL', !isProductionSite() ? '' : '<projectname>-bugs@fork-cms.be');
 define('SPOON_DEBUG_MESSAGE', 'Internal error.');
 define('SPOON_CHARSET', 'utf-8');
 
@@ -35,13 +33,9 @@ define('FORK_VERSION', '<version>');
 /**
  * Database configuration
  */
-if(isProductionSite())
+if(isStagedEnvironment())
 {
-	require_once dirname(__FILE__) . '/globals_production.php';
-}
-elseif(file_exists(dirname(__FILE__) . '/globals_staging.php'))
-{
-	require_once dirname(__FILE__) . '/globals_staging.php';
+	require_once dirname(__FILE__) . '/globals_stage.php';
 }
 else
 {
@@ -51,32 +45,17 @@ else
 	define('DB_HOSTNAME', '');
 	define('DB_USERNAME', '');
 	define('DB_PASSWORD', '');
+
+	define('SPOON_DEBUG', true);
+	define('SPOON_DEBUG_EMAIL', '');
 }
 
 /**
- * Check to see if we should enable debug or not.
+ * @return bool Whether or not we're running the site in a staged environment.
  */
-function enableDebug()
+function isStagedEnvironment()
 {
-	/*
- 	 * In non-production sites, debug mode should always be enabled.
-	 */
-	if(!isProductionSite()) return true;
-
-	/*
-	 * For production environments, we sometimes want to use the site with
-	 * debug disabled. This enables us to do so.
-	 */
-	if(isset($_GET['enable_debug'])) return (bool) $_GET['enable_debug'];
-	else return false;
-}
-
-/**
- * @return bool Whether or not we're running the site in production.
- */
-function isProductionSite()
-{
-	return (file_exists(dirname(__FILE__) . '/globals_production.php'));
+	return (file_exists(dirname(__FILE__) . '/globals_stage.php'));
 }
 
 /**
