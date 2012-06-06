@@ -33,9 +33,10 @@ class BackendclassnameModel
 	public static function exists($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM subname AS i
-			 WHERE i.id = ?',
+			 WHERE i.id = ?
+			 LIMIT 1',
 			array((int) $id)
 		);
 	}
@@ -75,10 +76,11 @@ class BackendclassnameModel
 		if($id === null)
 		{
 			$numberOfItems = (int) $db->getVar(
-				'SELECT COUNT(i.id)
+				'SELECT 1
 				 FROM subname AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
-				 WHERE i.language = ? AND m.url = ?',
+				 WHERE i.language = ? AND m.url = ?
+				 LIMIT 1',
 				array(BL::getWorkingLanguage(), $url));
 
 			// already exists
@@ -95,10 +97,11 @@ class BackendclassnameModel
 		else
 		{
 			$numberOfItems = (int) $db->getVar(
-				'SELECT COUNT(i.id)
+				'SELECT 1
 				 FROM subname AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
-				 WHERE i.language = ? AND m.url = ? AND i.id != ?',
+				 WHERE i.language = ? AND m.url = ? AND i.id != ?
+				 LIMIT 1',
 				array(BL::getWorkingLanguage(), $url, $id));
 
 			// already exists
