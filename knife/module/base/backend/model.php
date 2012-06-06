@@ -93,7 +93,7 @@ class BackendclassnameModel
 				return self::getUrl($url);
 			}
 		}
-		// current category should be excluded
+		// current item should be excluded
 		else
 		{
 			$numberOfItems = (int) $db->getVar(
@@ -135,15 +135,15 @@ class BackendclassnameModel
 	/**
 	 * Updates an item
 	 *
-	 * @param int $itemId
+	 * @param int $id
 	 * @param array $data
 	 */
-	public static function update($itemId, array $data)
+	public static function update($id, array $data)
 	{
 		$data['edited_on'] = BackendModel::getUTCDate();
 
 		BackendModel::getDB(true)->update(
-			'subname', $data, 'id = ?', (int) $itemId
+			'subname', $data, 'id = ?', (int) $id
 		);
 	}
 }
