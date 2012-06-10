@@ -1,8 +1,16 @@
 #Knife
 This is the Fork CLI Tool. This tool is build to make life of the developers easier.
 
-To make this usable in your terminal, add 'alias ft=/Path/To/Knife' in your .bashrc
-You'll now be able to call the knife tool via 'ft'
+## Installing
+Clone the repository to your local machine. (I've put it in my homedir, ~/.knife)
+
+	git clone git://github.com/siphoc/knife.git ~/.knife
+
+After you're done, add the following line of code to your ~/.bashrc file (or any other file that'll be automatically loaded. If you use my dotfiles it'll be loaded already.)
+
+	export PATH="$HOME/.knife:$PATH"
+
+Now you should be able to call the tool via the "ft" command.
 
 ##Setting up
 Don't forget to setup your knife, otherwise it'll use my credits in your projects. The .ftconfig file is meant as an example.
