@@ -10,12 +10,13 @@ Don't forget to setup your knife, otherwise it'll use my credits in your project
 ##Documentation
 At the moment, the inline help function is not very helpfull yet, this is a work in progress.
 
-More documentation can be found here:
-https://github.com/siphoc/knife/wiki/_pages
+I've posted a [blogpost](http://siphoc.com/news/detail/knife-the-fork-cli-tool) about this on my website. It contains a small tutorial on how to use the Fork CLI Tool.
+
+There's also a [wiki on github](https://github.com/siphoc/knife/wiki/_pages)
 
 ##Possible issues
 
-------PDO ERROR-----
+### PDO Error
 At the moment, I'm using plain PDO, in the future this tool will connect with Spoon. One of the errors you could
 come across is that your mysql socket isn't available.
 
