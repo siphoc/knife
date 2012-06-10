@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Knife by siphoc</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Knife</h1>
+        <p>The Fork CLI Tool</p>
+        <p class="view"><a href="https://github.com/siphoc/knife">View the Project on GitHub <small>siphoc/knife</small></a></p>
+        <ul>
+          <li><a href="https://github.com/siphoc/knife/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/siphoc/knife/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/siphoc/knife">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Knife</h1>
+
+<p>This is the Fork CLI Tool. This tool is build to make life of the developers easier.</p>
+
+<h2>Installing</h2>
+
+<p>Clone the repository to your local machine. (I've put it in my homedir, ~/.knife)</p>
+
+<pre><code>git clone git://github.com/siphoc/knife.git ~/.knife
+</code></pre>
+
+<p>After you're done, add the following line of code to your ~/.bashrc file (or any other file that'll be automatically loaded. If you use my dotfiles it'll be loaded already.)</p>
+
+<pre><code>export PATH="$HOME/.knife:$PATH"
+</code></pre>
+
+<p>Now you should be able to call the tool via the "ft" command.</p>
+
+<h2>Setting up</h2>
+
+<p>Don't forget to setup your knife, otherwise it'll use my credits in your projects. The .ftconfig file is meant as an example.</p>
+
+<h2>Documentation</h2>
+
+<p>At the moment, the inline help function is not very helpfull yet, this is a work in progress.</p>
+
+<p>I've posted a <a href="http://siphoc.com/news/detail/knife-the-fork-cli-tool">blogpost</a> about this on my website. It contains a small tutorial on how to use the Fork CLI Tool.</p>
+
+<p>There's also a <a href="https://github.com/siphoc/knife/wiki/_pages">wiki on github</a></p>
+
+<h2>Possible issues</h2>
+
+<h3>PDO Error</h3>
+
+<p>At the moment, I'm using plain PDO, in the future this tool will connect with Spoon. One of the errors you could
+come across is that your mysql socket isn't available.</p>
+
+<p>The error will be recognizable by:
+SQLSTATE[HY000] [2002] No such file or directory</p>
+
+<p>If you come accross this problem, don't worry, don't panic. Just breath.</p>
+
+<p>Now, as a real ninja go to terminal(where your're obviously already in) and type vi /etc/php.ini (or wherever your php ini is, just make sure it is the one the command line uses. To check this you could type php --ini)</p>
+
+<p>search the line pdo_mysql.default_socket=/a/path/to/a/mysql.sock</p>
+
+<p>Now, obviously, this is the wrong path. You have 3 choices, set the path to /tmp/mysql.sock or /your/mamp/folder/mysql.sock
+If this doesn't work, my last chance of saving you is this:</p>
+
+<p>cd /
+find . -name 'mysql.sock'</p>
+
+<p>This could take a while, but at the end it will show you where your mysql.sock file is. Set your path to that file
+and hope for the best.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/siphoc">siphoc</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-32543363-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
