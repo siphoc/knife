@@ -8,7 +8,7 @@
  */
 
 /**
- * This is the elete-action, it deletes an item
+ * This is the delete-action, it deletes an item
  *
  * @author authorname
  */
