@@ -26,6 +26,7 @@ class KnifeShowGenerator extends KnifeBaseGenerator
 	 *   theme       This creates a theme
 	 *   show        This shows information about the command contents
 	 *   settings    Adjusts a specific setting
+	 *   export      Exports a theme or module
 	 */
 	protected function init()
 	{
