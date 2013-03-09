@@ -18,7 +18,7 @@ Don't forget to setup your knife, otherwise it'll use my credits in your project
 ##Documentation
 At the moment, the inline help function is not very helpfull yet, this is a work in progress.
 
-I've posted a [blogpost](http://siphoc.com/news/detail/knife-the-fork-cli-tool) about this on my website. It contains a small tutorial on how to use the Fork CLI Tool.
+I've posted a [blogpost](http://siphoc.com/2012/03/11/knife-fork-cli-tool.html) about this on my website. It contains a small tutorial on how to use the Fork CLI Tool.
 
 There's also a [wiki on github](https://github.com/siphoc/knife/wiki/_pages)
 
